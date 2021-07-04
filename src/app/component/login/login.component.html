@@ -13,18 +13,20 @@
 
   <form (ngSubmit)="submit()" #form = 'ngForm' >
       <div class=" form-group" >
-        <label>User Name:</label>
+        <label><i class="fas fa-user"></i>User Name:
+        </label>
         <input type="text "
                required
                name="username"
                ngModel
                class="form-control"
                #username = "ngModel"
+
         >
         <span class="text-danger" *ngIf="!username.valid && username.touched">Plese Enter Valid username!</span>
       </div>
       <div class="form-group">
-        <label>Password :</label>
+        <label><i class="fas fa-key"></i> Password :</label>
         <input type="password"
                required
                name="password"
@@ -36,10 +38,12 @@
         <a routerLink="/signup" >Dont have an account? Sign Up!</a>
       </div>
 
-    <button class="btn btn-primary mr-1 my-3 p-2  " [disabled]="!form.valid" type="submit">Login</button>
-      <button class="btn btn-danger  my-3 p-2 " type="button">Login with Google/Fb</button>
+    <button class="btn btn-primary mr-1 my-3 p-2  " [disabled]="!form.valid" type="submit">Login <i class="fas fa-arrow-alt-circle-right"></i></button>
+      <button class="btn btn-danger  my-3 p-2 " type="button">Login with <i class="fab fa-google"></i>oogle or <i class="fab fa-facebook-f"></i>acebook!</button>
     </form>
 
   </div>
 
 </div>
+
+
