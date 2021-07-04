@@ -1,0 +1,9 @@
+.navbar-center
+{
+  position: absolute;
+  width: 10%;
+  top: 0;
+  left: 0;
+  cursor: pointer;
+  color: white;
+}
