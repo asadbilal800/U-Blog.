@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "u-blog-b73df": {
+      "hosting": {
+        "u-blog": [
+          "u-blog-b73df"
+        ]
+      }
+    }
+  }
+}

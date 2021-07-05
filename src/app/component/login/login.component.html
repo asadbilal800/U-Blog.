@@ -1,3 +1,8 @@
+<div class="alert alert-danger" *ngIf="!!errorMessage">{{errorMessage}}
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+  <span aria-hidden="true">&times;</span>
+</button>
+</div>
 
 <div class="  row mt-5">
   <div class=" text-center col-sm-12 col-md-4 mt-5 font-weight-bold ">
@@ -11,11 +16,11 @@
 
   <div class="col-sm-12 border border-dark col-md-6 offset-md-2  mt-5  font-weight-bold">
 
-  <form (ngSubmit)="submit()" #form = 'ngForm' >
+  <form (ngSubmit)="login()" #form = 'ngForm' >
       <div class=" form-group" >
         <label><i class="fas fa-user"></i>User Name:
         </label>
-        <input type="text "
+        <input type="text"
                required
                name="username"
                ngModel
@@ -38,12 +43,10 @@
         <a routerLink="/signup" >Dont have an account? Sign Up!</a>
       </div>
 
-    <button class="btn btn-primary mr-1 my-3 p-2  " [disabled]="!form.valid" type="submit">Login <i class="fas fa-arrow-alt-circle-right"></i></button>
-      <button class="btn btn-danger  my-3 p-2 " type="button">Login with <i class="fab fa-google"></i>oogle or <i class="fab fa-facebook-f"></i>acebook!</button>
+    <button class="btn btn-primary mr-1 my-3 p-2" id ='login' type="submit">Login <i class="fas fa-arrow-alt-circle-right"></i></button>
+      <button class="btn btn-dark  my-3 p-2 " (click)="differentLogin()" id="phone" type="button">Login with <i class="fab fa-google"></i>oogle or <i class="fab fa-facebook-f"></i>acebook!</button>
     </form>
 
   </div>
 
 </div>
-
-
