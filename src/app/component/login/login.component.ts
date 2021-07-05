@@ -4,6 +4,9 @@ import {Router} from "@angular/router";
 import {NgForm} from "@angular/forms";
 import {AuthService} from "../../services/auth.service";
 import {Subscription} from "rxjs";
+import firebase from 'firebase'
+import {AngularFirestore} from "@angular/fire/firestore";
+import {SignUpModel} from "../../models/sign-up.model";
 
 
 @Component({
@@ -14,24 +17,27 @@ import {Subscription} from "rxjs";
 export class LoginComponent implements OnInit, OnDestroy {
 
   firebaseToken : Subscription;
-  errorMessage;
+  displayMessage;
+  successMessage = 'User has been made successfully!'
+
   @ViewChild('form') myForm : NgForm;
-  constructor(private firestoreAuth: AngularFireAuth,private authSrv : AuthService,private router : Router) {}
+
+
+
+  constructor(private firestoreAuth: AngularFireAuth,private authSrv : AuthService,private router : Router,private fireStore : AngularFirestore) {}
 
   ngOnInit(): void {
   }
 
   login() {
     //resetting error message so ngIf would run.
-    this.errorMessage=''
+   // this.displayMessage=''
 
     let username= this.myForm.value.username;
     let password= this.myForm.value.password;
 
     this.firestoreAuth.signInWithEmailAndPassword(username, password).then( value => {
      this.firebaseToken=  this.firestoreAuth.idToken.subscribe((token)=> {
-       console.log('logging in')
-       console.log(token)
        this.authSrv.userToken.next(token);
        this.router.navigate(['/home'])
      })
@@ -39,7 +45,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     })
       .catch(
         err => {
-          this.errorMessage= err.message;
+          this.displayMessage= err.message;
         }
       );
 
@@ -47,13 +53,30 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    console.log('destroyed')
     if(this.firebaseToken) {
       this.firebaseToken.unsubscribe()
     }
   }
 
-  differentLogin() {
+  async differentLogin(socialMedia) {
+
+    let provider;
+    if(socialMedia==='google') {
+     provider = new firebase.auth.GoogleAuthProvider()
+
+    }
+    else {
+      provider = new firebase.auth.TwitterAuthProvider()
+    }
+    const credentials = await this.firestoreAuth.signInWithPopup(provider);
+    let signUpValues: SignUpModel = {username: credentials.user.displayName,email:credentials.user.email};
+
+    this.fireStore.collection('users').doc(`${credentials.user.uid}`).set(signUpValues).then((value)=> {
+
+      this.displayMessage = this.successMessage;
+    })
+
+
 
   }
 }

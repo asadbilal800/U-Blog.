@@ -61,8 +61,6 @@ export class SignupPhoneComponent implements OnInit {
   }
 
 
-
-
   verify(code) {
     this.localwinReference.confirmationResult.confirm(code).then((result)=> {
       this.fireStore.collection('users').doc(`${result.user.uid}`).set(result.user)

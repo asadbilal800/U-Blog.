@@ -1,4 +1,4 @@
-<div class="alert alert-danger" *ngIf="!!errorMessage">{{errorMessage}}
+<div class="alert alert-info" *ngIf="!!displayMessage">{{displayMessage}}
   <button type="button" class="close" data-dismiss="alert" aria-label="Close">
   <span aria-hidden="true">&times;</span>
 </button>
@@ -43,9 +43,12 @@
         <a routerLink="/signup" >Dont have an account? Sign Up!</a>
       </div>
 
-    <button class="btn btn-primary mr-1 my-3 p-2" id ='login' type="submit">Login <i class="fas fa-arrow-alt-circle-right"></i></button>
-      <button class="btn btn-dark  my-3 p-2 " (click)="differentLogin()" id="phone" type="button">Login with <i class="fab fa-google"></i>oogle or <i class="fab fa-facebook-f"></i>acebook!</button>
-    </form>
+    <button class="btn btn-outline-primary    mb-1 col-md-12" id ='login' type="submit">Login <i class="fas fa-arrow-alt-circle-right"></i></button>
+    <hr>
+      <button class="btn btn-danger    mb-1 col-md-5  " (click)="differentLogin('google')"  type="button">Login with <i class="fab fa-google"></i>oogle</button>
+    <button class="btn btn-primary     mb-1 col-md-5 offset-md-2" (click)="differentLogin('twiiter')"  type="button">Login with <i class="fab fa-twitter"></i> Twitter</button>
+
+  </form>
 
   </div>
 

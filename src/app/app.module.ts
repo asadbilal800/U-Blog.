@@ -9,7 +9,7 @@ import {FormsModule} from "@angular/forms";
 import { HomeComponent } from './component/home/home.component';
 import {AngularFireModule} from "@angular/fire";
 import {firebaseConfig} from "../environments/environment";
-import {AngularFirestore, AngularFirestoreModule} from "@angular/fire/firestore";
+import { AngularFirestoreModule} from "@angular/fire/firestore";
 import {AngularFireAuthModule} from "@angular/fire/auth";
 import {AngularFireStorageModule} from "@angular/fire/storage";
 import {AuthService} from "./services/auth.service";
