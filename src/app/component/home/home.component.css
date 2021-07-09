@@ -1,7 +1,15 @@
-mat-sidenav,mat-sidenav-container,mat-sidenav-content {
+mat-sidenav-container{
+  margin : 0;
   height: 100%;
+  background-color: white;
+  padding-top: 10%;
 }
 
 mat-sidenav{
   width: 18%;
+  height: 100%;
+  position: fixed;
+  background-color: ghostwhite;
+  margin:0;
+
 }

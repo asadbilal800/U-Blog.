@@ -1,0 +1,37 @@
+<!-- mat drawer is a flex so no need to recreate it -->
+<div fxFlex="20"></div>
+
+  <div   fxFlex="30" infiniteScroll [infiniteScrollDistance]="2"
+         [infiniteScrollThrottle]="50"
+         (scrolled)="onScroll()"
+  >
+    <mat-card  [routerLink]="['../article',article.id]" class="mb-5 animate__animated animate__fadeIn" *ngFor="let article of articleArray" >
+      <mat-card-header>
+        <mat-card-title>{{this.article.mintoRead}}</mat-card-title>
+        <mat-card-subtitle>{{this.article.tag}}</mat-card-subtitle>
+      </mat-card-header>
+      <img mat-card-image src="{{this.article.imgURL}}" alt="No image">
+      <mat-card-content>
+        <p>
+          {{this.article.itSelf}}
+        </p>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-button>Bookmark it.</button>
+      </mat-card-actions>
+    </mat-card>
+
+    <div   *ngIf="noPosts">
+      <p class="lead text-center"> No more posts. </p>
+    </div>
+
+
+
+  </div>
+
+<div fxFlex></div>
+
+<div  class="fixed-bottom mb-5 ">
+  <ngx-spinner name="articleLoadingSpinner" bdColor = "rgba(0,0,0,0)" size = "medium" color = "#2e47b5" type = "ball-beat" [fullScreen] = "false"></ngx-spinner>
+</div>
+

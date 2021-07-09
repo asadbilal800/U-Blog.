@@ -28,7 +28,9 @@ export class WriteComponent implements OnInit {
   ngOnInit(): void {
 
     this.authSrv.userCredInfo.subscribe(user => {
+      console.log('i ran')
       this.userCredInfo = user;
+      console.log(this.userCredInfo)
     })
   }
 
@@ -57,7 +59,7 @@ export class WriteComponent implements OnInit {
           //storing article image.
           let file = form.value.file
           this.afS.ref('article-images/' + `${this.userCredInfo.username}/${articleId}`)
-            .put(file,{contentType: 'image/jpeg'}).then(()=> {
+            .put(file).then(()=> {
             console.log('file uploaded.')
           }).then( ()=>
 
@@ -65,6 +67,7 @@ export class WriteComponent implements OnInit {
             this.afS.ref(`article-images/${this.userCredInfo.username}/${articleId}`)
               .getDownloadURL().subscribe(url => {
 
+              console.log('almost done')
               this.afStore.collection('all-articles').doc(`${this.userCredInfo.username}`)
                 .collection('articles').doc(articleId).update({imgURL: url })
             })
@@ -81,3 +84,12 @@ export class WriteComponent implements OnInit {
     this.form.value.file  =event.target.files[0];
   }
 }
+
+
+
+
+
+
+
+
+

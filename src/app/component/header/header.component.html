@@ -1,9 +1,6 @@
  <!--mat toolbar is a flexbox itself -->
-  <mat-toolbar color="primary" fxLayoutAlign="space-around center">
+  <mat-toolbar color="primary" class="fixed-top">
      <a mat-icon-button type="button" (click)=" toggleSideNav()"  ><mat-icon>menu</mat-icon></a>
      <a class="text-white" routerLink="/login" ><i class="fas fa-union"></i> Blog</a>
-    <div fxFlex="80"></div>
-     <button mat-raised-button="logout()" fxFlexOrder="3" color="accent">Log out</button>
-     <button mat-raised-button (click)="gotoWrite()">Write!</button>
-
+    <div fxFlex="90"></div>
   </mat-toolbar>

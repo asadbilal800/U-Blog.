@@ -1,57 +1,57 @@
-<mat-sidenav-container >
+<mat-sidenav-container class="borderclass" (click)="sidenav.close()" >
 
-  <mat-sidenav  #sidenav opened="false" mode="side" >
-    Disover!
-  </mat-sidenav>
+    <mat-sidenav  #sidenav opened="false" mode="side">
+      <mat-list >
+        <mat-divider></mat-divider>
+        <mat-list-item>
+          <a mat-icon-button routerLink="feed"> <mat-icon>feed</mat-icon> Blog Feed</a>
+        </mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item>
+          <a mat-icon-button routerLink="topics"> <mat-icon>list_alt</mat-icon> Discover Topics!</a>
+        </mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item>
+          <a mat-icon-button routerLink=""> <mat-icon>bookmark</mat-icon> Reading List</a>
+        </mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item>
+          <a mat-icon-button routerLink=""> <mat-icon>people</mat-icon> Friends</a>
+        </mat-list-item>
+        <mat-divider></mat-divider><mat-list-item>
+        <a mat-icon-button routerLink='write'> <mat-icon>create</mat-icon> Write Article</a>
+      </mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item>
+          <a mat-icon-button routerLink="me"> <mat-icon>account_circle</mat-icon> Edit Profile</a>
+        </mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item>
+          <a mat-icon-button (click)="signOut()"> <mat-icon>logout</mat-icon> Logout</a>
+        </mat-list-item>
+        <mat-divider></mat-divider>
+      </mat-list>
+    </mat-sidenav>
 
-  <mat-sidenav-content>
+    <mat-sidenav-content >
+      <router-outlet></router-outlet>
+    </mat-sidenav-content>
 
-    <div fxLayout >
+  </mat-sidenav-container>
 
-      <div fxFlex="10">
-      </div>
 
-      <div fxFlex="35"  >
-        <div  infiniteScroll [infiniteScrollDistance]="0.5"
-              [infiniteScrollThrottle]="50"
-              (scrolled)="onScroll()"
-        >
-          <mat-card class="mb-5 animate__animated animate__fadeIn" *ngFor="let article of articleArray" >
-            <mat-card-header>
-              <mat-card-title>{{this.article.mintoRead}}</mat-card-title>
-              <mat-card-subtitle>{{this.article.tag}}</mat-card-subtitle>
-            </mat-card-header>
-            <img class="img-fluid"  mat-card-image src="{{this.article.imgURL}}" alt="No image">
-            <mat-card-content>
-              <p>
-                {{this.article.owner}}
-              </p>
-            </mat-card-content>
-            <mat-card-actions>
-              <button mat-button>Bookmark it.</button>
-            </mat-card-actions>
-          </mat-card>
 
-          <div   *ngIf="noPosts">
-            <p class="lead text-center"> No more posts. </p>
-          </div>
-        </div>
 
-      </div>
 
-      <div fxFlex="55">
 
-      </div>
-    </div>
 
-    <div >
-      <ngx-spinner name="mainScreenSpinner" bdColor = "rgba(0,0,0,0)" size = "medium" color = "#2e47b5" type = "square-jelly-box" [fullScreen] = "true"></ngx-spinner>
 
-    </div>
 
-    <div  class="fixed-bottom mb-5 ">
-      <ngx-spinner name="articleLoadingSpinner" bdColor = "rgba(0,0,0,0)" size = "medium" color = "#2e47b5" type = "ball-beat" [fullScreen] = "false"></ngx-spinner></div>
-  </mat-sidenav-content>
 
-</mat-sidenav-container>
+  <ngx-spinner name="mainScreenSpinner" bdColor = "rgba(0,0,0,0)" size = "medium" color = "#2e47b5" type = "square-jelly-box" [fullScreen] = "true"></ngx-spinner>
+  <div  class="fixed-bottom mb-5 ">
+    <ngx-spinner name="articleLoadingSpinner" bdColor = "rgba(0,0,0,0)" size = "medium" color = "#2e47b5" type = "ball-beat" [fullScreen] = "false"></ngx-spinner>
+  </div>
+
+
 

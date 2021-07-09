@@ -32,6 +32,11 @@ import {MatCardModule} from "@angular/material/card";
 import {NgxSpinnerModule} from "ngx-spinner";
 import {MatSidenavModule} from "@angular/material/sidenav";
 import {CommonService} from "./services/common.service";
+import {MatListModule} from "@angular/material/list";
+import { MeComponent } from './component/me/me.component';
+import { TopicsComponent } from './component/topics/topics.component';
+import { ProfileFeedComponent } from './component/profile-feed/profile-feed.component';
+import { ArticleComponent } from './component/article/article.component';
 
 @NgModule({
   declarations: [
@@ -41,32 +46,37 @@ import {CommonService} from "./services/common.service";
     SignupComponent,
     HomeComponent,
     SignupPhoneComponent,
-    WriteComponent
+    WriteComponent,
+    MeComponent,
+    TopicsComponent,
+    ProfileFeedComponent,
+    ArticleComponent
   ],
-    imports: [
-        BrowserModule,
-        RoutingModule,
-        FormsModule,
-        AngularFireModule.initializeApp(firebaseConfig),
-        AngularFireAuthModule,
-        AngularFirestoreModule,
-        AngularFireStorageModule,
-        BrowserAnimationsModule,
-        MatFormFieldModule,
-        MatInputModule,
-        MatButtonModule,
-        MatIconModule,
-        MatSelectModule,
-        MatOptionModule,
-        MatToolbarModule,
-        FlexModule,
-        MatDividerModule,
-        InfiniteScrollModule,
-        MatCardModule,
-        NgxSpinnerModule,
-        MatSidenavModule
-        ,
-    ],
+  imports: [
+    BrowserModule,
+    RoutingModule,
+    FormsModule,
+    AngularFireModule.initializeApp(firebaseConfig),
+    AngularFireAuthModule,
+    AngularFirestoreModule,
+    AngularFireStorageModule,
+    BrowserAnimationsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+    MatIconModule,
+    MatSelectModule,
+    MatOptionModule,
+    MatToolbarModule,
+    FlexModule,
+    MatDividerModule,
+    InfiniteScrollModule,
+    MatCardModule,
+    NgxSpinnerModule,
+    MatSidenavModule,
+    MatListModule
+    ,
+  ],
   providers: [
     AuthService,
     AuthGuardServiceActivate,

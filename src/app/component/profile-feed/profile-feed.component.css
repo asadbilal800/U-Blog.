@@ -1,0 +1,13 @@
+.container {
+  padding-top : 10%;
+  margin: 0;
+  height: 100%;
+}
+
+.mat-card img {
+  height: 400px;
+}
+
+mat-card {
+  cursor: pointer;
+}

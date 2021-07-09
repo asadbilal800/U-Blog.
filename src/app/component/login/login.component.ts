@@ -44,7 +44,7 @@ export class LoginComponent implements OnInit, OnDestroy {
       })
      this.firebaseToken=  this.firestoreAuth.idToken.subscribe((token)=> {
        this.authSrv.userToken.next(token);
-       this.router.navigate(['/home'])
+       this.router.navigate(['/home/feed'])
      })
 
     })

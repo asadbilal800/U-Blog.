@@ -22,15 +22,6 @@ export class HeaderComponent implements OnInit {
 
   }
 
-  signOut() {
-    this.router.navigate(['/login'])
-    console.log('sign out')
-    this.afAuth.signOut().then(null)
-  }
-
-  gotoWrite() {
-    this.router.navigate(['/write'])
-  }
 
   toggleSideNav() {
     this.commonSrv.sideNavTogglerEmitter.next();

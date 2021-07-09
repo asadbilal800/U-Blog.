@@ -5,4 +5,5 @@ export type articleModel = {
   tag : string,
   claps : number,
   imgURL ?:string,
+  id ?: string,
 }

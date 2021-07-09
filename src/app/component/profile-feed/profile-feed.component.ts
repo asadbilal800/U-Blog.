@@ -1,30 +1,27 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
-import {AuthService} from "../../services/auth.service";
-import {AngularFireAuth} from "@angular/fire/auth";
-import {Router} from "@angular/router";
 import {articleModel} from "../../models/article.model";
+import {MatSidenav} from "@angular/material/sidenav";
+import {AngularFireAuth} from "@angular/fire/auth";
+import {AuthService} from "../../services/auth.service";
+import {Router} from "@angular/router";
 import {AngularFirestore} from "@angular/fire/firestore";
 import {AngularFireStorage} from "@angular/fire/storage";
-import { NgxSpinnerService} from "ngx-spinner";
-import {take} from "rxjs/operators";
-import {MatSidenav} from "@angular/material/sidenav";
+import {NgxSpinnerService} from "ngx-spinner";
 import {CommonService} from "../../services/common.service";
-
-
+import {take} from "rxjs/operators";
 
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+  selector: 'app-profile-feed',
+  templateUrl: './profile-feed.component.html',
+  styleUrls: ['./profile-feed.component.css']
 })
-export class HomeComponent implements OnInit {
+export class ProfileFeedComponent implements OnInit {
 
   articleArray : articleModel[]=[];
-  articleImgUrl;
   @ViewChild('imgArticle',{static: true}) img : ElementRef;
+  @ViewChild('sidenav',{static:true}) sideNav : MatSidenav;
   articleArrayIds: string[]=[];
   noPosts: boolean = false;
-  @ViewChild('sidenav',{static:true}) sideNav : MatSidenav;
   userCredInfo;
 
   constructor(private fsAuth : AngularFireAuth,
@@ -35,46 +32,46 @@ export class HomeComponent implements OnInit {
               private  spinner : NgxSpinnerService,
               private commonSrv: CommonService,
               private afAuth : AngularFireAuth,
-              ) {
+  ) {
 
   }
 
-   ngOnInit(): void {
+  ngOnInit(): void {
 
-    // this.spinner.show('mainScreenSpinner')
-     this.commonSrv.sideNavTogglerEmitter.subscribe(()=> {
-       this.sideNav.toggle();
-     })
+     this.spinner.show('articleLoadingSpinner')
+    this.commonSrv.sideNavTogglerEmitter.subscribe(()=> {
+      this.sideNav.toggle();
+    })
 
     this.authSrv.userCredInfo.pipe(take(1)).subscribe(data => {
       this.userCredInfo = data;
       //to avoid race condition..
     })
-     this.getIdsOfArticle();
+    this.getIdsOfArticle();
 
 
-     setTimeout(()=> {
-       this.loadArticle();
-       this.spinner.hide('mainScreenSpinner')
-     },2000)
+    setTimeout(()=> {
+      this.loadArticle();
+      this.spinner.hide('articleLoadingSpinner')
+    },2000)
 
 
 
 
   }
 
-   getIdsOfArticle(){
+  getIdsOfArticle(){
     this.fsStore.collection('all-articles').doc(`asad800`)
       .collection('articles')
       .snapshotChanges()
       .subscribe(
-      data => {
-       data.map(data=> {
-         let id = data.payload.doc.id;
-         this.articleArrayIds.push(id)
-        })
-      }
-    )
+        data => {
+          data.map(data=> {
+            let id = data.payload.doc.id
+            this.articleArrayIds.push(id)
+          })
+        }
+      )
   }
 
   loadArticle() {
@@ -87,10 +84,12 @@ export class HomeComponent implements OnInit {
         .snapshotChanges()
         .pipe(take(1))
         .subscribe(data => {
+          console.log(data)
 
-        let singleArticle = data.payload.data() as articleModel
-        this.articleArray.push(singleArticle)
-      })
+          let singleArticle = data.payload.data() as articleModel
+          singleArticle.id = data.payload.id;
+          this.articleArray.push(singleArticle)
+        })
     }
 
     else {
@@ -101,6 +100,7 @@ export class HomeComponent implements OnInit {
 
   onScroll() {
 
+    console.log('FIRED')
     if(this.noPosts){
       // do nothing..
     }
@@ -110,7 +110,7 @@ export class HomeComponent implements OnInit {
         this.loadArticle();
         this.spinner.hide('articleLoadingSpinner')
 
-      },2000);
+      },1500);
     }
 
   }
