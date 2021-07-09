@@ -8,7 +8,8 @@ import {AuthService} from "./auth.service";
 export class AuthGuardServiceActivate implements CanActivate {
 
   isAuth = false;
-  constructor(private authSrv : AuthService,private router : Router) {
+  constructor(private authSrv : AuthService) {
+
     this.authSrv.userToken.subscribe((token)=> {
       if (token) {
         this.isAuth = true;
@@ -16,10 +17,9 @@ export class AuthGuardServiceActivate implements CanActivate {
       else {
         this.isAuth= false;
       }
-
     });
-
   }
+
 
   canActivate(route: ActivatedRouteSnapshot,
               state: RouterStateSnapshot):
@@ -32,9 +32,5 @@ export class AuthGuardServiceActivate implements CanActivate {
     else {
       return false;
     }
-
-
-
-
   }
 }

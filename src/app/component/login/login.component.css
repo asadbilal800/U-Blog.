@@ -1,13 +1,5 @@
-.navbar-center
-{
-  position: absolute;
-  width: 10%;
-  top: 0;
-  left: 0;
-  cursor: pointer;
-  color: white;
-}
+.main-container {
+  padding-top: 10%;
+  height: 100%;
 
-input.ng-invalid.ng-touched {
-  border : 2px solid red;
 }

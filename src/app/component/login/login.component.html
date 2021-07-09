@@ -4,52 +4,102 @@
 </button>
 </div>
 
-<div class="  row mt-5">
-  <div class=" text-center col-sm-12 col-md-4 mt-5 font-weight-bold ">
+<div class="main-container" fxLayout>
 
-    Write.<br>
-    Your.<br>
-    Own.<br>
-    World.
+  <div fxFlex="40" class="animate__animated animate__fadeInLeft" >
+
+    <img class="img-fluid" src="assets/type.svg">
 
   </div>
 
-  <div class="col-sm-12 border border-dark col-md-6 offset-md-2  mt-5  font-weight-bold">
+  <div  fxFlex="60" class="animate__animated animate__fadeInRight"  >
 
-  <form (ngSubmit)="login()" #form = 'ngForm' >
-      <div class=" form-group" >
-        <label><i class="fas fa-user"></i>User Name:
-        </label>
-        <input type="text"
-               required
-               name="username"
-               ngModel
-               class="form-control"
-               #username = "ngModel"
+    <form (ngSubmit)="login()" #form = 'ngForm' >
 
-        >
-        <span class="text-danger" *ngIf="!username.valid && username.touched">Plese Enter Valid username!</span>
+      <div fxLayout>
+
+        <div fxFlex="23">
+
+        </div>
+
+        <div fxFlex="55">
+          <div fxLayout="column" fxLayoutGap="5%">
+            <mat-form-field>
+              <mat-label>  Email:</mat-label>
+              <input type="text"
+                     matInput
+                     required
+                     name="username"
+                     ngModel
+                     #username = "ngModel"
+              >
+              <mat-error *ngIf="username.hasError('required')">Please fill correctly!</mat-error>
+            </mat-form-field>
+
+            <mat-form-field>
+              <mat-label>Password :</mat-label>
+              <input type="password"
+                     required
+                     name="password"
+                     ngModel
+                     matInput
+                     #password = 'ngModel'
+              >
+              <mat-error *ngIf="password.hasError('required')">Please fill correctly!</mat-error>
+            </mat-form-field>
+
+            <a routerLink="/signup" >Dont have an account? Sign Up!</a>
+
+            <button mat-raised-button  color="primary" id ='login' type="submit"><i class="fas fa-sign-in-alt"></i> Login</button>
+
+            <button mat-raised-button color="accent"  (click)="differentLogin('google')"  type="button"><i class="fab fa-google"></i> Login with google</button>
+            <button mat-raised-button color="accent" (click)="differentLogin('twiiter')"  type="button"><i class="fab fa-twitter"></i> Login with Twitter</button>
+          </div>
+
+        </div>
+
+        <div fxFlex="22">
+        </div>
+
       </div>
-      <div class="form-group">
-        <label><i class="fas fa-key"></i> Password :</label>
-        <input type="password"
-               required
-               name="password"
-               ngModel
-               class="form-control"
-               #password = 'ngModel'
-        >
-        <span class="text-danger" *ngIf="!password.valid && password.touched">Please Enter Valid password!<br></span>
-        <a routerLink="/signup" >Dont have an account? Sign Up!</a>
-      </div>
+    </form>
+  </div>
 
-    <button class="btn btn-outline-primary    mb-1 col-md-12" id ='login' type="submit">Login <i class="fas fa-arrow-alt-circle-right"></i></button>
-    <hr>
-      <button class="btn btn-danger    mb-1 col-md-5  " (click)="differentLogin('google')"  type="button">Login with <i class="fab fa-google"></i>oogle</button>
-    <button class="btn btn-primary     mb-1 col-md-5 offset-md-2" (click)="differentLogin('twiiter')"  type="button">Login with <i class="fab fa-twitter"></i> Twitter</button>
 
-  </form>
+</div>
 
+<div fxLayout>
+
+  <div fxFlex="50" fxLayoutAlign="center center">
+    <p class="mat-display-3 text-center">
+      Write what You Feel.
+      <br>
+      Explore New Ways.
+    </p>
+  </div>
+  <div fxFlex="50">
+    <img class="img-fluid" src="assets/typewriter.svg">
+
+  </div>
+</div>
+
+<div fxLayout>
+
+
+  <div fxFlex="50">
+    <img class="img-fluid" src="assets/friends.svg">
+  </div>
+  <div fxFlex="50" fxLayoutAlign="center center">
+    <h1 class=" text-center">
+      Make Friends and Explore Their World!<br>
+      <hr>
+      Community of U-Blog is Vast & Friendly.<br>
+      <hr>
+      Take your time to dive ino the world of<br> <b>U.</b>
+
+
+    </h1>
   </div>
 
 </div>
+

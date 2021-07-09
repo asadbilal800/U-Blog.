@@ -16,6 +16,22 @@ import {AuthService} from "./services/auth.service";
 import {AuthGuardServiceActivate} from "./services/auth-guard-activate.service";
 import {WindowService} from "./services/window.service";
 import { SignupPhoneComponent } from './component/signup/signup-phone/signup-phone.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatFormFieldModule} from "@angular/material/form-field";
+import {MatInputModule} from "@angular/material/input";
+import {MatButtonModule} from "@angular/material/button";
+import {MatIconModule} from "@angular/material/icon";
+import {MatSelectModule} from "@angular/material/select";
+import {MatOptionModule} from "@angular/material/core";
+import {MatToolbarModule} from "@angular/material/toolbar";
+import {FlexModule} from "@angular/flex-layout";
+import {MatDividerModule} from "@angular/material/divider";
+import { WriteComponent } from './component/write/write.component';
+import {InfiniteScrollModule} from "ngx-infinite-scroll";
+import {MatCardModule} from "@angular/material/card";
+import {NgxSpinnerModule} from "ngx-spinner";
+import {MatSidenavModule} from "@angular/material/sidenav";
+import {CommonService} from "./services/common.service";
 
 @NgModule({
   declarations: [
@@ -24,19 +40,39 @@ import { SignupPhoneComponent } from './component/signup/signup-phone/signup-pho
     HeaderComponent,
     SignupComponent,
     HomeComponent,
-    SignupPhoneComponent
+    SignupPhoneComponent,
+    WriteComponent
   ],
-  imports: [
-    BrowserModule,
-    RoutingModule,
-    FormsModule,
-    AngularFireModule.initializeApp(firebaseConfig),
-    AngularFireAuthModule,
-    AngularFirestoreModule,
-    AngularFireStorageModule
-    ,
+    imports: [
+        BrowserModule,
+        RoutingModule,
+        FormsModule,
+        AngularFireModule.initializeApp(firebaseConfig),
+        AngularFireAuthModule,
+        AngularFirestoreModule,
+        AngularFireStorageModule,
+        BrowserAnimationsModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatButtonModule,
+        MatIconModule,
+        MatSelectModule,
+        MatOptionModule,
+        MatToolbarModule,
+        FlexModule,
+        MatDividerModule,
+        InfiniteScrollModule,
+        MatCardModule,
+        NgxSpinnerModule,
+        MatSidenavModule
+        ,
+    ],
+  providers: [
+    AuthService,
+    AuthGuardServiceActivate,
+    WindowService,
+    CommonService
   ],
-  providers: [AuthService,AuthGuardServiceActivate,WindowService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

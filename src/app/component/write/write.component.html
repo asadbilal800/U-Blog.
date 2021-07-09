@@ -1,0 +1,30 @@
+<form #form = 'ngForm' (ngSubmit)="write(form)">
+
+  file
+
+  <input type="file"
+         name="file"
+         ngModel
+        (change)="upload($event)"
+  >
+  mintoread
+  <input type="number"
+         name="minToRead"
+         ngModel
+         >
+
+  article
+  <input type="text"
+         name="itSelf"
+         ngModel
+  >
+
+  tag
+  <input type="text"
+         name="tag"
+         ngModel
+  >
+<button type="submit">submit</button>
+
+</form>
+

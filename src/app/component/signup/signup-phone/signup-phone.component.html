@@ -5,23 +5,43 @@
   </button>
 </div>
 
- <div class=" form-group col-sm-12 col-md-4 offset-md-4 p-2">
-        <label> Phone Number :</label>
-        <input type="text"
-               class="form-control"
-               #phoneNumber
+
+<div class="main-container" fxLayout>
+
+  <div fxFlex="30"></div>
+
+
+
+  <div  fxFlex="60" >
+
+    <div fxLayout="column" fxLayoutGap="5%">
+      <mat-form-field>
+        <mat-label>Password :</mat-label>
+        <input type="password"
+               required
+               name="phonenumber"
+               ngModel
+               matInput
+               #phonenumber = 'ngModel'
         >
-   <hr>
+        <mat-error *ngIf="phonenumber.hasError('required')">Please fill correctly!</mat-error>
+      </mat-form-field>
 
-   <div id="recaptcha-container"></div>
+      <div id="recaptcha-container" class="captcha-container"></div>
 
-   <hr>
+      <button mat-raised-button color="accent" (click)="sendSmsCode()" >Sign up!</button>
 
-   <button class="btn btn-primary mt-1 col-md-12 col-sm-12" (click)="sendSmsCode()"
-        >Sign up!</button>
-   <hr>
-   <div  class="form-inline my-1" *ngIf="!recaptchaHide">
-     <input class="form-control col-md-6 mr-1" placeholder="Insert code" type="text"  #codeInputRef>
-     <button class="btn btn-danger" (click)="verify(codeInputRef.value)">Verify Code!</button>
-   </div>
+      <div  class="form-inline my-1" *ngIf="!recaptchaHide">
+        <input class="form-control col-md-6 mr-1" placeholder="Insert code" type="text"  #codeInputRef>
+        <button class="btn btn-danger" (click)="verify(codeInputRef.value)">Verify Code!</button>
       </div>
+
+    </div>
+
+
+  </div>
+
+  <div fxFlex="30"></div>
+
+
+</div>

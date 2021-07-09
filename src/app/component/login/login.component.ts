@@ -22,14 +22,15 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   @ViewChild('form') myForm : NgForm;
 
-
-
-  constructor(private firestoreAuth: AngularFireAuth,private authSrv : AuthService,private router : Router,private fireStore : AngularFirestore) {}
+  constructor(private firestoreAuth: AngularFireAuth,
+              private authSrv : AuthService,
+              private router : Router,
+              private fireStore : AngularFirestore) {}
 
   ngOnInit(): void {
   }
 
-  login() {
+   login() {
     //resetting error message so ngIf would run.
    // this.displayMessage=''
 
@@ -37,6 +38,10 @@ export class LoginComponent implements OnInit, OnDestroy {
     let password= this.myForm.value.password;
 
     this.firestoreAuth.signInWithEmailAndPassword(username, password).then( value => {
+      this.firestoreAuth.user.subscribe(user => {
+         this.authSrv.userUIDObsvr.next(user.uid);
+         this.authSrv.getUserCredInfoFromDb();
+      })
      this.firebaseToken=  this.firestoreAuth.idToken.subscribe((token)=> {
        this.authSrv.userToken.next(token);
        this.router.navigate(['/home'])
@@ -48,7 +53,6 @@ export class LoginComponent implements OnInit, OnDestroy {
           this.displayMessage= err.message;
         }
       );
-
 
   }
 
@@ -63,7 +67,6 @@ export class LoginComponent implements OnInit, OnDestroy {
     let provider;
     if(socialMedia==='google') {
      provider = new firebase.auth.GoogleAuthProvider()
-
     }
     else {
       provider = new firebase.auth.TwitterAuthProvider()
@@ -71,7 +74,9 @@ export class LoginComponent implements OnInit, OnDestroy {
     const credentials = await this.firestoreAuth.signInWithPopup(provider);
     let signUpValues: SignUpModel = {username: credentials.user.displayName,email:credentials.user.email};
 
-    this.fireStore.collection('users').doc(`${credentials.user.uid}`).set(signUpValues).then((value)=> {
+    this.fireStore.collection('users').doc(`${credentials.user.uid}`)
+      .set(signUpValues)
+      .then((value)=> {
 
       this.displayMessage = this.successMessage;
     })
