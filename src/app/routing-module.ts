@@ -9,6 +9,7 @@ import {MeComponent} from "./component/me/me.component";
 import {TopicsComponent} from "./component/topics/topics.component";
 import {ProfileFeedComponent} from "./component/profile-feed/profile-feed.component";
 import {ArticleComponent} from "./component/article/article.component";
+import {BookmarksComponent} from "./component/bookmarks/bookmarks.component";
 
 
 const routes : Routes = [
@@ -24,6 +25,9 @@ const routes : Routes = [
     {path: 'topics', component: TopicsComponent},
     {path: 'feed', component: ProfileFeedComponent},
     {path: 'article/:id', component: ArticleComponent},
+    {path: 'bookmarks', component: BookmarksComponent},
+
+
 
 
   ]

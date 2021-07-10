@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {AuthService} from "../../services/auth.service";
 import {SignUpModel} from "../../models/sign-up.model";
+import {AngularFireStorage} from "@angular/fire/storage";
+import {AngularFirestore} from "@angular/fire/firestore";
 
 @Component({
   selector: 'app-me',
@@ -10,7 +12,9 @@ import {SignUpModel} from "../../models/sign-up.model";
 export class MeComponent implements OnInit {
 
   currentUser : SignUpModel;
-  constructor(private authSrv : AuthService
+  constructor(private authSrv : AuthService,
+              private fsStore : AngularFireStorage,
+              private fireStore : AngularFirestore
 
   )
   { }
@@ -19,12 +23,32 @@ export class MeComponent implements OnInit {
 
     this.authSrv.userCredInfo.subscribe(data => {
       this.currentUser = data;
-    })
+    });
+    this.currentUser.userUID= this.authSrv.userUIDObsvr.value
   }
 
   changePicture(event) {
+    console.log('method initiated.')
     let file = event.target.files[0];
-    // call db here.!
+    this.fsStore.ref(`display-pictures-users/${this.currentUser.username}`).put(file)
+      .then(()=> {
+        console.log('Display picture has been set in the storage')
+        console.log('storing it in user table..')
+
+        this.fsStore.ref(`display-pictures-users/${this.currentUser.username}`)
+          .getDownloadURL().subscribe(url => {
+          console.log(url)
+          console.log(this.currentUser.userUID)
+          this.fireStore.collection('users').doc(`${this.currentUser.userUID}`)
+            .update({displayImage : url }).then(
+            ()=> {
+              console.log('successfully uploaded display picture')
+
+            }
+          )
+        })
+      })
+
 
   }
 }

@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import {AngularFirestore} from "@angular/fire/firestore";
 import {map, take} from "rxjs/operators";
 import {NgxSpinnerService} from "ngx-spinner";
+import {AuthService} from "../../services/auth.service";
+import firebase from "firebase";
+import FieldValue = firebase.firestore.FieldValue;
 
 @Component({
   selector: 'app-topics',
@@ -11,11 +14,14 @@ import {NgxSpinnerService} from "ngx-spinner";
 export class TopicsComponent implements OnInit {
 
   topicList;
+  currentUser;
   constructor(private fsStore: AngularFirestore,
-              private spinner : NgxSpinnerService
+              private spinner : NgxSpinnerService,
+              private authSrv : AuthService,
 
   ) { }
   ngOnInit(): void {
+
     this.spinner.show()
     this.fsStore.collection('topics').doc<object>('SanBNEamwYEo8oZFqzJP').valueChanges()
       .pipe(
@@ -36,6 +42,26 @@ export class TopicsComponent implements OnInit {
      this.spinner.hide()
 
     })
+
+
+    this.authSrv.userCredInfo.subscribe((user)=> {
+
+      this.currentUser = user;
+    })
+
   }
 
+  subscribeTopic(topic: string) {
+
+    console.log('subscribing to topic... '+ topic)
+    console.log(this.authSrv.userUIDObsvr.value)
+
+    this.fsStore.collection('users').doc(`${this.authSrv.userUIDObsvr.value}`).update(
+      {subscriptions : FieldValue.arrayUnion(topic)}
+    ).then(()=> {
+      console.log('subscribed!')
+    })
+
+
+  }
 }

@@ -1,4 +1,5 @@
 export type articleModel = {
+  name : string,
   mintoRead : number,
   itSelf : string;
   owner : string,
@@ -6,4 +7,5 @@ export type articleModel = {
   claps : number,
   imgURL ?:string,
   id ?: string,
+  comment ?: string[]
 }

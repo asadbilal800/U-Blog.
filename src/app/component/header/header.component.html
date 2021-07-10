@@ -2,5 +2,13 @@
   <mat-toolbar color="primary" class="fixed-top">
      <a mat-icon-button type="button" (click)=" toggleSideNav()"  ><mat-icon>menu</mat-icon></a>
      <a class="text-white" routerLink="/login" ><i class="fas fa-union"></i> Blog</a>
-    <div fxFlex="90"></div>
+    <div fxFlex="80"></div>
+    <mat-list *ngIf="isAuth">
+      <mat-list-item>
+        <img  matListAvatar src="{{this.user?.displayImage}}">
+        <p class="lead" matLine>
+          {{this.user?.username}}
+        </p>
+      </mat-list-item>
+    </mat-list>
   </mat-toolbar>

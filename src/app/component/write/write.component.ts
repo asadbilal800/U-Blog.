@@ -16,7 +16,9 @@ import {take} from "rxjs/operators";
 export class WriteComponent implements OnInit {
 
   userCredInfo: SignUpModel;
-  @ViewChild('form') form : NgForm;
+  @ViewChild('form') forms : NgForm;
+  topicList : string[] = []
+  image;
 
   constructor(private afStore: AngularFirestore,
               private afAuth: AngularFireAuth,
@@ -26,6 +28,20 @@ export class WriteComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
+
+    this.afStore.collection('topics').snapshotChanges().pipe(take(1)).subscribe(data=> {
+      data.map(topic => {
+        let topics: any =topic.payload.doc.data()
+        for (const topic in topics){
+          this.topicList.push(topics[topic])
+        }
+        console.log(this.topicList)
+
+      });
+    })
+
+
 
     this.authSrv.userCredInfo.subscribe(user => {
       console.log('i ran')
@@ -38,38 +54,55 @@ export class WriteComponent implements OnInit {
 
   write(form: NgForm) {
 
+
     let article: articleModel = {
       owner: this.userCredInfo.username,
-      tag: form.value.tag,
+      tag: form.value['dropdownTag'], //also for this
       mintoRead: form.value['minToRead'], //if you have number,use this syntax
       itSelf: form.value.itSelf,
-      claps: 7
+      name: form.value.name,
+      claps: 7,
+      imgURL :'',
+      comment : [],
+      id : '',
     }
 
+
+
     //storing article
-    this.afStore.collection('all-articles').doc(`${this.userCredInfo.username}`)
-      .collection('articles').doc().set(article).then(
+    this.afStore.collection('all-articles').doc().set(article).then(
       ()=> {
         //now getting latest article and then storing image.
 
-        this.afStore.collection('all-articles').doc(`${this.userCredInfo.username}`)
-          .collection('articles').snapshotChanges().pipe(take(1)).subscribe(data => {
+        this.afStore.collection('all-articles')
+          .snapshotChanges().pipe(take(1)).subscribe(data => {
           let articleId =data.pop().payload.doc.id
+          console.log(articleId)
+
+          //storing article Id into its field.
+
 
           //storing article image.
-          let file = form.value.file
-          this.afS.ref('article-images/' + `${this.userCredInfo.username}/${articleId}`)
-            .put(file).then(()=> {
+          let file = this.image
+          console.log('file to be uploaded : '+file)
+          console.log(this.image)
+          this.afS.ref('article-images/' + `${this.userCredInfo.username}/${articleId}/image`)
+            .put(this.image,{contentType:'image/jpeg'}).then(()=> {
             console.log('file uploaded.')
           }).then( ()=>
 
             //getting download url from storage and storing in that article object.
-            this.afS.ref(`article-images/${this.userCredInfo.username}/${articleId}`)
+            this.afS.ref(`article-images/${this.userCredInfo.username}/${articleId}/image`)
               .getDownloadURL().subscribe(url => {
 
               console.log('almost done')
-              this.afStore.collection('all-articles').doc(`${this.userCredInfo.username}`)
-                .collection('articles').doc(articleId).update({imgURL: url })
+              console.log(url)
+              this.afStore.collection('all-articles').doc(articleId).update({imgURL : url,id : articleId }).then(
+                ()=> {
+                  console.log('success')
+
+                }
+              )
             })
 
           )
@@ -81,7 +114,9 @@ export class WriteComponent implements OnInit {
   }
 
   upload(event) {
-    this.form.value.file  =event.target.files[0];
+
+     this.image = event.target.files[0];
+
   }
 }
 

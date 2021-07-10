@@ -8,7 +8,9 @@ import {AngularFirestore} from "@angular/fire/firestore";
 import {AngularFireStorage} from "@angular/fire/storage";
 import {NgxSpinnerService} from "ngx-spinner";
 import {CommonService} from "../../services/common.service";
-import {take} from "rxjs/operators";
+import {map, take} from "rxjs/operators";
+import firebase from "firebase";
+import FieldValue = firebase.firestore.FieldValue;
 
 @Component({
   selector: 'app-profile-feed',
@@ -24,36 +26,38 @@ export class ProfileFeedComponent implements OnInit {
   noPosts: boolean = false;
   userCredInfo;
 
-  constructor(private fsAuth : AngularFireAuth,
-              private authSrv : AuthService,
-              private router : Router,
-              private fsStore : AngularFirestore,
-              private afStorage : AngularFireStorage,
-              private  spinner : NgxSpinnerService,
-              private commonSrv: CommonService,
-              private afAuth : AngularFireAuth,
+  constructor(private fsAuth : AngularFireAuth, private authSrv : AuthService, private router : Router, private fsStore : AngularFirestore, private afStorage : AngularFireStorage, private  spinner : NgxSpinnerService, private commonSrv: CommonService, private afAuth : AngularFireAuth,
   ) {
-
   }
 
   ngOnInit(): void {
 
-     this.spinner.show('articleLoadingSpinner')
-    this.commonSrv.sideNavTogglerEmitter.subscribe(()=> {
-      this.sideNav.toggle();
-    })
+   // this.spinner.show('mainScreenSpinner')
 
-    this.authSrv.userCredInfo.pipe(take(1)).subscribe(data => {
+
+    this.commonSrv.sideNavTogglerEmitter.subscribe(()=> {
+      this.sideNav?.toggle();
+    });
+
+
+    this.authSrv.userCredInfo
+      .subscribe(data => {
+      console.log('DATA:')
+      console.log(data)
       this.userCredInfo = data;
       //to avoid race condition..
     })
-    this.getIdsOfArticle();
+
+    setTimeout(()=> {
+      this.getIdsOfArticle();
+      this.spinner.hide('mainScreenSpinner')
+    },2000)
 
 
     setTimeout(()=> {
       this.loadArticle();
-      this.spinner.hide('articleLoadingSpinner')
-    },2000)
+      this.spinner.hide('mainScreenSpinner')
+    },4000)
 
 
 
@@ -61,30 +65,48 @@ export class ProfileFeedComponent implements OnInit {
   }
 
   getIdsOfArticle(){
-    this.fsStore.collection('all-articles').doc(`asad800`)
-      .collection('articles')
-      .snapshotChanges()
-      .subscribe(
-        data => {
-          data.map(data=> {
-            let id = data.payload.doc.id
-            this.articleArrayIds.push(id)
-          })
-        }
-      )
+
+    let arrayOfId = []
+    this.userCredInfo.subscriptions.map(
+      subscription => {
+        console.log('current subscription')
+        console.log(subscription)
+
+        this.fsStore.collection('all-articles', ref =>
+          ref.where("tag", "==", subscription as string)
+        ).snapshotChanges()
+          .pipe(
+            take(1),
+            map(data=> {
+                let arrayOfId = []
+                data.map(val => {
+                  let id = val.payload.doc.id
+                  arrayOfId.push(id)
+                })
+                return arrayOfId
+              }
+            )
+          ).subscribe( data => {
+            this.articleArrayIds  = arrayOfId.concat(data)
+          }
+        )
+
+      }
+    )
   }
 
   loadArticle() {
 
+
     let id =this.articleArrayIds.pop();
     if(id) {
-      this.fsStore.collection('all-articles').doc(`asad800`)
-        .collection('articles')
+      console.log('pop id->'+ id)
+      console.log(this.articleArrayIds.length)
+      this.fsStore.collection('all-articles')
         .doc(id)
         .snapshotChanges()
         .pipe(take(1))
         .subscribe(data => {
-          console.log(data)
 
           let singleArticle = data.payload.data() as articleModel
           singleArticle.id = data.payload.id;
@@ -100,7 +122,6 @@ export class ProfileFeedComponent implements OnInit {
 
   onScroll() {
 
-    console.log('FIRED')
     if(this.noPosts){
       // do nothing..
     }
@@ -120,6 +141,30 @@ export class ProfileFeedComponent implements OnInit {
     this.afAuth.signOut().then(null)
     this.router.navigate(['/login'])
     console.log('signing out')
+    this.articleArray = null;
   }
 
+
+  test(){
+    console.log('test function started ->')
+
+    let arrayOfId = []
+
+
+
+  }
+
+
+  bookmarkArticle(id: string) {
+
+    event.preventDefault()
+    console.log(id)
+
+    this.fsStore.collection('users').doc(`${this.authSrv.userUIDObsvr.value}`).update(
+      {bookmarks : FieldValue.arrayUnion(id)}
+    ).then(()=> {
+      console.log('bookmark-ed!!')
+    })
+
+  }
 }

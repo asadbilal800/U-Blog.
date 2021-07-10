@@ -5,10 +5,10 @@
 
     <mat-list fxFlex>
       <h3 class="mat-display-4 animate__animated animate__fadeInDownBig text-center">Topics</h3>
-      <mat-list-item *ngFor="let message of topicList">
+      <mat-list-item *ngFor="let topic of topicList">
         <img matListAvatar src="https://familydoctor.org/wp-content/uploads/2016/11/exercise.jpg" alt="no img">
-        <h3  matLine> <p class="lead ">{{message}}</p> </h3>
-        <button color="primary"  mat-raised-button>Follow</button>
+        <h3  matLine> <p class="lead ">{{topic}}</p> </h3>
+        <button color="primary" (click)="subscribeTopic(topic)"  mat-raised-button>Follow</button>
         <mat-divider></mat-divider>
 
 

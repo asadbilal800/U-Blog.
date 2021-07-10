@@ -4,15 +4,34 @@
       <div fxLayout="column" fxFlex  >
 
        <!--article image -->
+        <h1 class="mat-display-4"> {{article.name}}</h1>
+        <span class="help-block font-weight-light">Min to Read : {{article.mintoRead}} Claps: {{article.claps}}</span>
+
         <img  fxFlex="50" src="{{article.imgURL}}" alt="none">
-        <span class="help-block font-weight-light">Min to Read : {{article.mintoRead}}</span>
+
         <p class="lead">
           {{article.itSelf}}
         </p>
+
+        <p class="text-center">Comment :</p>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item"  *ngFor="let comment of commentsArray">
+            {{comment}}
+          </li>
+        </ul>
+
+        <button color="warn" mat-raised-button color="primary" [disabled]="disableClap" (click)="clap()">Clap!</button>
+
+        <label>Comment :</label>
+        <input type="text" [(ngModel)]="comment">
+        <button mat-raised-button color="accent" (click)="makeComment()">Comment!</button>
       </div>
   <div fxFlex="20">
+
   </div>
 </div>
+
+
 
 
 

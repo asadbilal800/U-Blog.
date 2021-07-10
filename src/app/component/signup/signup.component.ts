@@ -36,7 +36,11 @@ export class SignupComponent implements OnInit {
     let signUpValues: SignUpModel =
       { username: this.myForm.value.username,
         email:this.myForm.value.eph,
-        password:this.myForm.value.password
+        password:this.myForm.value.password,
+        userUID : '',
+        displayImage : '',
+        subscriptions :[],
+        bookmarks : [],
       };
 
        this.authF.createUserWithEmailAndPassword(email,password).then(data => {

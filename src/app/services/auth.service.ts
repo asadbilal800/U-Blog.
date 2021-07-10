@@ -1,6 +1,7 @@
 import {BehaviorSubject} from "rxjs";
 import {Injectable} from "@angular/core";
 import {AngularFirestore} from "@angular/fire/firestore";
+import {SignUpModel} from "../models/sign-up.model";
 
 @Injectable({providedIn:'root'})
 export class AuthService {
@@ -15,10 +16,11 @@ export class AuthService {
   userUIDObsvr = new BehaviorSubject<string>(null);
   userCredInfo = new BehaviorSubject<any>(null);
 
-   getUserCredInfoFromDb(){
+   getUserCredInfoFromDb(userUID: string){
 
-        let userUID =this.userUIDObsvr.value
-        this.afStore.collection('users').doc(userUID).valueChanges().subscribe((userDetails)=> {
+        let uid = userUID
+        this.afStore.collection('users').doc(uid).valueChanges().subscribe((userDetails)=> {
+          console.log(userDetails)
         this.userCredInfo.next(userDetails)
      })
 

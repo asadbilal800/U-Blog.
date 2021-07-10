@@ -17,6 +17,13 @@
          ngModel
          (change)="upload($event)"
   >
+
+  name
+
+  <input type="text"
+         name="name"
+         ngModel
+  >
   mintoread
   <input type="number"
          name="minToRead"
@@ -30,10 +37,9 @@
   >
 
   tag
-  <input type="text"
-         name="tag"
-         ngModel
-  >
+  <select  name="dropdownTag" ngModel>
+    <option *ngFor="let item of topicList"   value="{{item}}" >{{item}}</option>
+  </select>
   <button type="submit">submit</button>
 
 </form>

@@ -37,6 +37,7 @@ import { MeComponent } from './component/me/me.component';
 import { TopicsComponent } from './component/topics/topics.component';
 import { ProfileFeedComponent } from './component/profile-feed/profile-feed.component';
 import { ArticleComponent } from './component/article/article.component';
+import { BookmarksComponent } from './component/bookmarks/bookmarks.component';
 
 @NgModule({
   declarations: [
@@ -50,7 +51,8 @@ import { ArticleComponent } from './component/article/article.component';
     MeComponent,
     TopicsComponent,
     ProfileFeedComponent,
-    ArticleComponent
+    ArticleComponent,
+    BookmarksComponent
   ],
   imports: [
     BrowserModule,

@@ -39,12 +39,14 @@ export class LoginComponent implements OnInit, OnDestroy {
 
     this.firestoreAuth.signInWithEmailAndPassword(username, password).then( value => {
       this.firestoreAuth.user.subscribe(user => {
-         this.authSrv.userUIDObsvr.next(user.uid);
-         this.authSrv.getUserCredInfoFromDb();
+        this.authSrv.userUIDObsvr.next(user.uid)
+         this.authSrv.getUserCredInfoFromDb(user.uid);
       })
      this.firebaseToken=  this.firestoreAuth.idToken.subscribe((token)=> {
        this.authSrv.userToken.next(token);
-       this.router.navigate(['/home/feed'])
+
+
+       this.router.navigate(['/home/feed']);
      })
 
     })
