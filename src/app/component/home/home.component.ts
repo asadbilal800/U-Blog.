@@ -35,15 +35,14 @@ export class HomeComponent implements OnInit {
       this.viewFeed = true;
     })
 
-
      this.commonSrv.sideNavTogglerEmitter.subscribe(()=> {
-       this.sideNav.toggle();
+       this.sideNav?.toggle();
      })
 
      this.authSrv.userCredInfo.subscribe( user => {
        this.user = user;
        setTimeout(()=> {
-         let newUser = this.user.isNewUser;
+         let newUser = this.user?.isNewUser;
          if(newUser) {
            this.createModal()
          }

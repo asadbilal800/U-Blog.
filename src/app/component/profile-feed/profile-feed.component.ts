@@ -25,6 +25,9 @@ export class ProfileFeedComponent implements OnInit {
   articleArrayIds: string[]=[];
   noPosts: boolean = false;
   userCredInfo;
+  latestArticles = []
+  latestArticleIndex:number = 0;
+  observerableTopicList;
 
   constructor(private fsAuth : AngularFireAuth, private authSrv : AuthService, private router : Router, private fsStore : AngularFirestore, private afStorage : AngularFireStorage, private  spinner : NgxSpinnerService, private commonSrv: CommonService, private afAuth : AngularFireAuth,
   ) {
@@ -32,7 +35,39 @@ export class ProfileFeedComponent implements OnInit {
 
   ngOnInit(): void {
 
-   // this.spinner.show('mainScreenSpinner')
+    this.observerableTopicList = this.fsStore.collection('topics').doc<object>('SanBNEamwYEo8oZFqzJP').valueChanges()
+      .pipe(
+        take(1),
+        map(
+          data => {
+            let arrayOfTopics=[];
+            for(const item in data) {
+              arrayOfTopics.push( data[item])
+            }
+            return arrayOfTopics
+          }
+        )
+      )
+
+
+    this.fsStore.collection('all-articles').stateChanges(['added'])
+
+      .subscribe(action => {
+        action.map( a=> {
+          if(this.latestArticleIndex == 5) {
+            this.latestArticleIndex = 0;
+          }
+          let article =a.payload.doc.data() as any;
+          this.latestArticles[this.latestArticleIndex]=(article.name)
+          this.latestArticleIndex = this.latestArticleIndex + 1;
+
+        })
+
+    })
+
+
+
+    this.spinner.show('mainScreenSpinner')
 
 
     this.commonSrv.sideNavTogglerEmitter.subscribe(()=> {
@@ -41,16 +76,14 @@ export class ProfileFeedComponent implements OnInit {
 
 
     this.authSrv.userCredInfo
+      .pipe(take(1))
       .subscribe(data => {
-      console.log('DATA:')
-      console.log(data)
       this.userCredInfo = data;
       //to avoid race condition..
     })
 
     setTimeout(()=> {
       this.getIdsOfArticle();
-      this.spinner.hide('mainScreenSpinner')
     },2000)
 
 
@@ -144,15 +177,6 @@ export class ProfileFeedComponent implements OnInit {
     this.articleArray = null;
   }
 
-
-  test(){
-    console.log('test function started ->')
-
-    let arrayOfId = []
-
-
-
-  }
 
 
   bookmarkArticle(id: string) {

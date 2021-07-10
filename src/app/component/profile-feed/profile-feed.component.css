@@ -8,6 +8,8 @@
   height: 400px;
 }
 
-mat-card {
+mat-card.mat-card-feed {
   cursor: pointer;
 }
+
+

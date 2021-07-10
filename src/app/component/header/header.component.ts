@@ -46,6 +46,6 @@ export class HeaderComponent implements OnInit {
 
 
   toggleSideNav() {
-    this.commonSrv.sideNavTogglerEmitter.next();
+    this.commonSrv?.sideNavTogglerEmitter.next();
   }
 }

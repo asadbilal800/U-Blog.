@@ -41,6 +41,7 @@ import { BookmarksComponent } from './component/bookmarks/bookmarks.component';
 import { DynamicModalComponent } from './component/dynamic-modal-component/dynamic-modal.component';
 import {ModalDirective} from './directives/modal-directive.directive';
 import {MatDialogModule} from "@angular/material/dialog";
+import {MatChipsModule} from "@angular/material/chips";
 
 @NgModule({
   declarations: [
@@ -59,32 +60,33 @@ import {MatDialogModule} from "@angular/material/dialog";
     DynamicModalComponent,
     ModalDirective
   ],
-    imports: [
-        BrowserModule,
-        RoutingModule,
-        FormsModule,
-        AngularFireModule.initializeApp(firebaseConfig),
-        AngularFireAuthModule,
-        AngularFirestoreModule,
-        AngularFireStorageModule,
-        BrowserAnimationsModule,
-        MatFormFieldModule,
-        MatInputModule,
-        MatButtonModule,
-        MatIconModule,
-        MatSelectModule,
-        MatOptionModule,
-        MatToolbarModule,
-        FlexModule,
-        MatDividerModule,
-        InfiniteScrollModule,
-        MatCardModule,
-        NgxSpinnerModule,
-        MatSidenavModule,
-        MatListModule,
-        MatDialogModule
-        ,
-    ],
+  imports: [
+    BrowserModule,
+    RoutingModule,
+    FormsModule,
+    AngularFireModule.initializeApp(firebaseConfig),
+    AngularFireAuthModule,
+    AngularFirestoreModule,
+    AngularFireStorageModule,
+    BrowserAnimationsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+    MatIconModule,
+    MatSelectModule,
+    MatOptionModule,
+    MatToolbarModule,
+    FlexModule,
+    MatDividerModule,
+    InfiniteScrollModule,
+    MatCardModule,
+    NgxSpinnerModule,
+    MatSidenavModule,
+    MatListModule,
+    MatDialogModule,
+    MatChipsModule
+    ,
+  ],
   providers: [
     AuthService,
     AuthGuardServiceActivate,
