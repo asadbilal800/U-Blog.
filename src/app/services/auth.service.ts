@@ -1,4 +1,4 @@
-import {BehaviorSubject} from "rxjs";
+import {BehaviorSubject, Subject} from "rxjs";
 import {Injectable} from "@angular/core";
 import {AngularFirestore} from "@angular/fire/firestore";
 import {SignUpModel} from "../models/sign-up.model";
@@ -15,6 +15,7 @@ export class AuthService {
   userToken= new BehaviorSubject<string>(null);
   userUIDObsvr = new BehaviorSubject<string>(null);
   userCredInfo = new BehaviorSubject<any>(null);
+  clearModalView = new Subject<void>();
 
    getUserCredInfoFromDb(userUID: string){
 

@@ -41,6 +41,8 @@ export class SignupComponent implements OnInit {
         displayImage : '',
         subscriptions :[],
         bookmarks : [],
+        isNewUser : true,
+        bio : '',
       };
 
        this.authF.createUserWithEmailAndPassword(email,password).then(data => {

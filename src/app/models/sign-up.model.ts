@@ -6,6 +6,7 @@ export type SignUpModel = {
   displayImage ?: string,
   userUID ?: string,
   subscriptions ?: string[],
-  bookmarks ?: string[]
-
+  bookmarks ?: string[],
+  isNewUser :  boolean,
+  bio ?: string,
 }

@@ -7,6 +7,7 @@ import {Subscription} from "rxjs";
 import firebase from 'firebase'
 import {AngularFirestore} from "@angular/fire/firestore";
 import {SignUpModel} from "../../models/sign-up.model";
+import {loginModel} from "../../models/login.model";
 
 
 @Component({
@@ -47,7 +48,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
 
        this.router.navigate(['/home/feed']);
-     })
+     });
 
     })
       .catch(
@@ -74,7 +75,7 @@ export class LoginComponent implements OnInit, OnDestroy {
       provider = new firebase.auth.TwitterAuthProvider()
     }
     const credentials = await this.firestoreAuth.signInWithPopup(provider);
-    let signUpValues: SignUpModel = {username: credentials.user.displayName,email:credentials.user.email};
+    let signUpValues: loginModel = {username: credentials.user.displayName,email:credentials.user.email};
 
     this.fireStore.collection('users').doc(`${credentials.user.uid}`)
       .set(signUpValues)

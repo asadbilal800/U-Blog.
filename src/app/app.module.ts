@@ -38,6 +38,9 @@ import { TopicsComponent } from './component/topics/topics.component';
 import { ProfileFeedComponent } from './component/profile-feed/profile-feed.component';
 import { ArticleComponent } from './component/article/article.component';
 import { BookmarksComponent } from './component/bookmarks/bookmarks.component';
+import { DynamicModalComponent } from './component/dynamic-modal-component/dynamic-modal.component';
+import {ModalDirective} from './directives/modal-directive.directive';
+import {MatDialogModule} from "@angular/material/dialog";
 
 @NgModule({
   declarations: [
@@ -52,33 +55,36 @@ import { BookmarksComponent } from './component/bookmarks/bookmarks.component';
     TopicsComponent,
     ProfileFeedComponent,
     ArticleComponent,
-    BookmarksComponent
+    BookmarksComponent,
+    DynamicModalComponent,
+    ModalDirective
   ],
-  imports: [
-    BrowserModule,
-    RoutingModule,
-    FormsModule,
-    AngularFireModule.initializeApp(firebaseConfig),
-    AngularFireAuthModule,
-    AngularFirestoreModule,
-    AngularFireStorageModule,
-    BrowserAnimationsModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatButtonModule,
-    MatIconModule,
-    MatSelectModule,
-    MatOptionModule,
-    MatToolbarModule,
-    FlexModule,
-    MatDividerModule,
-    InfiniteScrollModule,
-    MatCardModule,
-    NgxSpinnerModule,
-    MatSidenavModule,
-    MatListModule
-    ,
-  ],
+    imports: [
+        BrowserModule,
+        RoutingModule,
+        FormsModule,
+        AngularFireModule.initializeApp(firebaseConfig),
+        AngularFireAuthModule,
+        AngularFirestoreModule,
+        AngularFireStorageModule,
+        BrowserAnimationsModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatButtonModule,
+        MatIconModule,
+        MatSelectModule,
+        MatOptionModule,
+        MatToolbarModule,
+        FlexModule,
+        MatDividerModule,
+        InfiniteScrollModule,
+        MatCardModule,
+        NgxSpinnerModule,
+        MatSidenavModule,
+        MatListModule,
+        MatDialogModule
+        ,
+    ],
   providers: [
     AuthService,
     AuthGuardServiceActivate,
