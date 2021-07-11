@@ -6,8 +6,8 @@ import {AuthService} from "../../services/auth.service";
 import {Subscription} from "rxjs";
 import firebase from 'firebase'
 import {AngularFirestore} from "@angular/fire/firestore";
-import {SignUpModel} from "../../models/sign-up.model";
 import {loginModel} from "../../models/login.model";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 
 @Component({
@@ -15,25 +15,20 @@ import {loginModel} from "../../models/login.model";
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent implements OnInit, OnDestroy {
+export class LoginComponent implements  OnDestroy {
 
   firebaseToken : Subscription;
-  displayMessage;
-  successMessage = 'User has been made successfully!'
-
   @ViewChild('form') myForm : NgForm;
 
   constructor(private firestoreAuth: AngularFireAuth,
               private authSrv : AuthService,
               private router : Router,
-              private fireStore : AngularFirestore) {}
+              private fireStore : AngularFirestore,
+              private snackBar : MatSnackBar
+              ) {}
 
-  ngOnInit(): void {
-  }
 
    login() {
-    //resetting error message so ngIf would run.
-   // this.displayMessage=''
 
     let username= this.myForm.value.username;
     let password= this.myForm.value.password;
@@ -45,15 +40,13 @@ export class LoginComponent implements OnInit, OnDestroy {
       })
      this.firebaseToken=  this.firestoreAuth.idToken.subscribe((token)=> {
        this.authSrv.userToken.next(token);
-
-
        this.router.navigate(['/home/feed']);
      });
 
     })
       .catch(
         err => {
-          this.displayMessage= err.message;
+          this.snackBar.open(err.message,'X', {duration : 8000,verticalPosition: "top"})
         }
       );
 
@@ -80,8 +73,6 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.fireStore.collection('users').doc(`${credentials.user.uid}`)
       .set(signUpValues)
       .then((value)=> {
-
-      this.displayMessage = this.successMessage;
     })
 
 

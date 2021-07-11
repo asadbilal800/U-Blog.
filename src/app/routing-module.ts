@@ -10,6 +10,7 @@ import {TopicsComponent} from "./component/topics/topics.component";
 import {ProfileFeedComponent} from "./component/profile-feed/profile-feed.component";
 import {ArticleComponent} from "./component/article/article.component";
 import {BookmarksComponent} from "./component/bookmarks/bookmarks.component";
+import {AuthGuardServiceActivate} from "./services/auth-guard-activate.service";
 
 
 const routes : Routes = [
@@ -18,9 +19,10 @@ const routes : Routes = [
   {path: 'login', component: LoginComponent},
   {path : 'signup', component: SignupComponent},
   {path: 'signup/phone', component: SignupPhoneComponent},
-  {path : 'home', component: HomeComponent,/* canActivate: [AuthGuardServiceActivate] */
-  children :[
-    {path: 'write', component: WriteComponent,/* canActivate: [AuthGuardServiceActivate] */},
+  {path : 'home', component: HomeComponent, canActivate: [AuthGuardServiceActivate] ,
+
+    children :[
+    {path: 'write', component: WriteComponent, canActivate: [AuthGuardServiceActivate] },
     { path : 'me', component: MeComponent},
     {path: 'topics', component: TopicsComponent},
     {path: 'feed', component: ProfileFeedComponent},

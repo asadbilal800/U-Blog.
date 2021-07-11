@@ -42,6 +42,7 @@ import { DynamicModalComponent } from './component/dynamic-modal-component/dynam
 import {ModalDirective} from './directives/modal-directive.directive';
 import {MatDialogModule} from "@angular/material/dialog";
 import {MatChipsModule} from "@angular/material/chips";
+import {MatSnackBar, MatSnackBarModule} from "@angular/material/snack-bar";
 
 @NgModule({
   declarations: [
@@ -84,7 +85,8 @@ import {MatChipsModule} from "@angular/material/chips";
     MatSidenavModule,
     MatListModule,
     MatDialogModule,
-    MatChipsModule
+    MatChipsModule,
+    MatSnackBarModule
     ,
   ],
   providers: [
