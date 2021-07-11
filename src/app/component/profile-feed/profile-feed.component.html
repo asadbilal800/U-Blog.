@@ -1,70 +1,92 @@
 <!-- mat drawer is a flex so no need to recreate it -->
-<div fxFlex="20">
-</div>
+<div fxFlex="20"></div>
 
-  <div   fxFlex="30" infiniteScroll [infiniteScrollDistance]="2"
-         [infiniteScrollThrottle]="50"
-         (scrolled)="onScroll()"
+<div
+  fxFlex="30"
+  infiniteScroll
+  [infiniteScrollDistance]="2"
+  [infiniteScrollThrottle]="50"
+  (scrolled)="onScroll()"
+>
+  <mat-card
+    class="mat-card-feed"
+    class="mb-5 animate__animated animate__fadeIn"
+    *ngFor="let article of articleArray"
   >
-    <mat-card class="mat-card-feed"   class="mb-5 animate__animated animate__fadeIn" *ngFor="let article of articleArray" >
-      <mat-card-header>
-        <mat-card-title [routerLink]="['../article',article.id]">{{this.article.name}}</mat-card-title>
-        <mat-card-subtitle>{{this.article.mintoRead}}</mat-card-subtitle>
-      </mat-card-header>
-      <img [routerLink]="['../article',article.id]" mat-card-image src="{{this.article.imgURL}}" alt="No image">
-      <mat-card-content>
-        <p>
-          {{this.article.itSelf}}
-        </p>
-      </mat-card-content>
-      <mat-card-actions>
-        <button mat-raised-button color="primary" (click)="bookmarkArticle(this.article.id)">Bookmark it!</button>
+    <mat-card-header>
+      <mat-card-title [routerLink]="['../article', article.id]">{{
+        this.article.name
+      }}</mat-card-title>
+      <mat-card-subtitle>{{ this.article.mintoRead }}</mat-card-subtitle>
+    </mat-card-header>
+    <img
+      [routerLink]="['../article', article.id]"
+      mat-card-image
+      src="{{ this.article.imgURL }}"
+      alt="No image"
+    />
+    <mat-card-content>
+      <p>
+        {{ this.article.itSelf }}
+      </p>
+    </mat-card-content>
+    <mat-card-actions>
+      <button
+        mat-raised-button
+        color="primary"
+        (click)="bookmarkArticle(this.article.id)"
+      >
+        Bookmark it!
+      </button>
+    </mat-card-actions>
+  </mat-card>
 
-      </mat-card-actions>
-    </mat-card>
-
-    <div   *ngIf="noPosts">
-      <p class="lead text-center"> No more posts. </p>
-    </div>
-
-
-
+  <div *ngIf="noPosts">
+    <p class="lead text-center">No more posts.</p>
   </div>
-
-<div fxFlex="10">
-
 </div>
-<div  fxFlex="30">
 
-    <mat-card  >
-        <p class="font-weight-bold text-center">Latest Articles
-        </p>
+<div fxFlex="10"></div>
+<div fxFlex="30">
+  <mat-card>
+    <p class="font-weight-bold text-center">Latest Articles</p>
 
-
-
-      <mat-list>
-        <mat-list-item *ngFor=" let name of latestArticles">
-          <mat-icon>chevron_right</mat-icon> <p class="lead"> {{name}} </p>
+    <mat-list>
+      <mat-list-item *ngFor="let name of latestArticles">
+        <mat-icon>chevron_right</mat-icon>
+        <p class="lead">{{ name }}</p>
         <mat-divider></mat-divider>
-        </mat-list-item>
-      </mat-list>
-
-    </mat-card>
+      </mat-list-item>
+    </mat-list>
+  </mat-card>
 
   <h3 class="font-weight-light mt-5">Recommended List</h3>
   <mat-chip-list aria-label="Fish selection">
-
-    <mat-chip color="primary" selected *ngFor="let topic of observerableTopicList | async">{{topic}}</mat-chip>
-
+    <mat-chip
+      color="primary"
+      selected
+      *ngFor="let topic of observerableTopicList | async"
+      >{{ topic }}</mat-chip
+    >
   </mat-chip-list>
 </div>
 
+<ngx-spinner
+  name="mainScreenSpinner"
+  bdColor="rgba(0,0,0,0)"
+  size="medium"
+  color="#2e47b5"
+  type="square-jelly-box"
+  [fullScreen]="true"
+></ngx-spinner>
 
-
-<ngx-spinner name="mainScreenSpinner" bdColor = "rgba(0,0,0,0)" size = "medium" color = "#2e47b5" type = "square-jelly-box" [fullScreen] = "true"></ngx-spinner>
-
-
-<div  class="fixed-bottom mb-5 ">
-  <ngx-spinner name="articleLoadingSpinner" bdColor = "rgba(0,0,0,0)" size = "medium" color = "#2e47b5" type = "ball-beat" [fullScreen] = "false"></ngx-spinner>
+<div class="fixed-bottom mb-5">
+  <ngx-spinner
+    name="articleLoadingSpinner"
+    bdColor="rgba(0,0,0,0)"
+    size="medium"
+    color="#2e47b5"
+    type="ball-beat"
+    [fullScreen]="false"
+  ></ngx-spinner>
 </div>
-

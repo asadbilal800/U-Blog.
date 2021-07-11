@@ -1,58 +1,67 @@
 <div class="main-container border" fxLayout>
-  <div fxFlex="20">
-  </div>
+  <div fxFlex="20"></div>
 
   <div fxFlex="60">
+    <form (ngSubmit)="signup()" #form="ngForm">
+      <div fxLayout="column">
+        <mat-form-field>
+          <mat-label> Username:</mat-label>
+          <input
+            type="text"
+            matInput
+            required
+            name="username"
+            ngModel
+            #username="ngModel"
+          />
+          <mat-error *ngIf="username.hasError('required')"
+            >Please fill correctly!</mat-error
+          >
+        </mat-form-field>
 
-        <form (ngSubmit)="signup()" #form = 'ngForm' >
-          <div fxLayout="column" >
-            <mat-form-field>
-              <mat-label>  Username:</mat-label>
-              <input type="text"
-                     matInput
-                     required
-                     name="username"
-                     ngModel
-                     #username = "ngModel"
-              >
-              <mat-error *ngIf="username.hasError('required')">Please fill correctly!</mat-error>
-            </mat-form-field>
+        <mat-form-field>
+          <mat-label>Email :</mat-label>
+          <input
+            type="text"
+            required
+            name="eph"
+            ngModel
+            matInput
+            #eph="ngModel"
+          />
+          <mat-error *ngIf="eph.hasError('required')"
+            >Please fill correctly!</mat-error
+          >
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Password :</mat-label>
+          <input
+            type="password"
+            required
+            name="password"
+            ngModel
+            matInput
+            #password="ngModel"
+          />
+          <mat-error *ngIf="password.hasError('required')"
+            >Please fill correctly!</mat-error
+          >
+        </mat-form-field>
 
-            <mat-form-field>
-              <mat-label>Email :</mat-label>
-              <input type="text"
-                     required
-                     name="eph"
-                     ngModel
-                     matInput
-                     #eph = 'ngModel'
-              >
-              <mat-error *ngIf="eph.hasError('required')">Please fill correctly!</mat-error>
-            </mat-form-field>
-            <mat-form-field>
-              <mat-label>Password :</mat-label>
-              <input type="password"
-                     required
-                     name="password"
-                     ngModel
-                     matInput
-                     #password = 'ngModel'
-              >
-              <mat-error *ngIf="password.hasError('required')">Please fill correctly!</mat-error>
-            </mat-form-field>
+        <button
+          class="signup-button mt-3"
+          mat-raised-button
+          color="primary"
+          [disabled]="!form.valid"
+          type="submit"
+        >
+          Signup! <i class="fas fa-user-plus"></i>
+        </button>
 
-            <button class="signup-button mt-3" mat-raised-button color="primary" [disabled]="!form.valid" type="submit"> Signup! <i class="fas fa-user-plus"></i> </button>
-
-            <a  routerLink="/signup/phone" >Sign up with Phone Number? </a>
-
-          </div>
-        </form>
+        <a routerLink="/signup/phone">Sign up with Phone Number? </a>
+      </div>
+    </form>
   </div>
 
-  <div fxFlex="20">
-
-  </div>
+  <div fxFlex="20"></div>
 </div>
-
-
-

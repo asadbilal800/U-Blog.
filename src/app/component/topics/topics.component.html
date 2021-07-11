@@ -1,23 +1,31 @@
-<div class="container " fxLayoutAlign="space-around center">
-
-
-
-
-    <mat-list fxFlex>
-      <h3 class="mat-display-4 animate__animated animate__fadeInDownBig text-center">Topics</h3>
-      <mat-list-item *ngFor="let topic of topicList">
-        <img matListAvatar src="https://familydoctor.org/wp-content/uploads/2016/11/exercise.jpg" alt="no img">
-        <h3  matLine> <p class="lead ">{{topic}}</p> </h3>
-        <button color="primary" (click)="subscribeTopic(topic)"  mat-raised-button>Follow</button>
-        <mat-divider></mat-divider>
-
-
-      </mat-list-item>
-    </mat-list>
-
-
-
+<div class="container" fxLayoutAlign="space-around center">
+  <mat-list fxFlex>
+    <h3
+      class="mat-display-4 animate__animated animate__fadeInDownBig text-center"
+    >
+      Topics
+    </h3>
+    <mat-list-item *ngFor="let topic of topicList">
+      <img
+        matListAvatar
+        src="https://familydoctor.org/wp-content/uploads/2016/11/exercise.jpg"
+        alt="no img"
+      />
+      <h3 matLine>
+        <p class="lead">{{ topic }}</p>
+      </h3>
+      <button color="primary" (click)="subscribeTopic(topic)" mat-raised-button>
+        Follow
+      </button>
+      <mat-divider></mat-divider>
+    </mat-list-item>
+  </mat-list>
 </div>
 
-
-<ngx-spinner  bdColor = "rgba(0,0,0,0)" size = "medium" color = "#2e47b5" type = "square-jelly-box" [fullScreen] = "true"></ngx-spinner>
+<ngx-spinner
+  bdColor="rgba(0,0,0,0)"
+  size="medium"
+  color="#2e47b5"
+  type="square-jelly-box"
+  [fullScreen]="true"
+></ngx-spinner>

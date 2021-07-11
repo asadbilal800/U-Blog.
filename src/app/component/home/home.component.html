@@ -1,51 +1,73 @@
+<ng-template appModalDirective> </ng-template>
 
-<ng-template appModalDirective >
-</ng-template>
-
-
-<mat-sidenav-container (click)="sidenav.close()"  *ngIf="viewFeed" >
-
-    <mat-sidenav  #sidenav opened="false" mode="side">
-      <mat-list >
-        <mat-list-item>
-          <a mat-icon-button routerLink="feed"> <mat-icon>feed</mat-icon> Blog Feed</a>
-        </mat-list-item>
-        <mat-divider></mat-divider>
-        <mat-list-item>
-          <a mat-icon-button routerLink="topics"> <mat-icon>list_alt</mat-icon> Discover Topics!</a>
-        </mat-list-item>
-        <mat-divider></mat-divider>
-        <mat-list-item>
-          <a mat-icon-button routerLink="bookmarks"> <mat-icon>bookmark</mat-icon> Reading List</a>
-        </mat-list-item>
-        <mat-divider></mat-divider>
-        <mat-list-item>
-          <a mat-icon-button routerLink=""> <mat-icon>people</mat-icon> Friends</a>
-        </mat-list-item>
-        <mat-divider></mat-divider><mat-list-item>
-        <a mat-icon-button routerLink='write'> <mat-icon>create</mat-icon> Write Article</a>
+<mat-sidenav-container (click)="sidenav.close()" *ngIf="viewFeed">
+  <mat-sidenav #sidenav opened="false" mode="side">
+    <mat-list>
+      <mat-list-item>
+        <a mat-icon-button routerLink="feed">
+          <mat-icon>feed</mat-icon> Blog Feed</a
+        >
       </mat-list-item>
-        <mat-divider></mat-divider>
-        <mat-list-item>
-          <a mat-icon-button routerLink="me"> <mat-icon>account_circle</mat-icon> Edit Profile</a>
-        </mat-list-item>
-        <mat-divider></mat-divider>
-        <mat-list-item>
-          <a mat-icon-button (click)="signOut()"> <mat-icon>logout</mat-icon> Logout</a>
-        </mat-list-item>
-        <mat-divider></mat-divider>
-      </mat-list>
-    </mat-sidenav>
+      <mat-divider></mat-divider>
+      <mat-list-item>
+        <a mat-icon-button routerLink="topics">
+          <mat-icon>list_alt</mat-icon> Discover Topics!</a
+        >
+      </mat-list-item>
+      <mat-divider></mat-divider>
+      <mat-list-item>
+        <a mat-icon-button routerLink="bookmarks">
+          <mat-icon>bookmark</mat-icon> Reading List</a
+        >
+      </mat-list-item>
+      <mat-divider></mat-divider>
+      <mat-list-item>
+        <a mat-icon-button routerLink="">
+          <mat-icon>people</mat-icon> Friends</a
+        >
+      </mat-list-item>
+      <mat-divider></mat-divider
+      ><mat-list-item>
+        <a mat-icon-button routerLink="write">
+          <mat-icon>create</mat-icon> Write Article</a
+        >
+      </mat-list-item>
+      <mat-divider></mat-divider>
+      <mat-list-item>
+        <a mat-icon-button routerLink="me">
+          <mat-icon>account_circle</mat-icon> Edit Profile</a
+        >
+      </mat-list-item>
+      <mat-divider></mat-divider>
+      <mat-list-item>
+        <a mat-icon-button (click)="signOut()">
+          <mat-icon>logout</mat-icon> Logout</a
+        >
+      </mat-list-item>
+      <mat-divider></mat-divider>
+    </mat-list>
+  </mat-sidenav>
 
-    <mat-sidenav-content >
-      <router-outlet></router-outlet>
-    </mat-sidenav-content>
+  <mat-sidenav-content>
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>
 
-  </mat-sidenav-container>
-
-  <ngx-spinner name="mainScreenSpinner" bdColor = "rgba(0,0,0,0)" size = "medium" color = "#2e47b5" type = "square-jelly-box" [fullScreen] = "true"></ngx-spinner>
-  <div  class="fixed-bottom mb-5 ">
-    <ngx-spinner name="articleLoadingSpinner" bdColor = "rgba(0,0,0,0)" size = "medium" color = "#2e47b5" type = "ball-beat" [fullScreen] = "false"></ngx-spinner>
-  </div>
-
-
+<ngx-spinner
+  name="mainScreenSpinner"
+  bdColor="rgba(0,0,0,0)"
+  size="medium"
+  color="#2e47b5"
+  type="square-jelly-box"
+  [fullScreen]="true"
+></ngx-spinner>
+<div class="fixed-bottom mb-5">
+  <ngx-spinner
+    name="articleLoadingSpinner"
+    bdColor="rgba(0,0,0,0)"
+    size="medium"
+    color="#2e47b5"
+    type="ball-beat"
+    [fullScreen]="false"
+  ></ngx-spinner>
+</div>

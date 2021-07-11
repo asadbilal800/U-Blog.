@@ -1,51 +1,49 @@
 import { Component, OnInit } from '@angular/core';
-import {AuthService} from "../../services/auth.service";
-import {SignUpModel} from "../../models/sign-up.model";
-import {AngularFirestore} from "@angular/fire/firestore";
-import {articleModel} from "../../models/article.model";
-import {take} from "rxjs/operators";
+import { AuthService } from '../../services/auth.service';
+import { SignUpModel } from '../../models/sign-up.model';
+import { AngularFirestore } from '@angular/fire/firestore';
+import { articleModel } from '../../models/article.model';
+import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-bookmarks',
   templateUrl: './bookmarks.component.html',
-  styleUrls: ['./bookmarks.component.css']
+  styleUrls: ['./bookmarks.component.css'],
 })
 export class BookmarksComponent implements OnInit {
-
-  user : SignUpModel;
-  bookmarkIdArray : string[] = []
-  articleArray : articleModel[] =[];
-  constructor(private authSrv : AuthService,
-              private  afStore : AngularFirestore) { }
+  user: SignUpModel;
+  bookmarkIdArray: string[] = [];
+  articleArray: articleModel[] = [];
+  constructor(
+    private authSrv: AuthService,
+    private afStore: AngularFirestore
+  ) {}
 
   ngOnInit(): void {
-     this.authSrv.userCredInfo.subscribe( user => {
-       this.user= user;
-     });
+    this.authSrv.userCredInfo.subscribe((user) => {
+      this.user = user;
+    });
 
-     this.getBookMmarksOfUser();
-     this.loadBookmark();
-
-
+    this.getBookMmarksOfUser();
+    this.loadBookmark();
   }
-
-
 
   getBookMmarksOfUser() {
     this.bookmarkIdArray = this.user.bookmarks;
-}
+  }
 
-   loadBookmark(){
+  loadBookmark() {
+    this.afStore.collection('all-articles');
 
-     this.afStore.collection('all-articles')
-
-     this.bookmarkIdArray.map( id => {
-       this.afStore.collection('all-articles').doc(id).valueChanges().pipe(take(1)).subscribe(article => {
-         this.articleArray.push(article as articleModel)
-       })
-
-     })
-
-}
-
+    this.bookmarkIdArray.map((id) => {
+      this.afStore
+        .collection('all-articles')
+        .doc(id)
+        .valueChanges()
+        .pipe(take(1))
+        .subscribe((article) => {
+          this.articleArray.push(article as articleModel);
+        });
+    });
+  }
 }

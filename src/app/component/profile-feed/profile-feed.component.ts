@@ -1,194 +1,174 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
-import {articleModel} from "../../models/article.model";
-import {MatSidenav} from "@angular/material/sidenav";
-import {AngularFireAuth} from "@angular/fire/auth";
-import {AuthService} from "../../services/auth.service";
-import {Router} from "@angular/router";
-import {AngularFirestore} from "@angular/fire/firestore";
-import {AngularFireStorage} from "@angular/fire/storage";
-import {NgxSpinnerService} from "ngx-spinner";
-import {CommonService} from "../../services/common.service";
-import {map, take} from "rxjs/operators";
-import firebase from "firebase";
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { articleModel } from '../../models/article.model';
+import { MatSidenav } from '@angular/material/sidenav';
+import { AngularFireAuth } from '@angular/fire/auth';
+import { AuthService } from '../../services/auth.service';
+import { Router } from '@angular/router';
+import { AngularFirestore } from '@angular/fire/firestore';
+import { AngularFireStorage } from '@angular/fire/storage';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { CommonService } from '../../services/common.service';
+import { map, take } from 'rxjs/operators';
+import firebase from 'firebase';
 import FieldValue = firebase.firestore.FieldValue;
 
 @Component({
   selector: 'app-profile-feed',
   templateUrl: './profile-feed.component.html',
-  styleUrls: ['./profile-feed.component.css']
+  styleUrls: ['./profile-feed.component.css'],
 })
 export class ProfileFeedComponent implements OnInit {
-
-  articleArray : articleModel[]=[];
-  @ViewChild('imgArticle',{static: true}) img : ElementRef;
-  @ViewChild('sidenav',{static:true}) sideNav : MatSidenav;
-  articleArrayIds: string[]=[];
+  articleArray: articleModel[] = [];
+  @ViewChild('imgArticle', { static: true }) img: ElementRef;
+  @ViewChild('sidenav', { static: true }) sideNav: MatSidenav;
+  articleArrayIds: string[] = [];
   noPosts: boolean = false;
   userCredInfo;
-  latestArticles = []
-  latestArticleIndex:number = 0;
+  latestArticles = [];
+  latestArticleIndex: number = 0;
   observerableTopicList;
 
-  constructor(private fsAuth : AngularFireAuth, private authSrv : AuthService, private router : Router, private fsStore : AngularFirestore, private afStorage : AngularFireStorage, private  spinner : NgxSpinnerService, private commonSrv: CommonService, private afAuth : AngularFireAuth,
-  ) {
-  }
+  constructor(
+    private fsAuth: AngularFireAuth,
+    private authSrv: AuthService,
+    private router: Router,
+    private fsStore: AngularFirestore,
+    private afStorage: AngularFireStorage,
+    private spinner: NgxSpinnerService,
+    private commonSrv: CommonService,
+    private afAuth: AngularFireAuth
+  ) {}
 
   ngOnInit(): void {
-
-    this.observerableTopicList = this.fsStore.collection('topics').doc<object>('SanBNEamwYEo8oZFqzJP').valueChanges()
+    this.observerableTopicList = this.fsStore
+      .collection('topics')
+      .doc<object>('SanBNEamwYEo8oZFqzJP')
+      .valueChanges()
       .pipe(
         take(1),
-        map(
-          data => {
-            let arrayOfTopics=[];
-            for(const item in data) {
-              arrayOfTopics.push( data[item])
-            }
-            return arrayOfTopics
+        map((data) => {
+          let arrayOfTopics = [];
+          for (const item in data) {
+            arrayOfTopics.push(data[item]);
           }
-        )
-      )
 
+          return arrayOfTopics;
+        })
+      );
 
-    this.fsStore.collection('all-articles').stateChanges(['added'])
+    this.fsStore
+      .collection('all-articles')
+      .stateChanges(['added'])
 
-      .subscribe(action => {
-        action.map( a=> {
-          if(this.latestArticleIndex == 5) {
+      .subscribe((action) => {
+        action.map((a) => {
+          if (this.latestArticleIndex == 5) {
             this.latestArticleIndex = 0;
           }
-          let article =a.payload.doc.data() as any;
-          this.latestArticles[this.latestArticleIndex]=(article.name)
+          let article = a.payload.doc.data() as any;
+          this.latestArticles[this.latestArticleIndex] = article.name;
           this.latestArticleIndex = this.latestArticleIndex + 1;
+        });
+      });
 
-        })
+    this.spinner.show('mainScreenSpinner');
 
-    })
-
-
-
-    this.spinner.show('mainScreenSpinner')
-
-
-    this.commonSrv.sideNavTogglerEmitter.subscribe(()=> {
+    this.commonSrv.sideNavTogglerEmitter.subscribe(() => {
       this.sideNav?.toggle();
     });
 
-
-    this.authSrv.userCredInfo
-      .pipe(take(1))
-      .subscribe(data => {
+    this.authSrv.userCredInfo.pipe(take(1)).subscribe((data) => {
       this.userCredInfo = data;
       //to avoid race condition..
-    })
+    });
 
-    setTimeout(()=> {
+    setTimeout(() => {
       this.getIdsOfArticle();
-    },2000)
+    }, 2000);
 
-
-    setTimeout(()=> {
+    setTimeout(() => {
       this.loadArticle();
-      this.spinner.hide('mainScreenSpinner')
-    },4000)
-
-
-
-
+      this.spinner.hide('mainScreenSpinner');
+    }, 4000);
   }
 
-  getIdsOfArticle(){
+  getIdsOfArticle() {
+    let arrayOfId = [];
+    this.userCredInfo.subscriptions.map((subscription) => {
+      console.log('current subscription');
+      console.log(subscription);
 
-    let arrayOfId = []
-    this.userCredInfo.subscriptions.map(
-      subscription => {
-        console.log('current subscription')
-        console.log(subscription)
-
-        this.fsStore.collection('all-articles', ref =>
-          ref.where("tag", "==", subscription as string)
-        ).snapshotChanges()
-          .pipe(
-            take(1),
-            map(data=> {
-                let arrayOfId = []
-                data.map(val => {
-                  let id = val.payload.doc.id
-                  arrayOfId.push(id)
-                })
-                return arrayOfId
-              }
-            )
-          ).subscribe( data => {
-            this.articleArrayIds  = arrayOfId.concat(data)
-          }
+      this.fsStore
+        .collection('all-articles', (ref) =>
+          ref.where('tag', '==', subscription as string)
         )
-
-      }
-    )
+        .snapshotChanges()
+        .pipe(
+          take(1),
+          map((data) => {
+            let arrayOfId = [];
+            data.map((val) => {
+              let id = val.payload.doc.id;
+              arrayOfId.push(id);
+            });
+            return arrayOfId;
+          })
+        )
+        .subscribe((data) => {
+          this.articleArrayIds = arrayOfId.concat(data);
+        });
+    });
   }
 
   loadArticle() {
-
-
-    let id =this.articleArrayIds.pop();
-    if(id) {
-      console.log('pop id->'+ id)
-      console.log(this.articleArrayIds.length)
-      this.fsStore.collection('all-articles')
+    let id = this.articleArrayIds.pop();
+    if (id) {
+      console.log('pop id->' + id);
+      console.log(this.articleArrayIds.length);
+      this.fsStore
+        .collection('all-articles')
         .doc(id)
         .snapshotChanges()
         .pipe(take(1))
-        .subscribe(data => {
-
-          let singleArticle = data.payload.data() as articleModel
+        .subscribe((data) => {
+          let singleArticle = data.payload.data() as articleModel;
           singleArticle.id = data.payload.id;
-          this.articleArray.push(singleArticle)
-        })
-    }
-
-    else {
+          this.articleArray.push(singleArticle);
+        });
+    } else {
       this.noPosts = true;
     }
-
   }
 
   onScroll() {
-
-    if(this.noPosts){
+    if (this.noPosts) {
       // do nothing..
-    }
-    else {
-      this.spinner.show('articleLoadingSpinner')
-      setTimeout(()=> {
+    } else {
+      this.spinner.show('articleLoadingSpinner');
+      setTimeout(() => {
         this.loadArticle();
-        this.spinner.hide('articleLoadingSpinner')
-
-      },1500);
+        this.spinner.hide('articleLoadingSpinner');
+      }, 1500);
     }
-
   }
 
-
   signOut() {
-    this.afAuth.signOut().then(null)
-    this.router.navigate(['/login'])
-    console.log('signing out')
+    this.afAuth.signOut().then(null);
+    this.router.navigate(['/login']);
+    console.log('signing out');
     this.articleArray = null;
   }
 
-
-
   bookmarkArticle(id: string) {
+    event.preventDefault();
+    console.log(id);
 
-    event.preventDefault()
-    console.log(id)
-
-    this.fsStore.collection('users').doc(`${this.authSrv.userUIDObsvr.value}`).update(
-      {bookmarks : FieldValue.arrayUnion(id)}
-    ).then(()=> {
-      console.log('bookmark-ed!!')
-    })
-
+    this.fsStore
+      .collection('users')
+      .doc(`${this.authSrv.userUIDObsvr.value}`)
+      .update({ bookmarks: FieldValue.arrayUnion(id) })
+      .then(() => {
+        console.log('bookmark-ed!!');
+      });
   }
 }

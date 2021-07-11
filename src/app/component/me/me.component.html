@@ -1,27 +1,24 @@
-
-<div class="container" fxLayout >
-
-  <div fxFlex="40" >
+<div class="container" fxLayout>
+  <div fxFlex="40">
     <div fxLayout="column" fxLayoutAlign="center center">
-      <div >
-        <img class="img-fluid" src="{{currentUser.displayImage}}" alt="No image">
-        <input type="file" (change)="changePicture($event)">
+      <div>
+        <img
+          class="img-fluid"
+          src="{{ currentUser.displayImage }}"
+          alt="No image"
+        />
+        <input type="file" (change)="changePicture($event)" />
       </div>
-
     </div>
   </div>
   <div fxFlex class="border">
     <div fxLayout="column" fxLayoutAlign="center stretch">
       <div>
-        {{currentUser.email}}
-
+        {{ currentUser.email }}
       </div>
       <div>
-        {{currentUser.username}}
-
+        {{ currentUser.username }}
       </div>
     </div>
   </div>
-
-
 </div>

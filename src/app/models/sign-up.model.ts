@@ -1,12 +1,11 @@
-
 export type SignUpModel = {
-  username ?: string;
-  email ?: string;
-  password ?: string;
-  displayImage ?: string,
-  userUID ?: string,
-  subscriptions ?: string[],
-  bookmarks ?: string[],
-  isNewUser :  boolean,
-  bio ?: string,
-}
+  username?: string;
+  email?: string;
+  password?: string;
+  displayImage?: string;
+  userUID?: string;
+  subscriptions?: string[];
+  bookmarks?: string[];
+  isNewUser: boolean;
+  bio?: string;
+};

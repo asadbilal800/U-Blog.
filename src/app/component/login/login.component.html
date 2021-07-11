@@ -1,99 +1,101 @@
 <div class="main-container" fxLayout>
-
-  <div fxFlex="40" class="animate__animated animate__fadeInLeft" >
-
-    <img class="img-fluid" src="assets/type.svg">
-
+  <div fxFlex="40" class="animate__animated animate__fadeInLeft">
+    <img class="img-fluid" src="assets/type.svg" />
   </div>
 
-  <div  fxFlex="60" class="animate__animated animate__fadeInRight"  >
-
-    <form (ngSubmit)="login()" #form = 'ngForm' >
-
+  <div fxFlex="60" class="animate__animated animate__fadeInRight">
+    <form (ngSubmit)="login()" #form="ngForm">
       <div fxLayout>
-
-        <div fxFlex="23">
-
-        </div>
+        <div fxFlex="23"></div>
 
         <div fxFlex="55">
           <div fxLayout="column" fxLayoutGap="5%">
             <mat-form-field>
-              <mat-label>  Email:</mat-label>
-              <input type="text"
-                     matInput
-                     required
-                     name="username"
-                     ngModel
-                     #username = "ngModel"
+              <mat-label> Email:</mat-label>
+              <input
+                type="text"
+                matInput
+                required
+                name="username"
+                ngModel
+                #username="ngModel"
+              />
+              <mat-error *ngIf="username.hasError('required')"
+                >Please fill correctly!</mat-error
               >
-              <mat-error *ngIf="username.hasError('required')">Please fill correctly!</mat-error>
             </mat-form-field>
 
             <mat-form-field>
               <mat-label>Password :</mat-label>
-              <input type="password"
-                     required
-                     name="password"
-                     ngModel
-                     matInput
-                     #password = 'ngModel'
+              <input
+                type="password"
+                required
+                name="password"
+                ngModel
+                matInput
+                #password="ngModel"
+              />
+              <mat-error *ngIf="password.hasError('required')"
+                >Please fill correctly!</mat-error
               >
-              <mat-error *ngIf="password.hasError('required')">Please fill correctly!</mat-error>
             </mat-form-field>
 
-            <a routerLink="/signup" >Dont have an account? Sign Up!</a>
+            <a routerLink="/signup">Dont have an account? Sign Up!</a>
 
-            <button mat-raised-button  color="primary" id ='login' type="submit"><i class="fas fa-sign-in-alt"></i> Login</button>
+            <button mat-raised-button color="primary" id="login" type="submit">
+              <i class="fas fa-sign-in-alt"></i> Login
+            </button>
 
-            <button mat-raised-button color="accent"  (click)="differentLogin('google')"  type="button"><i class="fab fa-google"></i> Login with google</button>
-            <button mat-raised-button color="accent" (click)="differentLogin('twiiter')"  type="button"><i class="fab fa-twitter"></i> Login with Twitter</button>
+            <button
+              mat-raised-button
+              color="accent"
+              (click)="differentLogin('google')"
+              type="button"
+            >
+              <i class="fab fa-google"></i> Login with google
+            </button>
+            <button
+              mat-raised-button
+              color="accent"
+              (click)="differentLogin('twiiter')"
+              type="button"
+            >
+              <i class="fab fa-twitter"></i> Login with Twitter
+            </button>
           </div>
-
         </div>
 
-        <div fxFlex="22">
-        </div>
-
+        <div fxFlex="22"></div>
       </div>
     </form>
   </div>
-
-
 </div>
 
 <div fxLayout>
-
   <div fxFlex="50" fxLayoutAlign="center center">
     <p class="mat-display-3 text-center">
       Write what You Feel.
-      <br>
+      <br />
       Explore New Ways.
     </p>
   </div>
   <div fxFlex="50">
-    <img class="img-fluid" src="assets/typewriter.svg">
-
+    <img class="img-fluid" src="assets/typewriter.svg" />
   </div>
 </div>
 
 <div fxLayout>
-
-
   <div fxFlex="50">
-    <img class="img-fluid" src="assets/friends.svg">
+    <img class="img-fluid" src="assets/friends.svg" />
   </div>
   <div fxFlex="50" fxLayoutAlign="center center">
-    <h1 class=" text-center">
-      Make Friends and Explore Their World!<br>
-      <hr>
-      Community of U-Blog is Vast & Friendly.<br>
-      <hr>
-      Take your time to dive ino the world of<br> <b>U.</b>
-
-
+    <h1 class="text-center">
+      Make Friends and Explore Their World!<br />
+      <hr />
+      Community of U-Blog is Vast & Friendly.<br />
+      <hr />
+      Take your time to dive ino the world of<br />
+      <b>U.</b>
     </h1>
   </div>
-
 </div>
-

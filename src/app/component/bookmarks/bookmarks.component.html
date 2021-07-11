@@ -1,15 +1,16 @@
-
-<div class=" border" fxLayout fxFlex>
-
+<div class="border" fxLayout fxFlex>
   <ul fxLayout="column">
-
-    <li   *ngFor="let article of articleArray" fxLayout fxFlex="50" [routerLink]="['../article',article.id]">
-      <img fxFlex="20" src="{{this.article.imgURL}}}"  >
-     <p class="text-center" fxFlex fxLayoutAlign="none center">
-       {{this.article.name}}
-     </p>
-      <hr>
+    <li
+      *ngFor="let article of articleArray"
+      fxLayout
+      fxFlex="50"
+      [routerLink]="['../article', article.id]"
+    >
+      <img fxFlex="20" src="{{ this.article.imgURL }}}" />
+      <p class="text-center" fxFlex fxLayoutAlign="none center">
+        {{ this.article.name }}
+      </p>
+      <hr />
     </li>
-
   </ul>
 </div>

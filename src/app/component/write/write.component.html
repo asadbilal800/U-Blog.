@@ -1,46 +1,30 @@
-<br>
+<br />
 
-<br>
-<br>
+<br />
+<br />
 
-<br>
+<br />
 
-
-
-
-<form #form = 'ngForm' (ngSubmit)="write(form)">
-
+<form #form="ngForm" (ngSubmit)="write(form)">
   file
 
-  <input type="file"
-         name="file"
-         ngModel
-         (change)="upload($event)"
-  >
+  <input type="file" name="file" ngModel (change)="upload($event)" />
 
   name
 
-  <input type="text"
-         name="name"
-         ngModel
-  >
+  <input type="text" name="name" ngModel />
+
   mintoread
-  <input type="number"
-         name="minToRead"
-         ngModel
-  >
+  <input type="number" name="minToRead" ngModel />
 
   article
-  <input type="text"
-         name="itSelf"
-         ngModel
-  >
+  <input type="text" name="itSelf" ngModel />
 
   tag
-  <select  name="dropdownTag" ngModel>
-    <option *ngFor="let item of topicList"   value="{{item}}" >{{item}}</option>
+  <select name="dropdownTag" ngModel>
+    <option *ngFor="let item of topicList" value="{{ item }}">
+      {{ item }}
+    </option>
   </select>
   <button type="submit">submit</button>
-
 </form>
-
