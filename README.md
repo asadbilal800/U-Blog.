@@ -1,5 +1,5 @@
-# U-blog
- Interactive blog based on firebase and angular.
+# U-blog 
+#### Interactive blog based on firebase and angular.
 
 ## Features
 
