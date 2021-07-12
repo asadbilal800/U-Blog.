@@ -11,22 +11,26 @@
         <div fxFlex="55">
           <div fxLayout="column" fxLayoutGap="5%">
             <mat-form-field>
-              <mat-label> Email:</mat-label>
+              <mat-label> Email</mat-label>
               <input
                 type="text"
                 matInput
                 required
                 name="username"
                 ngModel
+                email
                 #username="ngModel"
               />
               <mat-error *ngIf="username.hasError('required')"
-                >Please fill correctly!</mat-error
+                >Email is required.</mat-error
+              >
+              <mat-error *ngIf="username.hasError('email')"
+                >Email Format is not correct.</mat-error
               >
             </mat-form-field>
 
             <mat-form-field>
-              <mat-label>Password :</mat-label>
+              <mat-label>Password </mat-label>
               <input
                 type="password"
                 required
@@ -36,13 +40,19 @@
                 #password="ngModel"
               />
               <mat-error *ngIf="password.hasError('required')"
-                >Please fill correctly!</mat-error
+                >Password is requried.</mat-error
               >
             </mat-form-field>
 
             <a routerLink="/signup">Dont have an account? Sign Up!</a>
 
-            <button mat-raised-button color="primary" id="login" type="submit">
+            <button
+              mat-raised-button
+              color="primary"
+              id="login"
+              type="submit"
+              [disabled]="!form.valid"
+            >
               <i class="fas fa-sign-in-alt"></i> Login
             </button>
 
@@ -74,28 +84,12 @@
 <div fxLayout>
   <div fxFlex="50" fxLayoutAlign="center center">
     <p class="mat-display-3 text-center">
-      Write what You Feel.
+      Write What You Feel.
       <br />
       Explore New Ways.
     </p>
   </div>
   <div fxFlex="50">
     <img class="img-fluid" src="assets/typewriter.svg" />
-  </div>
-</div>
-
-<div fxLayout>
-  <div fxFlex="50">
-    <img class="img-fluid" src="assets/friends.svg" />
-  </div>
-  <div fxFlex="50" fxLayoutAlign="center center">
-    <h1 class="text-center">
-      Make Friends and Explore Their World!<br />
-      <hr />
-      Community of U-Blog is Vast & Friendly.<br />
-      <hr />
-      Take your time to dive ino the world of<br />
-      <b>U.</b>
-    </h1>
   </div>
 </div>

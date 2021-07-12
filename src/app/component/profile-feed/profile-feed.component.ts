@@ -1,4 +1,10 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { articleModel } from '../../models/article.model';
 import { MatSidenav } from '@angular/material/sidenav';
 import { AngularFireAuth } from '@angular/fire/auth';
@@ -11,6 +17,7 @@ import { CommonService } from '../../services/common.service';
 import { map, take } from 'rxjs/operators';
 import firebase from 'firebase';
 import FieldValue = firebase.firestore.FieldValue;
+import { Observable, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-profile-feed',
@@ -26,7 +33,7 @@ export class ProfileFeedComponent implements OnInit {
   userCredInfo;
   latestArticles = [];
   latestArticleIndex: number = 0;
-  observerableTopicList;
+  observerableTopicList: Observable<any[]>;
 
   constructor(
     private fsAuth: AngularFireAuth,
@@ -83,13 +90,14 @@ export class ProfileFeedComponent implements OnInit {
     });
 
     setTimeout(() => {
+      console.log('fetching id of user article.');
       this.getIdsOfArticle();
-    }, 2000);
+    }, 3000);
 
     setTimeout(() => {
       this.loadArticle();
       this.spinner.hide('mainScreenSpinner');
-    }, 4000);
+    }, 7000);
   }
 
   getIdsOfArticle() {
@@ -114,10 +122,16 @@ export class ProfileFeedComponent implements OnInit {
             return arrayOfId;
           })
         )
-        .subscribe((data) => {
-          this.articleArrayIds = arrayOfId.concat(data);
+        .subscribe((idsArray) => {
+          if (idsArray) {
+            idsArray.map((id) => {
+              this.articleArrayIds.push(id);
+            });
+          }
         });
     });
+    console.log('successfully fetched all id into array');
+    console.log(this.articleArrayIds);
   }
 
   loadArticle() {
@@ -150,13 +164,6 @@ export class ProfileFeedComponent implements OnInit {
         this.spinner.hide('articleLoadingSpinner');
       }, 1500);
     }
-  }
-
-  signOut() {
-    this.afAuth.signOut().then(null);
-    this.router.navigate(['/login']);
-    console.log('signing out');
-    this.articleArray = null;
   }
 
   bookmarkArticle(id: string) {

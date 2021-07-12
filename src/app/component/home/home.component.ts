@@ -68,6 +68,7 @@ export class HomeComponent implements OnInit {
 
   signOut() {
     this.afAuth.signOut().then(null);
+    localStorage.clear();
     this.router.navigate(['/login']);
     console.log('signing out');
   }

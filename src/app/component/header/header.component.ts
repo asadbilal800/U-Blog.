@@ -26,7 +26,9 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit(): void {
     this.authSrv.userCredInfo.subscribe((data) => {
-      this.user = data;
+      if (data) {
+        this.user = data;
+      }
     });
 
     this.fsAuth.idToken.subscribe((token) => {

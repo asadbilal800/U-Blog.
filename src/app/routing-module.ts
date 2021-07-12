@@ -13,7 +13,11 @@ import { BookmarksComponent } from './component/bookmarks/bookmarks.component';
 import { AuthGuardServiceActivate } from './services/auth-guard-activate.service';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'home/feed', pathMatch: 'full' },
+  {
+    path: '',
+    redirectTo: 'home/feed',
+    pathMatch: 'full',
+  },
   { path: 'login', component: LoginComponent },
   { path: 'signup', component: SignupComponent },
   { path: 'signup/phone', component: SignupPhoneComponent },
@@ -28,11 +32,31 @@ const routes: Routes = [
         component: WriteComponent,
         canActivate: [AuthGuardServiceActivate],
       },
-      { path: 'me', component: MeComponent },
-      { path: 'topics', component: TopicsComponent },
-      { path: 'feed', component: ProfileFeedComponent },
-      { path: 'article/:id', component: ArticleComponent },
-      { path: 'bookmarks', component: BookmarksComponent },
+      {
+        path: 'me',
+        component: MeComponent,
+        canActivate: [AuthGuardServiceActivate],
+      },
+      {
+        path: 'topics',
+        component: TopicsComponent,
+        canActivate: [AuthGuardServiceActivate],
+      },
+      {
+        path: 'feed',
+        component: ProfileFeedComponent,
+        canActivate: [AuthGuardServiceActivate],
+      },
+      {
+        path: 'article/:id',
+        component: ArticleComponent,
+        canActivate: [AuthGuardServiceActivate],
+      },
+      {
+        path: 'bookmarks',
+        component: BookmarksComponent,
+        canActivate: [AuthGuardServiceActivate],
+      },
     ],
   },
 ];

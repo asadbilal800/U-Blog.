@@ -38,6 +38,7 @@ export class LoginComponent implements OnDestroy {
           this.authSrv.getUserCredInfoFromDb(user.uid);
         });
         this.firebaseToken = this.firestoreAuth.idToken.subscribe((token) => {
+          localStorage.setItem('token', token);
           this.authSrv.userToken.next(token);
           this.router.navigate(['/home/feed']);
         });
