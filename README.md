@@ -15,10 +15,10 @@
 ## Tools & Technology
 
  <ins> Frontend </ins> :
- Angular 12.
- Angular Material.
- AngularFlex.
- Bootstrap.
+ Angular 12,
+ Angular Material,
+ AngularFlex,
+ Bootstrap,
  Angular Fire.
 
 
