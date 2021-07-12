@@ -1,7 +1,11 @@
 # U-blog 
 #### Interactive blog based on firebase and angular.
-<br>
-<br>
+
+
+
+
+
+
 ## Features
 
 #### Write your own article. 
@@ -11,6 +15,8 @@
 #### Cant decide what to read? Throw me a random Article!
 #### Follow Friends and see their respective blogs!
 #### Get instant update on the latest articles.
+
+
 
 
 ## Tools & Technology
