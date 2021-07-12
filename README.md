@@ -12,7 +12,7 @@
 
 ## Tools & Technology
 
-### FrontEnd :
+ <ins> Frontend </ins> :
 #### Angular 12.
 #### Angular Material.
 #### AngularFlex.
