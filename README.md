@@ -8,13 +8,13 @@
 
 ## Features
 
-#### Write your own article. 
-#### Signup & login via phone/email/social media account.
-#### Customize your feed i.e. By Subscribing to any general topics that you like.
-#### Edit your avatar.
-#### Cant decide what to read? Throw me a random Article!
-#### Follow Friends and see their respective blogs!
-#### Get instant update on the latest articles.
+ Write your own article.  <br>
+ Signup & login via phone/email/social media account. <br>
+ Customize your feed i.e. By Subscribing to any general topics that you like. <br>
+ Edit your avatar. <br>
+ Cant decide what to read? Throw me a random Article! <br>
+ Follow Friends and see their respective blogs! <br>
+ Get instant update on the latest articles. <br>
 
 
 
