@@ -1,7 +1,7 @@
 # U-blog
  Interactive blog based on firebase and angular.
 
-## 
+#Features
 
 #### Write your own article. <br>
 #### Signup & login via phone/email/social media account.
@@ -12,7 +12,7 @@
 #### Get instant update on the latest articles.
 
 
-## Tools & Technology
+# Tools & Technology
 
  <ins> Frontend </ins> :
  Angular 12,
