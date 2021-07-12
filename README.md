@@ -1,18 +1,18 @@
-#U-blog
-####Interactive blog based on firebase and angular.
+# U-blog
+#### Interactive blog based on firebase and angular.
 
-##Features
-####Write your own article. <br>
-####Customize your feed i.e. By Subscribing to any general topics that you like.
-####Edit your avatar.
-####Cant decide what to read? Throw me a random Article!
-####Follow Friends and see their respective blogs!
+## Features
+#### Write your own article. <br>
+#### Customize your feed i.e. By Subscribing to any general topics that you like.
+#### Edit your avatar.
+#### Cant decide what to read? Throw me a random Article!
+#### Follow Friends and see their respective blogs!
 #### Get instant update on the latest articles.
 
 
-##Tools & Technology
+## Tools & Technology
 
-###FrontEnd :
+### FrontEnd :
 #### Angular 12.
 #### Angular Material.
 #### AngularFlex.
@@ -21,5 +21,5 @@
 
 
 
-###BackEnd :
-####Firebase & Services
+### BackEnd :
+#### Firebase & Services
