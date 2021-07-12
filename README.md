@@ -15,12 +15,12 @@
 ## Tools & Technology
 
  <ins> Frontend </ins> :
-#### Angular 12.
-#### Angular Material.
-#### AngularFlex.
-#### Bootstrap.
-#### Angular Fire.
+ Angular 12.
+ Angular Material.
+ AngularFlex.
+ Bootstrap.
+ Angular Fire.
 
 
  <ins> Backend </ins> :
-#### Firebase & Services
+ Firebase & Services
