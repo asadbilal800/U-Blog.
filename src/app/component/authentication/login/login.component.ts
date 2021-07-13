@@ -2,11 +2,11 @@ import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
-import { AuthService } from '../../services/auth.service';
+import { AuthService } from '../../../services/auth.service';
 import { Subscription } from 'rxjs';
 import firebase from 'firebase';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { loginModel } from '../../models/login.model';
+import { loginModel } from '../../../models/login.model';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({

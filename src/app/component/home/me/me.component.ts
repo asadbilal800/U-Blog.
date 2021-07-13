@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../../services/auth.service';
-import { SignUpModel } from '../../models/sign-up.model';
+import { AuthService } from '../../../services/auth.service';
+import { SignUpModel } from '../../../models/sign-up.model';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { AngularFirestore } from '@angular/fire/firestore';
 

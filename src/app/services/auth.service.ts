@@ -21,8 +21,6 @@ export class AuthService {
       .doc(uid)
       .valueChanges()
       .subscribe((userDetails) => {
-        console.log('user details :');
-        console.log(userDetails);
         this.userCredInfo.next(userDetails);
       });
   }

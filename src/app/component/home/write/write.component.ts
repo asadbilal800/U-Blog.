@@ -2,10 +2,10 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { AngularFireAuth } from '@angular/fire/auth';
-import { AuthService } from '../../services/auth.service';
+import { AuthService } from '../../../services/auth.service';
 import { NgForm } from '@angular/forms';
-import { articleModel } from '../../models/article.model';
-import { SignUpModel } from '../../models/sign-up.model';
+import { articleModel } from '../../../models/article.model';
+import { SignUpModel } from '../../../models/sign-up.model';
 import { take } from 'rxjs/operators';
 
 @Component({

@@ -1,10 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { SignUpModel } from '../../models/sign-up.model';
+import { SignUpModel } from '../../../models/sign-up.model';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { MESSAGES } from '../../services/common.service';
+import { MESSAGES } from '../../../services/common.service';
 
 @Component({
   selector: 'app-signup',

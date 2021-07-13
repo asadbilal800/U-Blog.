@@ -1,15 +1,15 @@
 import { RouterModule, Routes } from '@angular/router';
-import { LoginComponent } from './component/login/login.component';
+import { LoginComponent } from './component/authentication/login/login.component';
 import { NgModule } from '@angular/core';
-import { SignupComponent } from './component/signup/signup.component';
+import { SignupComponent } from './component/authentication/signup/signup.component';
 import { HomeComponent } from './component/home/home.component';
-import { SignupPhoneComponent } from './component/signup/signup-phone/signup-phone.component';
-import { WriteComponent } from './component/write/write.component';
-import { MeComponent } from './component/me/me.component';
-import { TopicsComponent } from './component/topics/topics.component';
-import { ProfileFeedComponent } from './component/profile-feed/profile-feed.component';
-import { ArticleComponent } from './component/article/article.component';
-import { BookmarksComponent } from './component/bookmarks/bookmarks.component';
+import { SignupPhoneComponent } from './component/authentication/signup/signup-phone/signup-phone.component';
+import { WriteComponent } from './component/home/write/write.component';
+import { MeComponent } from './component/home/me/me.component';
+import { TopicsComponent } from './component/home/topics/topics.component';
+import { ProfileFeedComponent } from './component/home/profile-feed/profile-feed.component';
+import { ArticleComponent } from './component/home/article/article.component';
+import { BookmarksComponent } from './component/home/bookmarks/bookmarks.component';
 import { AuthGuardServiceActivate } from './services/auth-guard-activate.service';
 
 const routes: Routes = [

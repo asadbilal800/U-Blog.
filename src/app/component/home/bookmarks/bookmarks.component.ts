@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../../services/auth.service';
-import { SignUpModel } from '../../models/sign-up.model';
+import { AuthService } from '../../../services/auth.service';
+import { SignUpModel } from '../../../models/sign-up.model';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { articleModel } from '../../models/article.model';
+import { articleModel } from '../../../models/article.model';
 import { take } from 'rxjs/operators';
 
 @Component({

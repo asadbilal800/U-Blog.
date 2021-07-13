@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { map, take } from 'rxjs/operators';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { AuthService } from '../../services/auth.service';
+import { AuthService } from '../../../services/auth.service';
 import firebase from 'firebase';
 import FieldValue = firebase.firestore.FieldValue;
 
