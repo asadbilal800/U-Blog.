@@ -4,7 +4,7 @@
       <div>
         <img
           class="img-fluid"
-          src="{{ currentUser.displayImage }}"
+          src="{{ currentUser?.displayImage }}"
           alt="No image"
         />
         <input type="file" (change)="changePicture($event)" />
@@ -14,10 +14,10 @@
   <div fxFlex class="border">
     <div fxLayout="column" fxLayoutAlign="center stretch">
       <div>
-        {{ currentUser.email }}
+        {{ currentUser?.email }}
       </div>
       <div>
-        {{ currentUser.username }}
+        {{ currentUser?.username }}
       </div>
     </div>
   </div>

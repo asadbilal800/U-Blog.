@@ -49,8 +49,10 @@ export class ProfileFeedComponent implements OnInit {
     this.commonSrv.sideNavTogglerEmitter.subscribe(() => {
       this.sideNav?.toggle();
     });
+    this.spinner.show('mainScreenSpinner');
     this.getArticlesId().then(() => {
       this.loadArticle();
+      this.spinner.hide('mainScreenSpinner');
     });
   }
 

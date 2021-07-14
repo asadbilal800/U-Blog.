@@ -1,6 +1,16 @@
 <!-- mat drawer is a flex so no need to recreate it -->
 <div fxFlex="20"></div>
 
+<div style="position: relative">
+  <ngx-spinner
+    name="mainScreenSpinner"
+    bdColor="rgba(0,0,0,0)"
+    size="medium"
+    color="#2e47b5"
+    type="square-jelly-box"
+    [fullScreen]="false"
+  ></ngx-spinner>
+</div>
 <div
   fxFlex="30"
   infiniteScroll
@@ -17,7 +27,9 @@
       <mat-card-title [routerLink]="['../article', article.id]">{{
         this.article.name
       }}</mat-card-title>
-      <mat-card-subtitle>{{ this.article.mintoRead }}</mat-card-subtitle>
+      <mat-card-subtitle
+        ><b>Author : </b> {{ this.article.owner }}
+      </mat-card-subtitle>
     </mat-card-header>
     <img
       [routerLink]="['../article', article.id]"
@@ -26,6 +38,7 @@
       alt="No image"
     />
     <mat-card-content>
+      <p><b>Min to read :</b> {{ this.article.mintoRead }}</p>
       <p>
         {{ this.article.itSelf }}
       </p>
@@ -70,15 +83,6 @@
     >
   </mat-chip-list>
 </div>
-
-<ngx-spinner
-  name="mainScreenSpinner"
-  bdColor="rgba(0,0,0,0)"
-  size="medium"
-  color="#2e47b5"
-  type="square-jelly-box"
-  [fullScreen]="true"
-></ngx-spinner>
 
 <div class="fixed-bottom mb-5">
   <ngx-spinner
