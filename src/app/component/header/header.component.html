@@ -16,7 +16,7 @@
 
   <!-- mat  list contain anything with mat-list-item -->
 
-  <mat-list fxLayout>
+  <mat-list *ngIf="isAuth" fxLayout>
 
     <mat-list-item>
       <mat-icon matBadge="7" matBadgeColor="warn">notifications</mat-icon>
@@ -30,11 +30,15 @@
       <mat-icon>mode</mat-icon>
     </mat-list-item>
 
-    <mat-list-item *ngIf="isAuth"  >
+    <mat-list-item>
+      <mat-icon>search</mat-icon>
+    </mat-list-item>
+
+    <mat-list-item   >
       <img matListAvatar src="{{user.displayImage}}" />
     </mat-list-item>
 
-    <mat-list-item *ngIf="isAuth">
+    <mat-list-item >
       <p matLine>
         {{user.username}}
       </p>

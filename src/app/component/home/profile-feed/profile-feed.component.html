@@ -24,9 +24,9 @@
   >
     <mat-card-header>
       <mat-card-title [routerLink]="['../article', article.id]">
-        <p>
-          <b>{{ this.article.name }}</b>
-        </p>
+        <h3>
+          {{ this.article.name }}
+        </h3>
       </mat-card-title>
       <mat-card-subtitle
         ><p><b>Author :</b> {{ this.article.owner }}</p>
