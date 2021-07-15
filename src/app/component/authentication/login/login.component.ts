@@ -6,7 +6,6 @@ import { AuthService } from '../../../services/auth.service';
 import { Subscription } from 'rxjs';
 import firebase from 'firebase';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { loginModel } from '../../../models/login.model';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import {SignUpModel} from "../../../models/sign-up.model";
 

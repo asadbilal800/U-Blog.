@@ -1,21 +1,51 @@
 <!--mat toolbar is a flexbox itself -->
 <mat-toolbar color="primary">
-  <a *ngIf="isAuth" mat-icon-button type="button" (click)="toggleSideNav()"
-    ><mat-icon>menu</mat-icon></a
-  >
-  <a class="text-white" routerLink="/home/feed"
-    ><i class="fas fa-union"></i> Blog</a
-  >
-  <div fxFlex="80"></div>
-  <mat-list *ngIf="isAuth">
-    <mat-list-item>
-      <p class="lead" matLine>
-        {{ this.user?.username }}
-      </p>
-      <img
-        matListAvatar src="{{ this.user?.displayImage }}"
-      />
 
+  <!-- mat nav list contain a tag with mat-list-item -->
+  <mat-nav-list fxLayout>
+
+    <a  *ngIf="isAuth" mat-list-item  (click)="toggleSideNav()"
+    ><mat-icon>menu</mat-icon></a>
+
+    <a  mat-list-item class="text-white" routerLink="/home/feed"
+    ><i class="fas fa-union"></i> -Blog</a>
+
+  </mat-nav-list>
+
+  <div fxFlex="80"></div>
+
+  <!-- mat  list contain anything with mat-list-item -->
+
+  <mat-list fxLayout>
+
+    <mat-list-item>
+      <mat-icon matBadge="7" matBadgeColor="warn">notifications</mat-icon>
+    </mat-list-item>
+
+    <mat-list-item>
+      <mat-icon matBadge="3" matBadgeColor="warn">bookmark</mat-icon>
+    </mat-list-item>
+
+    <mat-list-item>
+      <mat-icon>mode</mat-icon>
+    </mat-list-item>
+
+    <mat-list-item *ngIf="isAuth"  >
+      <img matListAvatar src="{{user.displayImage}}" />
+    </mat-list-item>
+
+    <mat-list-item *ngIf="isAuth">
+      <p matLine>
+        {{user.username}}
+      </p>
+    </mat-list-item>
+
+    <mat-list-item>
+      <mat-icon>help_outline</mat-icon>
     </mat-list-item>
   </mat-list>
+
+
+
+
 </mat-toolbar>

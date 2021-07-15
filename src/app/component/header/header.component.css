@@ -1,3 +1,6 @@
-a,p {
+a,p,mat-list-item {
   color : white;
+}
+mat-icon {
+  bac: white;
 }
