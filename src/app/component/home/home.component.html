@@ -1,7 +1,7 @@
 <ng-template appModalDirective> </ng-template>
 
 <mat-sidenav-container (click)="sidenav.close()" *ngIf="viewFeed">
-  <mat-sidenav #sidenav opened="false" mode="side">
+  <mat-sidenav #sidenav opened="false" mode="over">
     <mat-list>
       <mat-list-item>
         <a mat-icon-button routerLink="feed">
@@ -52,22 +52,3 @@
     <router-outlet></router-outlet>
   </mat-sidenav-content>
 </mat-sidenav-container>
-
-<ngx-spinner
-  name="mainScreenSpinner"
-  bdColor="rgba(0,0,0,0)"
-  size="medium"
-  color="#2e47b5"
-  type="square-jelly-box"
-  [fullScreen]="true"
-></ngx-spinner>
-<div class="fixed-bottom mb-5">
-  <ngx-spinner
-    name="articleLoadingSpinner"
-    bdColor="rgba(0,0,0,0)"
-    size="medium"
-    color="#2e47b5"
-    type="ball-beat"
-    [fullScreen]="false"
-  ></ngx-spinner>
-</div>

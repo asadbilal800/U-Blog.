@@ -3,6 +3,7 @@ import { AuthService } from '../../../services/auth.service';
 import { SignUpModel } from '../../../models/sign-up.model';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { AngularFirestore } from '@angular/fire/firestore';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-me',
@@ -14,14 +15,17 @@ export class MeComponent implements OnInit {
   constructor(
     private authSrv: AuthService,
     private fsStore: AngularFireStorage,
-    private fireStore: AngularFirestore
+    private fireStore: AngularFirestore,
+    private spinner: NgxSpinnerService
   ) {}
 
   ngOnInit(): void {
+    this.spinner.show('mainScreenSpinner');
     this.authSrv.userCredInfo.subscribe((data) => {
       this.currentUser = data;
     });
     this.currentUser.userUID = this.authSrv.userUIDObsvr.value;
+    this.spinner.hide('mainScreenSpinner');
   }
 
   changePicture(event) {

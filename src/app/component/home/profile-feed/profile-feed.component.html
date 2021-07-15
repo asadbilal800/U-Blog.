@@ -1,25 +1,25 @@
 <!-- mat drawer is a flex so no need to recreate it -->
-<div fxFlex="20"></div>
-
-<div style="position: relative">
-  <ngx-spinner
-    name="mainScreenSpinner"
-    bdColor="rgba(0,0,0,0)"
-    size="medium"
-    color="#2e47b5"
-    type="square-jelly-box"
-    [fullScreen]="false"
-  ></ngx-spinner>
+<div style="position: absolute" class="ml-5">
+  <h5>Topics</h5>
+  <mat-chip-list aria-label="Fish selection">
+    <mat-chip
+      color="primary"
+      selected
+      *ngFor="let topic of observerableTopicList | async"
+      >{{ topic }}</mat-chip
+    >
+  </mat-chip-list>
 </div>
+<div fxFlex="20"></div>
 <div
   fxFlex="30"
+  style="padding-top: 10%"
   infiniteScroll
   [infiniteScrollDistance]="2"
   [infiniteScrollThrottle]="50"
   (scrolled)="onScroll()"
 >
   <mat-card
-    class="mat-card-feed"
     class="mb-5 animate__animated animate__fadeIn"
     *ngFor="let article of articleArray"
   >
@@ -61,27 +61,14 @@
 
 <div fxFlex="10"></div>
 <div fxFlex="30">
-  <mat-card>
-    <p class="font-weight-bold text-center">Latest Articles</p>
-
+  <mat-card class="latest-article">
+    <p class="text-center"><b>Latest Articles</b></p>
     <mat-list>
       <mat-list-item *ngFor="let name of latestArticles">
-        <mat-icon>chevron_right</mat-icon>
-        <p class="lead">{{ name }}</p>
-        <mat-divider></mat-divider>
+        <p><mat-icon>chevron_right</mat-icon>{{ name }}</p>
       </mat-list-item>
     </mat-list>
   </mat-card>
-
-  <h3 class="font-weight-light mt-5">Recommended List</h3>
-  <mat-chip-list aria-label="Fish selection">
-    <mat-chip
-      color="primary"
-      selected
-      *ngFor="let topic of observerableTopicList | async"
-      >{{ topic }}</mat-chip
-    >
-  </mat-chip-list>
 </div>
 
 <div class="fixed-bottom mb-5">
@@ -94,3 +81,11 @@
     [fullScreen]="false"
   ></ngx-spinner>
 </div>
+
+<ngx-spinner
+  name="mainScreenSpinner"
+  size="medium"
+  color="#1b26c3"
+  type="ball-clip-rotate"
+  [fullScreen]="true"
+></ngx-spinner>
