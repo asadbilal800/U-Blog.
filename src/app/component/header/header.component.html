@@ -9,10 +9,13 @@
   <div fxFlex="80"></div>
   <mat-list *ngIf="isAuth">
     <mat-list-item>
-      <img matListAvatar src="{{ this.user?.displayImage }}" />
       <p class="lead" matLine>
         {{ this.user?.username }}
       </p>
+      <img
+        matListAvatar src="{{ this.user?.displayImage }}"
+      />
+
     </mat-list-item>
   </mat-list>
 </mat-toolbar>

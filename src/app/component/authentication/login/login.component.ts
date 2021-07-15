@@ -8,6 +8,7 @@ import firebase from 'firebase';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { loginModel } from '../../../models/login.model';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import {SignUpModel} from "../../../models/sign-up.model";
 
 @Component({
   selector: 'app-login',
@@ -65,15 +66,44 @@ export class LoginComponent implements OnDestroy {
       provider = new firebase.auth.TwitterAuthProvider();
     }
     const credentials = await this.firestoreAuth.signInWithPopup(provider);
-    let signUpValues: loginModel = {
-      username: credentials.user.displayName,
-      email: credentials.user.email,
-    };
 
-    this.fireStore
-      .collection('users')
-      .doc(`${credentials.user.uid}`)
-      .set(signUpValues)
-      .then((value) => {});
+
+    this.fireStore.collection('users').doc(`${credentials.user.uid}`)
+      .get().subscribe( (result)=> {
+        if(result.data()) {
+          console.log('user already in the db')
+          this.authSrv.userUIDObsvr.next(credentials.user.uid);
+          this.authSrv.getUserCredInfoFromDb(credentials.user.uid);
+          this.firebaseToken = this.firestoreAuth.idToken.subscribe((token) => {
+            localStorage.setItem('token', token);
+            this.authSrv.userToken.next(token);
+            this.router.navigate(['/home/feed']);
+          });
+        }
+        else {
+          console.log('user not in the db')
+          let signUpValues: SignUpModel = {
+            username: credentials.user.displayName,
+            email: credentials.user.email,
+            userUID: '',
+            displayImage: '',
+            subscriptions: [],
+            bookmarks: [],
+            isNewUser: true,
+            bio: '',
+          };
+
+          this.fireStore
+            .collection('users')
+            .doc(`${credentials.user.uid}`)
+            .set(signUpValues)
+            .then((value) => {});
+
+        }
+    })
+
+
+
+
   }
 }
