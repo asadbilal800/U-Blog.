@@ -24,9 +24,9 @@
     *ngFor="let article of articleArray"
   >
     <mat-card-header>
-      <mat-card-title [routerLink]="['../article', article.id]">{{
-        this.article.name
-      }}</mat-card-title>
+      <mat-card-title [routerLink]="['../article', article.id]">
+        <b>{{ this.article.name }}</b></mat-card-title
+      >
       <mat-card-subtitle
         ><b>Author : </b> {{ this.article.owner }}
       </mat-card-subtitle>
@@ -40,16 +40,16 @@
     <mat-card-content>
       <p><b>Min to read :</b> {{ this.article.mintoRead }}</p>
       <p>
-        {{ this.article.itSelf }}
+        {{ this.article.description }}
       </p>
     </mat-card-content>
     <mat-card-actions>
       <button
-        mat-raised-button
-        color="primary"
+        mat-icon-button
+        matTooltip="Bookmark it"
         (click)="bookmarkArticle(this.article.id)"
       >
-        Bookmark it!
+        <mat-icon>bookmark </mat-icon>
       </button>
     </mat-card-actions>
   </mat-card>

@@ -21,6 +21,7 @@ export class AuthService {
       .doc(uid)
       .valueChanges()
       .subscribe((userDetails) => {
+        localStorage.setItem('user', JSON.stringify(userDetails));
         this.userCredInfo.next(userDetails);
       });
   }

@@ -1,5 +1,6 @@
 export type articleModel = {
   name: string;
+  description: string;
   mintoRead: number;
   itSelf: string;
   owner: string;

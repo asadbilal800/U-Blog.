@@ -43,6 +43,8 @@ import { ModalDirective } from './directives/modal.directive';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { NgxMatFileInputModule } from '@angular-material-components/file-input';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @NgModule({
   declarations: [
@@ -87,6 +89,8 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
     MatDialogModule,
     MatChipsModule,
     MatSnackBarModule,
+    NgxMatFileInputModule,
+    MatTooltipModule,
   ],
   providers: [
     AuthService,

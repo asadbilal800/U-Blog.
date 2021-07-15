@@ -12,6 +12,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 })
 export class MeComponent implements OnInit {
   currentUser: SignUpModel;
+  value: string = 'Change Display Picture';
   constructor(
     private authSrv: AuthService,
     private fsStore: AngularFireStorage,

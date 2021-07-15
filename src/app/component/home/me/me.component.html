@@ -1,24 +1,45 @@
-<div class="container" fxLayout>
-  <div fxFlex="40">
-    <div fxLayout="column" fxLayoutAlign="center center">
-      <div>
-        <img
-          class="img-fluid"
-          src="{{ currentUser?.displayImage }}"
-          alt="No image"
-        />
-        <input type="file" (change)="changePicture($event)" />
-      </div>
+<div fxFlex="40">
+  <div fxLayout="column" fxLayoutAlign="center center">
+    <div>
+      <img
+        class="img-fluid"
+        style="border-radius: 50%"
+        width="400px"
+        src="{{ this.currentUser?.displayImage }}"
+      />
+    </div>
+    <div class="mt-2">
+      <button
+        type="button"
+        mat-raised-button
+        color="warn"
+        (click)="fileInput.click()"
+      >
+        Choose File
+      </button>
+      <input
+        hidden
+        type="file"
+        color="warn"
+        (change)="changePicture($event)"
+        #fileInput
+      />
     </div>
   </div>
-  <div fxFlex class="border">
-    <div fxLayout="column" fxLayoutAlign="center stretch">
-      <div>
-        {{ currentUser?.email }}
-      </div>
-      <div>
-        {{ currentUser?.username }}
-      </div>
+</div>
+<div fxFlex>
+  <div fxLayout="column" fxLayoutAlign="center stretch">
+    <div>
+      <h3>Email :</h3>
+      {{ currentUser?.email }}
+    </div>
+    <div>
+      <h3>Username :</h3>
+      {{ currentUser?.username }}
+    </div>
+    <div>
+      <h3>Bio :</h3>
+      {{ currentUser?.bio }}
     </div>
   </div>
 </div>

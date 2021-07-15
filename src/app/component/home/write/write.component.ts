@@ -59,6 +59,7 @@ export class WriteComponent implements OnInit {
       imgURL: '',
       comment: [],
       id: '',
+      description: form.value.desc,
     };
 
     //storing article
