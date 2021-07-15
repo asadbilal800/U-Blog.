@@ -29,6 +29,8 @@ export class ProfileFeedComponent implements OnInit {
   latestArticles = [];
   latestArticleIndex: number = 0;
   observerableTopicList: Observable<any[]>;
+  subscribeToNone;
+  noFeed: boolean = true;
 
   constructor(
     private fsAuth: AngularFireAuth,
@@ -43,6 +45,9 @@ export class ProfileFeedComponent implements OnInit {
   ngOnInit(): void {
     this.authSrv.userCredInfo.pipe(take(1)).subscribe((data) => {
       this.userCredInfo = data;
+      if (!this.userCredInfo.subscriptions) {
+        this.subscribeToNone = true;
+      }
     });
     this.getTopicList();
     this.realTimeDbChangesListener();

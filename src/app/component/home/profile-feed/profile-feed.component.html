@@ -1,6 +1,5 @@
 <!-- mat drawer is a flex so no need to recreate it -->
 <div style="position: absolute" class="ml-5">
-  <h5>Topics</h5>
   <mat-chip-list aria-label="Fish selection">
     <mat-chip
       color="primary"
@@ -25,10 +24,12 @@
   >
     <mat-card-header>
       <mat-card-title [routerLink]="['../article', article.id]">
-        <b>{{ this.article.name }}</b></mat-card-title
-      >
+        <p>
+          <b>{{ this.article.name }}</b>
+        </p>
+      </mat-card-title>
       <mat-card-subtitle
-        ><b>Author : </b> {{ this.article.owner }}
+        ><p><b>Author :</b> {{ this.article.owner }}</p>
       </mat-card-subtitle>
     </mat-card-header>
     <img
@@ -39,6 +40,7 @@
     />
     <mat-card-content>
       <p><b>Min to read :</b> {{ this.article.mintoRead }}</p>
+      <hr />
       <p>
         {{ this.article.description }}
       </p>
@@ -55,7 +57,7 @@
   </mat-card>
 
   <div *ngIf="noPosts">
-    <p class="lead text-center">No more posts.</p>
+    <h4 class="text-center">{{ "No more posts" | noFeedPipe }}</h4>
   </div>
 </div>
 

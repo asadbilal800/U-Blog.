@@ -45,6 +45,7 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { NgxMatFileInputModule } from '@angular-material-components/file-input';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { CustomPipe } from './pipes/custom.pipe';
 
 @NgModule({
   declarations: [
@@ -62,6 +63,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     BookmarksComponent,
     DynamicModalComponent,
     ModalDirective,
+    CustomPipe,
   ],
   imports: [
     BrowserModule,
