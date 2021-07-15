@@ -4,6 +4,7 @@ import { SignUpModel } from '../../../models/sign-up.model';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-me',
@@ -17,7 +18,8 @@ export class MeComponent implements OnInit {
     private authSrv: AuthService,
     private fsStore: AngularFireStorage,
     private fireStore: AngularFirestore,
-    private spinner: NgxSpinnerService
+    private spinner: NgxSpinnerService,
+    private snackBar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
@@ -30,6 +32,7 @@ export class MeComponent implements OnInit {
   }
 
   changePicture(event) {
+    this.spinner.show('mainScreenSpinner');
     console.log('method initiated.');
     let file = event.target.files[0];
     this.fsStore
@@ -38,6 +41,11 @@ export class MeComponent implements OnInit {
       .then(() => {
         console.log('Display picture has been set in the storage');
         console.log('storing it in user table..');
+        this.spinner.hide('mainScreenSpinner');
+        this.snackBar.open('Image changed successfully', 'X', {
+          duration: 8000,
+          verticalPosition: 'top',
+        });
 
         this.fsStore
           .ref(`display-pictures-users/${this.currentUser.username}`)

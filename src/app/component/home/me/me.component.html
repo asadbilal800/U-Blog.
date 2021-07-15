@@ -1,10 +1,10 @@
-<div fxFlex="40">
+<div class="container" fxFlex="40">
   <div fxLayout="column" fxLayoutAlign="center center">
     <div>
       <img
-        class="img-fluid"
-        style="border-radius: 50%"
-        width="400px"
+        style="border-radius: 20%"
+        width="300px"
+        height="400px"
         src="{{ this.currentUser?.displayImage }}"
       />
     </div>
@@ -28,26 +28,53 @@
   </div>
 </div>
 <div fxFlex>
-  <div fxLayout="column" fxLayoutAlign="center stretch">
+  <div fxLayout="column" fxLayoutAlign="start stretch" fxFlex>
     <div>
       <h3>Email :</h3>
-      {{ currentUser?.email }}
+      <div fxLayout>
+        <p fxFlex>
+          {{ currentUser?.email }}
+        </p>
+        <div fxLayoutAlign="flex-end">
+          <mat-icon>edit</mat-icon>
+        </div>
+      </div>
+      <hr />
     </div>
+
     <div>
       <h3>Username :</h3>
-      {{ currentUser?.username }}
+      <div fxLayout>
+        <p fxFlex>
+          {{ currentUser?.username }}
+        </p>
+        <div fxLayoutAlign="flex-end">
+          <mat-icon>edit</mat-icon>
+        </div>
+      </div>
+      <hr />
     </div>
+
     <div>
       <h3>Bio :</h3>
-      {{ currentUser?.bio }}
+      <div fxLayout>
+        <p fxFlex>
+          {{ currentUser?.bio }}
+        </p>
+        <div fxLayoutAlign="flex-end">
+          <mat-icon>edit</mat-icon>
+        </div>
+      </div>
+      <hr />
     </div>
   </div>
-</div>
 
-<ngx-spinner
-  name="mainScreenSpinner"
-  size="medium"
-  color="#1b26c3"
-  type="ball-clip-rotate"
-  [fullScreen]="true"
-></ngx-spinner>
+  <ngx-spinner
+    name="mainScreenSpinner"
+    size="medium"
+    color="#1b26c3"
+    type="ball-clip-rotate"
+    [fullScreen]="true"
+  ></ngx-spinner>
+</div>
+<div fxFlex="20"></div>

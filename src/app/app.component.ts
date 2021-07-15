@@ -24,11 +24,4 @@ export class AppComponent implements OnInit {
       }
     }
   }
-
-  logout() {
-    this.afAuth.signOut().then(null);
-    localStorage.clear();
-    this.router.navigate(['/login']);
-    console.log('signing out');
-  }
 }
