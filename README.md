@@ -33,10 +33,6 @@
  Firebase & Services
  
  
- #Live SnapShot
- ![Screen Shot 2021-07-20 at 11 45 49 PM](https://user-images.githubusercontent.com/24291795/126378776-2c61650a-a8de-449b-a6ed-3d5a51fa6391.png)
-
- 
  
  
  
