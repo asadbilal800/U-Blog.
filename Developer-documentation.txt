@@ -1,0 +1,25 @@
+----BACKEND----
+
+
+
+Firestore :
+
+All articles -> ids -> article-model.
+
+topics -> id -> topic name : art,topic-name1: religion.
+
+users -> ids -> user-model.
+
+
+
+Fire storage : 
+
+article image -> user-name -> article ID. -> img.jpg
+
+display-picture -> image-with-username.jpgs
+
+
+
+Authentication :
+
+automatic uid created by firebase,that is stored against 'users' as their doc id.
