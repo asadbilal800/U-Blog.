@@ -17,6 +17,7 @@ import {SignUpModel} from "../../../models/sign-up.model";
 export class LoginComponent implements OnDestroy {
   firebaseToken: Subscription;
   @ViewChild('form') myForm: NgForm;
+  hide: boolean = false
 
   constructor(
     private firestoreAuth: AngularFireAuth,

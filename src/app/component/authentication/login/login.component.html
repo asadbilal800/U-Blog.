@@ -7,7 +7,6 @@
     <form (ngSubmit)="login()" #form="ngForm">
       <div fxLayout>
         <div fxFlex="23"></div>
-
         <div fxFlex="55">
           <div fxLayout="column" fxLayoutGap="5%">
             <mat-form-field>
@@ -37,8 +36,8 @@
                 name="password"
                 ngModel
                 matInput
-                #password="ngModel"
-              />
+                #password="ngModel">
+
               <mat-error *ngIf="password.hasError('required')"
                 >Password is requried.</mat-error
               >
@@ -89,6 +88,7 @@
       Explore New Ways.
     </p>
   </div>
+
   <div fxFlex="50">
     <img class="img-fluid" src="../../../../assets/typewriter.svg" />
   </div>
