@@ -18,8 +18,7 @@ export class AuthService {
     let uid = userUID;
     this.afStore
       .collection('users')
-      .doc(uid)
-      .valueChanges()
+      .doc(uid).get()
       .subscribe((userDetails) => {
         localStorage.setItem('user', JSON.stringify(userDetails));
         this.userCredInfo.next(userDetails);

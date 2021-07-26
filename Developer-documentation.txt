@@ -6,7 +6,7 @@ Firestore :
 
 All articles -> ids -> article-model.
 
-topics -> id -> topic name : art,topic-name1: religion.
+topics -> id -> topic name : art,topic-name1: religion. (hardcoded list)
 
 users -> ids -> user-model.
 

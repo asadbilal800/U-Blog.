@@ -12,7 +12,7 @@ export class AppComponent implements OnInit {
   title = 'U-blog';
 
   constructor(
-    private afAuth: AngularFireAuth,
+    private fsAuth: AngularFireAuth,
     private router: Router,
     private authSrv: AuthService
   ) {}

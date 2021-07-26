@@ -3,9 +3,10 @@
 
   <div fxFlex="60">
     <form (ngSubmit)="signup()" #form="ngForm">
+
       <div fxLayout="column">
         <mat-form-field>
-          <mat-label> Username:</mat-label>
+          <mat-label> Username</mat-label>
           <input
             type="text"
             matInput
@@ -20,7 +21,7 @@
         </mat-form-field>
 
         <mat-form-field>
-          <mat-label>Email :</mat-label>
+          <mat-label>Email</mat-label>
           <input
             type="text"
             required
@@ -33,8 +34,9 @@
             >Please fill correctly!</mat-error
           >
         </mat-form-field>
+
         <mat-form-field>
-          <mat-label>Password :</mat-label>
+          <mat-label>Password </mat-label>
           <input
             type="password"
             required

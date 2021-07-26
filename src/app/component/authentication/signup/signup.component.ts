@@ -4,7 +4,7 @@ import { SignUpModel } from '../../../models/sign-up.model';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { MESSAGES } from '../../../services/common.service';
+import {CommonService, MESSAGES} from '../../../services/common.service';
 
 @Component({
   selector: 'app-signup',
@@ -16,11 +16,12 @@ export class SignupComponent {
 
   constructor(
     private fsStore: AngularFirestore,
-    private authFs: AngularFireAuth,
-    private snackBar: MatSnackBar
+    private fsAuth: AngularFireAuth,
+    private snackBar: MatSnackBar,
   ) {}
 
   signup() {
+
     let email = this.myForm.value.eph;
     let password = this.myForm.value.password;
 
@@ -36,7 +37,7 @@ export class SignupComponent {
       bio: '',
     };
 
-    this.authFs
+    this.fsAuth
       .createUserWithEmailAndPassword(email, password)
       .then((data) => {
         this.fsStore

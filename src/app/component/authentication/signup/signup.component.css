@@ -1,9 +1,8 @@
-
 .main-container {
   height: 100%;
   padding-top: 5%;
 }
 
 a {
-  text-underline: none;
+  text-decoration-line: none;
 }
