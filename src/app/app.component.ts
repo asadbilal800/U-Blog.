@@ -14,7 +14,7 @@ export class AppComponent implements OnInit {
   constructor(
     private fsAuth: AngularFireAuth,
     private router: Router,
-    private authSrv: AuthService
+    private authSrv: AuthService,
   ) {}
   ngOnInit() {
     if (!!this.authSrv.userCredInfo) {
@@ -23,5 +23,13 @@ export class AppComponent implements OnInit {
         this.authSrv.userCredInfo.next(user);
       }
     }
+  }
+
+  logout(){
+    this.fsAuth.signOut().then(null);
+    localStorage.clear()
+    this.router.navigate(['/login'])
+    console.log('signing out');
+
   }
 }

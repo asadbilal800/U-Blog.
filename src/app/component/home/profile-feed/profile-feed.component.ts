@@ -8,11 +8,10 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { CommonService } from '../../../services/common.service';
-import { catchError, map, take } from 'rxjs/operators';
-import firebase from 'firebase';
+import {  map, take } from 'rxjs/operators';
+import firebase from 'firebase/app';
 import FieldValue = firebase.firestore.FieldValue;
-import { bindCallback, Observable } from 'rxjs';
-import database = firebase.database;
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-profile-feed',

@@ -4,10 +4,11 @@ import { Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
 import { AuthService } from '../../../services/auth.service';
 import { Subscription } from 'rxjs';
-import firebase from 'firebase';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import {SignUpModel} from "../../../models/sign-up.model";
+import firebase from "firebase/app";
+
 
 @Component({
   selector: 'app-login',

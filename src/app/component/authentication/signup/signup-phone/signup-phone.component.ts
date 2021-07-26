@@ -1,6 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { WindowService } from '../../../../services/window.service';
-import firebase from 'firebase';
+import firebase from 'firebase/app';
 import { AngularFirestore } from '@angular/fire/firestore';
 
 @Component({

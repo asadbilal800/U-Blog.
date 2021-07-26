@@ -4,7 +4,7 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { take } from 'rxjs/operators';
 import { articleModel } from '../../../models/article.model';
 import { AuthService } from '../../../services/auth.service';
-import firebase from 'firebase';
+import firebase from 'firebase/app';
 import FieldValue = firebase.firestore.FieldValue;
 
 @Component({
