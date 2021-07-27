@@ -4,7 +4,6 @@
   <div fxFlex="40" class="animate__animated animate__fadeInLeft">
     <img class="img-fluid" src="../../../../assets/type.svg" />
   </div>
-
   <div fxFlex="60" class="animate__animated animate__fadeInRight">
     <form (ngSubmit)="login()" #form="ngForm">
       <div fxLayout>
@@ -65,6 +64,7 @@
             </button>
             <button
               mat-raised-button
+              class="text-white"
               style = "background-color: #fc4503"
               (click)="differentLogin('google')"
               type="button"
@@ -82,8 +82,8 @@
   </div>
 </div>
 
-
 <div class="main-container" fxLayout>
+
   <div fxFlex="50" fxLayoutAlign="center center">
     <h1 class="text-center">
       Write What You Feel.
@@ -96,7 +96,7 @@
   </div>
 </div>
 
-<div class="main-container" style="padding-top: 25%" fxLayout>
+<div class="main-container" fxLayout style="padding-top: 25%">
   <div fxFlex>
     <p class="mat-display-4 text-center">
       "It's Never Too Late To Write
@@ -120,7 +120,7 @@
   </div>
 </div>
 
-<mat-toolbar color =primary>
+<mat-toolbar color ="primary">
   <div fxFlex>
     <p class="text-center"> &copy; CopyRights Reserved U-Blog 2021</p>
   </div>
