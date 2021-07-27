@@ -14,8 +14,7 @@ import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFireStorageModule } from '@angular/fire/storage';
 import { AuthService } from './services/auth.service';
 import { AuthGuardServiceActivate } from './services/auth-guard-activate.service';
-import { WindowService } from './services/window.service';
-import { SignupPhoneComponent } from './component/authentication/signup/signup-phone/signup-phone.component';
+import { SignInPhoneComponent } from './component/authentication/login/signIn-phone/signIn-phone.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -42,7 +41,7 @@ import { DynamicModalComponent } from './component/dynamic-modal-component/dynam
 import { ModalDirective } from './directives/modal.directive';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatChipsModule } from '@angular/material/chips';
-import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { NgxMatFileInputModule } from '@angular-material-components/file-input';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { CustomPipe } from './pipes/custom.pipe';
@@ -55,7 +54,7 @@ import {MatBadgeModule} from "@angular/material/badge";
     HeaderComponent,
     SignupComponent,
     HomeComponent,
-    SignupPhoneComponent,
+    SignInPhoneComponent,
     WriteComponent,
     MeComponent,
     TopicsComponent,
@@ -66,6 +65,7 @@ import {MatBadgeModule} from "@angular/material/badge";
     ModalDirective,
     CustomPipe,
   ],
+
     imports: [
         BrowserModule,
         RoutingModule,
@@ -96,6 +96,7 @@ import {MatBadgeModule} from "@angular/material/badge";
         MatTooltipModule,
         MatBadgeModule,
     ],
+
   providers: [
     AuthService,
     AuthGuardServiceActivate,

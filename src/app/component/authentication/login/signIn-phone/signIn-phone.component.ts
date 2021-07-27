@@ -1,5 +1,4 @@
 import { Component, OnInit, } from '@angular/core';
-import { WindowService } from '../../../../services/window.service';
 import firebase from 'firebase/app'
 import 'firebase/auth'
 import { AngularFirestore } from '@angular/fire/firestore';
@@ -11,17 +10,16 @@ import {NgxSpinnerService} from "ngx-spinner";
 
 @Component({
   selector: 'app-signup-phone',
-  templateUrl: './signup-phone.component.html',
-  styleUrls: ['./signup-phone.component.css'],
+  templateUrl: './signIn-phone.component.html',
+  styleUrls: ['./signIn-phone.component.css'],
 })
-export class SignupPhoneComponent implements OnInit {
+export class SignInPhoneComponent implements OnInit {
   localwinReference: any;
   captchaVisible = false;
   captchaCheck: boolean = false;
   private phoneNumber;
 
   constructor(
-    private winRefSrv: WindowService,
     private fireStore: AngularFirestore,
     private snackBar : MatSnackBar,
     private fsAuth : AngularFireAuth,
