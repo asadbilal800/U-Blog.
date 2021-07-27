@@ -99,7 +99,6 @@ import {MatBadgeModule} from "@angular/material/badge";
   providers: [
     AuthService,
     AuthGuardServiceActivate,
-    WindowService,
     CommonService,
   ],
   bootstrap: [AppComponent],

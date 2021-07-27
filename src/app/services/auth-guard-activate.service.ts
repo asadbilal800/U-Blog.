@@ -6,7 +6,7 @@ import {
   UrlTree,
 } from '@angular/router';
 import { Observable } from 'rxjs';
-import { Injectable, OnInit } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { AuthService } from './auth.service';
 
 @Injectable({ providedIn: 'root' })
@@ -35,7 +35,8 @@ export class AuthGuardServiceActivate implements CanActivate {
 
     if (localStorage.getItem('token')) {
       return true;
-    } else {
+    }
+    else {
       return this.router.createUrlTree(['/login']);
     }
   }

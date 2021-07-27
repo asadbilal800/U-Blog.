@@ -8,5 +8,7 @@ export class CommonService {
 
 export enum MESSAGES {
   SUCCESS_MESSAGE = 'User has been successfully made',
-  REQUIRED = 'Please fill this correctly'
+  REQUIRED = 'Please fill this correctly',
+ SUCCESS_SMS_MESSAGE = 'A code has been sent to your Phone!',
+  TICK_MESSAGE = 'Please tick the captcha Box!'
 }

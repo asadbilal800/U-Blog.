@@ -1,7 +1,13 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, } from '@angular/core';
 import { WindowService } from '../../../../services/window.service';
-import firebase from 'firebase/app';
+import firebase from 'firebase/app'
+import 'firebase/auth'
 import { AngularFirestore } from '@angular/fire/firestore';
+import {MatSnackBar} from "@angular/material/snack-bar";
+import {MESSAGES} from "../../../../services/common.service";
+import {AngularFireAuth} from "@angular/fire/auth";
+import {SignUpModel} from "../../../../models/sign-up.model";
+import {NgxSpinnerService} from "ngx-spinner";
 
 @Component({
   selector: 'app-signup-phone',
@@ -9,70 +15,89 @@ import { AngularFirestore } from '@angular/fire/firestore';
   styleUrls: ['./signup-phone.component.css'],
 })
 export class SignupPhoneComponent implements OnInit {
-  @ViewChild('phoneNumber') phone: ElementRef;
   localwinReference: any;
-  recaptchaHide = true;
-
-  displayMessage;
-  successSmsMessage = 'A code has been sent to your Phone!';
-  successMessage = 'User has been made successfully!';
+  captchaVisible = false;
+  captchaCheck: boolean = false;
+  private phoneNumber;
 
   constructor(
     private winRefSrv: WindowService,
-    private fireStore: AngularFirestore
+    private fireStore: AngularFirestore,
+    private snackBar : MatSnackBar,
+    private fsAuth : AngularFireAuth,
+    private spinner : NgxSpinnerService
   ) {
-    this.localwinReference = this.winRefSrv.windowRef;
+    this.localwinReference = window;
   }
 
   ngOnInit(): void {
-    //recaptha implementation for phone number authentication.
+    //recaptcha implementation for phone number authentication.
 
     this.localwinReference.recaptchaVerifier =
       new firebase.auth.RecaptchaVerifier('recaptcha-container', {
         size: 'normal',
         callback: (response) => {
-          // when checking the box of captcha.
-          this.sendSmsCode();
+          this.captchaCheck = true
         },
       });
-    //render captcha on main page.
     this.localwinReference.recaptchaVerifier.render();
   }
 
-  sendSmsCode() {
-    //displays the input and send code button.
-    this.recaptchaHide = !this.recaptchaHide;
+  sendSmsCode(number) {
+    if(this.captchaCheck) {
 
-    let phone = this.phone.nativeElement.value;
-    firebase
-      .auth()
-      .signInWithPhoneNumber(phone, this.localwinReference.recaptchaVerifier)
+      this.phoneNumber = '+92'
+      this.phoneNumber = this.phoneNumber.concat(number)
 
+      firebase.auth()
+      .signInWithPhoneNumber(this.phoneNumber, this.localwinReference.recaptchaVerifier)
       .then((confirmationResult) => {
-        this.displayMessage = this.successSmsMessage;
+        this.captchaVisible = true
+        this.handleDisplayMessage(MESSAGES.SUCCESS_SMS_MESSAGE)
         this.localwinReference.confirmationResult = confirmationResult;
       })
       .catch((error) => {
-        this.displayMessage = error.message;
+        this.handleDisplayMessage(error.message)
       });
+    }
+    else {
+      this.handleDisplayMessage(MESSAGES.TICK_MESSAGE)
+    }
+
   }
 
   verify(code) {
+    this.spinner.show('mainScreenSpinner')
     this.localwinReference.confirmationResult
-      .confirm(code)
+      .confirm(String(code))
       .then((result) => {
+        let signUpUser: SignUpModel = {
+          username: this.phoneNumber,
+          isNewUser: true,
+        };
+
         this.fireStore
           .collection('users')
           .doc(`${result.user.uid}`)
-          .set(result.user)
-
+          .set(signUpUser)
           .then((value) => {
-            this.displayMessage = this.successMessage;
+            this.spinner.hide('mainScreenSpinner')
+            this.handleDisplayMessage(MESSAGES.SUCCESS_MESSAGE)
           });
-      })
 
+      })
       .catch((error) => {
-        this.displayMessage = error.message;
+        this.handleDisplayMessage(error.message)
       });
+    this.fsAuth.signOut().then(()=> null)
+
   }
+
+  handleDisplayMessage(message : string){
+    this.snackBar.open(message,'X',{
+      verticalPosition: 'top',
+      duration  :8000
+    })
+  }
+
 }

@@ -4,7 +4,7 @@ import { SignUpModel } from '../../../models/sign-up.model';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import {CommonService, MESSAGES} from '../../../services/common.service';
+import { MESSAGES} from '../../../services/common.service';
 import {NgxSpinnerService} from "ngx-spinner";
 
 @Component({

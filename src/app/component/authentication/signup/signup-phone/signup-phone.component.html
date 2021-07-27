@@ -1,39 +1,39 @@
-<div class="alert" [ngClass]="displayMessage===successMessage ? 'alert-danger' : 'alert-success'"
-     *ngIf="!!displayMessage">{{displayMessage}}
-  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-    <span aria-hidden="true">&times;</span>
-  </button>
-</div>
-
-
 <div class="main-container" fxLayout>
 
   <div fxFlex="30"></div>
 
-
-
   <div  fxFlex="60" >
 
-    <div fxLayout="column" fxLayoutGap="5%">
+    <div fxLayout="column">
       <mat-form-field>
-        <mat-label>Password :</mat-label>
-        <input type="password"
+        <mat-label>Enter Phone Number 033xxxxxxxx</mat-label>
+        <input type="number"
                required
-               name="phonenumber"
                ngModel
                matInput
-               #phonenumber = 'ngModel'
+               #phoneNumber = 'ngModel'
+
         >
-        <mat-error *ngIf="phonenumber.hasError('required')">Please fill correctly!</mat-error>
+        <mat-error *ngIf="phoneNumber.hasError('required')">Please fill correctly!</mat-error>
       </mat-form-field>
 
       <div id="recaptcha-container" class="captcha-container"></div>
 
-      <button mat-raised-button color="accent" (click)="sendSmsCode()" >Sign up!</button>
+      <button class="mt-3" mat-raised-button color="accent" (click)="sendSmsCode(phoneNumber.value)" [disabled]="(!phoneNumber.valid) ">Sign up!</button>
 
-      <div  class="form-inline my-1" *ngIf="!recaptchaHide">
-        <input class="form-control col-md-6 mr-1" placeholder="Insert code" type="text"  #codeInputRef>
-        <button class="btn btn-danger" (click)="verify(codeInputRef.value)">Verify Code!</button>
+      <div *ngIf="captchaVisible" fxLayout="column">
+        <mat-form-field >
+          <mat-label>Insert Code</mat-label>
+          <input
+            type="text"
+            required
+            matInput
+            ngModel
+            #codeInput = 'ngModel'
+            >
+          <mat-error *ngIf="codeInput.hasError('required')"></mat-error>
+        </mat-form-field>
+        <button mat-raised-button color="warn" (click)="verify(codeInput.value)" [disabled]="!codeInput.valid">Verify Code</button>
       </div>
 
     </div>
@@ -43,5 +43,12 @@
 
   <div fxFlex="30"></div>
 
-
 </div>
+
+<ngx-spinner
+  name="mainScreenSpinner"
+  size="medium"
+  color="#1b26c3"
+  type="ball-clip-rotate"
+  [fullScreen]="true"
+></ngx-spinner>
