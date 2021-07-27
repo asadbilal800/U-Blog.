@@ -1,4 +1,4 @@
-export type SignUpModel = {
+export type UserModel = {
   username?: string;
   email?: string;
   password?: string;
@@ -9,3 +9,4 @@ export type SignUpModel = {
   isNewUser: boolean;
   bio?: string;
 };
+

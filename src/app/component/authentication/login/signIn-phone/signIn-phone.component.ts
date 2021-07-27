@@ -5,7 +5,7 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {MESSAGES} from "../../../../services/common.service";
 import {AngularFireAuth} from "@angular/fire/auth";
-import {SignUpModel} from "../../../../models/sign-up.model";
+import {UserModel} from "../../../../models/user.model";
 import {NgxSpinnerService} from "ngx-spinner";
 import {AuthService} from "../../../../services/auth.service";
 import {Router} from "@angular/router";
@@ -88,7 +88,7 @@ export class SignInPhoneComponent implements OnInit {
           }
           else {
             console.log('user not in the db')
-            let signUpValues: SignUpModel = {
+            let signUpValues: UserModel = {
               username: result.user.displayName,
               isNewUser: true,
             };

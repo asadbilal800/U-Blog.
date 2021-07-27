@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { AngularFirestore } from '@angular/fire/firestore';
+import { UserModel} from "../../models/user.model";
 
 @Component({
   selector: 'app-dynamic-modal-component',
@@ -48,8 +49,8 @@ export class DynamicModalComponent implements OnInit {
   enableButton: boolean = true;
 
   ngOnInit(): void {
-    this.authSrv.userUIDObsvr.subscribe((uid) => {
-      this.userId = uid;
+    this.authSrv.userCredInfo.subscribe((user : UserModel) => {
+      this.userId = user.userUID;
     });
   }
 

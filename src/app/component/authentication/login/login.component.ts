@@ -5,7 +5,7 @@ import { NgForm } from '@angular/forms';
 import { AuthService } from '../../../services/auth.service';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import {SignUpModel} from "../../../models/sign-up.model";
+import {UserModel} from "../../../models/user.model";
 import firebase from "firebase/app";
 import {MESSAGES} from "../../../services/common.service";
 
@@ -72,7 +72,7 @@ export class LoginComponent  {
         }
         else {
           console.log('user not in the db')
-          let signUpValues: SignUpModel = {
+          let signUpValues: UserModel = {
             username: credentials.user.displayName,
             email: credentials.user.email,
             isNewUser: true,

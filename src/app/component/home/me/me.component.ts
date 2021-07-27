@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../../services/auth.service';
-import { SignUpModel } from '../../../models/sign-up.model';
+import { UserModel } from '../../../models/user.model';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -12,7 +12,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrls: ['./me.component.css'],
 })
 export class MeComponent implements OnInit {
-  currentUser: SignUpModel;
+  currentUser: UserModel;
   value: string = 'Change Display Picture';
   constructor(
     private authSrv: AuthService,
@@ -27,7 +27,6 @@ export class MeComponent implements OnInit {
     this.authSrv.userCredInfo.subscribe((data) => {
       this.currentUser = data;
     });
-    this.currentUser.userUID = this.authSrv.userUIDObsvr.value;
     this.spinner.hide('mainScreenSpinner');
   }
 

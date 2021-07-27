@@ -5,7 +5,7 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import { AuthService } from '../../../services/auth.service';
 import { NgForm } from '@angular/forms';
 import { articleModel } from '../../../models/article.model';
-import { SignUpModel } from '../../../models/sign-up.model';
+import { UserModel } from '../../../models/user.model';
 import { take } from 'rxjs/operators';
 
 @Component({
@@ -14,7 +14,7 @@ import { take } from 'rxjs/operators';
   styleUrls: ['./write.component.css'],
 })
 export class WriteComponent implements OnInit {
-  userCredInfo: SignUpModel;
+  userCredInfo: UserModel;
   @ViewChild('form') forms: NgForm;
   topicList: string[] = [];
   image;

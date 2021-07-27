@@ -1,7 +1,7 @@
 import { BehaviorSubject, Subject } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { SignUpModel } from '../models/sign-up.model';
+import { UserModel } from '../models/user.model';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -15,10 +15,10 @@ export class AuthService {
   clearModalView = new Subject<void>();
 
   getUserDataFromFirebase(userUID: string) {
-    let uid = userUID;
+
     this.fsStore
       .collection('users')
-      .doc(uid).get()
+      .doc(userUID).get()
       .subscribe((userDetails) => {
         localStorage.setItem('user', JSON.stringify(userDetails));
         this.userCredInfo.next(userDetails);

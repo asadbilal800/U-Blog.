@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../../services/auth.service';
-import { SignUpModel } from '../../../models/sign-up.model';
+import { UserModel } from '../../../models/user.model';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { articleModel } from '../../../models/article.model';
 import { take } from 'rxjs/operators';
@@ -11,7 +11,7 @@ import { take } from 'rxjs/operators';
   styleUrls: ['./bookmarks.component.css'],
 })
 export class BookmarksComponent implements OnInit {
-  user: SignUpModel;
+  user: UserModel;
   bookmarkIdArray: string[] = [];
   articleArray: articleModel[] = [];
   constructor(

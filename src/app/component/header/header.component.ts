@@ -3,7 +3,7 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 import { CommonService } from '../../services/common.service';
 import { AuthService } from '../../services/auth.service';
-import { SignUpModel } from '../../models/sign-up.model';
+import { UserModel } from '../../models/user.model';
 
 @Component({
   selector: 'app-header',
@@ -11,7 +11,7 @@ import { SignUpModel } from '../../models/sign-up.model';
   styleUrls: ['./header.component.css'],
 })
 export class HeaderComponent implements OnInit {
-  user: SignUpModel = null;
+  user: UserModel = null;
   isAuth = false;
 
   constructor(

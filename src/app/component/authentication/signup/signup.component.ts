@@ -1,6 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { SignUpModel } from '../../../models/sign-up.model';
+import { UserModel } from '../../../models/user.model';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -33,19 +33,18 @@ export class SignupComponent {
     let password = this.myForm.value.password;
     let username = this.myForm.value.username;
 
-    let signUpValues: SignUpModel = {
-      username: username,
-      email: email,
-      password: password,
-      isNewUser: true,
-    };
-
     //after singing/logging in,'data' gives 3 important things..uid,displayName and email.
 
     this.fsAuth
       .createUserWithEmailAndPassword(email, password)
       .then((data) => {
-
+        let signUpValues: UserModel = {
+          username: username,
+          email: email,
+          password: password,
+          isNewUser: true,
+          userUID: data.user.uid
+        };
 
           this.fsStore
             .collection('users')
