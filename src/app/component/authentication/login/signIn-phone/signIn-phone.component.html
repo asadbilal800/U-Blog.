@@ -19,7 +19,7 @@
 
       <div id="recaptcha-container" class="captcha-container"></div>
 
-      <button class="mt-3" mat-raised-button color="accent" (click)="sendSmsCode(phoneNumber.value)" [disabled]="(!phoneNumber.valid) ">Sign up!</button>
+      <button class="mt-3" mat-raised-button color="accent" (click)="sendSmsCode(phoneNumber.value)" [disabled]="(!phoneNumber.valid) "><mat-icon>smartphone</mat-icon> Login</button>
 
       <div *ngIf="captchaVisible" fxLayout="column">
         <mat-form-field >

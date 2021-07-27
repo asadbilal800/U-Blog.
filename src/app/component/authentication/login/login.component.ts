@@ -1,14 +1,13 @@
-import { Component, OnDestroy, ViewChild } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
 import { AuthService } from '../../../services/auth.service';
-import { Subscription } from 'rxjs';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import {SignUpModel} from "../../../models/sign-up.model";
 import firebase from "firebase/app";
-import {relative} from "@angular/compiler-cli/src/ngtsc/file_system";
+import {MESSAGES} from "../../../services/common.service";
 
 
 @Component({
@@ -16,16 +15,17 @@ import {relative} from "@angular/compiler-cli/src/ngtsc/file_system";
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
 })
-export class LoginComponent implements OnDestroy {
-  firebaseToken: Subscription;
+export class LoginComponent  {
   @ViewChild('form') myForm: NgForm;
-  hide: boolean = false
+  requiredMessage = MESSAGES.REQUIRED;
+  emailFormat = MESSAGES.EMAIL_BAD_FORMAT
+
 
   constructor(
-    private firestoreAuth: AngularFireAuth,
+    private fsAuth: AngularFireAuth,
     private authSrv: AuthService,
     private router: Router,
-    private fireStore: AngularFirestore,
+    private fsStore: AngularFirestore,
     private snackBar: MatSnackBar
   ) {}
 
@@ -33,14 +33,14 @@ export class LoginComponent implements OnDestroy {
     let username = this.myForm.value.username;
     let password = this.myForm.value.password;
 
-    this.firestoreAuth
+    this.fsAuth
       .signInWithEmailAndPassword(username, password)
       .then((value) => {
-        this.firestoreAuth.user.subscribe((user) => {
+        this.fsAuth.user.subscribe((user) => {
           this.authSrv.userUIDObsvr.next(user.uid);
-          this.authSrv.getUserCredInfoFromDb(user.uid);
+          this.authSrv.getUserDataFromFirebase(user.uid);
         });
-        this.firebaseToken = this.firestoreAuth.idToken.subscribe((token) => {
+        this.fsAuth.idToken.subscribe((token) => {
           localStorage.setItem('token', token);
           this.authSrv.userToken.next(token);
           this.router.navigate(['/home/feed']);
@@ -54,23 +54,17 @@ export class LoginComponent implements OnDestroy {
       });
   }
 
-  ngOnDestroy() {
-    if (this.firebaseToken) {
-      this.firebaseToken.unsubscribe();
-    }
-  }
-
-  async differentLogin(socialMedia) {
+  async differentLogin() {
     let provider = new firebase.auth.GoogleAuthProvider();
-    const credentials = await this.firestoreAuth.signInWithPopup(provider);
+    const credentials = await this.fsAuth.signInWithPopup(provider);
 
-    this.fireStore.collection('users').doc(`${credentials.user.uid}`)
+    this.fsStore.collection('users').doc(`${credentials.user.uid}`)
       .get().subscribe( (result)=> {
         if(result.data()) {
-          console.log('user already in the db')
+          console.log('User already in the db')
           this.authSrv.userUIDObsvr.next(credentials.user.uid);
-          this.authSrv.getUserCredInfoFromDb(credentials.user.uid);
-          this.firebaseToken = this.firestoreAuth.idToken.subscribe((token) => {
+          this.authSrv.getUserDataFromFirebase(credentials.user.uid);
+           this.fsAuth.idToken.subscribe((token) => {
             localStorage.setItem('token', token);
             this.authSrv.userToken.next(token);
             this.router.navigate(['/home/feed']);
@@ -81,19 +75,22 @@ export class LoginComponent implements OnDestroy {
           let signUpValues: SignUpModel = {
             username: credentials.user.displayName,
             email: credentials.user.email,
-            userUID: '',
-            displayImage: '',
-            subscriptions: [],
-            bookmarks: [],
             isNewUser: true,
-            bio: '',
           };
 
-          this.fireStore
+          this.fsStore
             .collection('users')
             .doc(`${credentials.user.uid}`)
             .set(signUpValues)
-            .then((value) => {});
+            .then((value) => {
+              this.authSrv.userUIDObsvr.next(credentials.user.uid);
+              this.authSrv.getUserDataFromFirebase(credentials.user.uid);
+              this.fsAuth.idToken.subscribe((token) => {
+                localStorage.setItem('token', token);
+                this.authSrv.userToken.next(token);
+                this.router.navigate(['/home/feed']);
+              });
+            });
 
         }
     })

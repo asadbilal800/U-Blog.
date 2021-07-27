@@ -22,10 +22,10 @@
                 #username="ngModel"
               />
               <mat-error *ngIf="username.hasError('required')"
-                >Email is required.</mat-error
+                >{{requiredMessage}}</mat-error
               >
               <mat-error *ngIf="username.hasError('email')"
-                >Email Format is not correct.</mat-error
+                >{{emailFormat}}</mat-error
               >
             </mat-form-field>
 
@@ -40,7 +40,7 @@
                 #password="ngModel">
 
               <mat-error *ngIf="password.hasError('required')"
-                >Password is requried.</mat-error
+                >{{requiredMessage}}</mat-error
               >
             </mat-form-field>
 
@@ -66,7 +66,7 @@
               mat-raised-button
               class="text-white"
               style = "background-color: #fc4503"
-              (click)="differentLogin('google')"
+              (click)="differentLogin()"
               type="button"
             >
               <i class="fab fa-google"></i> Login with Google

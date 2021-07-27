@@ -7,6 +7,8 @@ import {MESSAGES} from "../../../../services/common.service";
 import {AngularFireAuth} from "@angular/fire/auth";
 import {SignUpModel} from "../../../../models/sign-up.model";
 import {NgxSpinnerService} from "ngx-spinner";
+import {AuthService} from "../../../../services/auth.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-signup-phone',
@@ -20,10 +22,12 @@ export class SignInPhoneComponent implements OnInit {
   private phoneNumber;
 
   constructor(
-    private fireStore: AngularFirestore,
+    private fsStore: AngularFirestore,
     private snackBar : MatSnackBar,
     private fsAuth : AngularFireAuth,
-    private spinner : NgxSpinnerService
+    private spinner : NgxSpinnerService,
+    private authSrv : AuthService,
+    private router : Router
   ) {
     this.localwinReference = window;
   }
@@ -43,7 +47,6 @@ export class SignInPhoneComponent implements OnInit {
 
   sendSmsCode(number) {
     if(this.captchaCheck) {
-
       this.phoneNumber = '+92'
       this.phoneNumber = this.phoneNumber.concat(number)
 
@@ -69,24 +72,51 @@ export class SignInPhoneComponent implements OnInit {
     this.localwinReference.confirmationResult
       .confirm(String(code))
       .then((result) => {
-        let signUpUser: SignUpModel = {
-          username: this.phoneNumber,
-          isNewUser: true,
-        };
+        this.fsStore.collection('users').doc(`${result.user.uid}`)
+          .get().subscribe( (userData)=> {
+          if(userData.data()) {
+            console.log('User already in the db')
+            this.authSrv.userUIDObsvr.next(result.user.uid);
+            this.authSrv.getUserDataFromFirebase(result.user.uid);
+            this.fsAuth.idToken.subscribe((token) => {
+              localStorage.setItem('token', token);
+              this.authSrv.userToken.next(token);
 
-        this.fireStore
-          .collection('users')
-          .doc(`${result.user.uid}`)
-          .set(signUpUser)
-          .then((value) => {
-            this.spinner.hide('mainScreenSpinner')
-            this.handleDisplayMessage(MESSAGES.SUCCESS_MESSAGE)
-          });
+              this.spinner.hide('mainScreenSpinner')
+              this.router.navigate(['/home/feed']);
+            });
+          }
+          else {
+            console.log('user not in the db')
+            let signUpValues: SignUpModel = {
+              username: result.user.displayName,
+              isNewUser: true,
+            };
 
+            this.fsStore
+              .collection('users')
+              .doc(`${result.user.uid}`)
+              .set(signUpValues)
+              .then((value) => {
+                this.authSrv.userUIDObsvr.next(result.user.uid);
+                this.authSrv.getUserDataFromFirebase(result.user.uid);
+                this.fsAuth.idToken.subscribe((token) => {
+                  localStorage.setItem('token', token);
+                  this.authSrv.userToken.next(token);
+
+                  this.spinner.hide('mainScreenSpinner')
+                  this.router.navigate(['/home/feed']);
+                });
+              });
+
+          }
+        })
       })
       .catch((error) => {
+        this.spinner.hide('mainScreenSpinner')
         this.handleDisplayMessage(error.message)
       });
+    this.captchaCheck = false
     this.fsAuth.signOut().then(()=> null)
 
   }

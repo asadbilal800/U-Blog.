@@ -14,7 +14,7 @@ export class AuthService {
   userCredInfo = new BehaviorSubject<any>(null);
   clearModalView = new Subject<void>();
 
-  getUserCredInfoFromDb(userUID: string) {
+  getUserDataFromFirebase(userUID: string) {
     let uid = userUID;
     this.fsStore
       .collection('users')

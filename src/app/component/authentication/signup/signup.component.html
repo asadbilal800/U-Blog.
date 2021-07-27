@@ -26,6 +26,7 @@
           <input
             type="text"
             required
+            email
             name="email"
             ngModel
             matInput
@@ -33,6 +34,9 @@
           />
           <mat-error *ngIf="eph.hasError('required')"
             >{{requiredMessage}}</mat-error
+          >
+          <mat-error *ngIf="eph.hasError('email')"
+          >{{emailFormat}}</mat-error
           >
         </mat-form-field>
 
@@ -53,7 +57,7 @@
         <button
           class="signup-button"
           mat-raised-button
-          color="primary"
+          color="accent"
           [disabled]="!form.valid"
           type="submit"
           class="mt-3"

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { SignUpModel } from '../../../models/sign-up.model';
 import { AngularFirestore } from '@angular/fire/firestore';
@@ -12,9 +12,10 @@ import {NgxSpinnerService} from "ngx-spinner";
   templateUrl: './signup.component.html',
   styleUrls: ['./signup.component.css'],
 })
-export class SignupComponent implements OnInit{
+export class SignupComponent {
   @ViewChild('form') myForm: NgForm;
-  requiredMessage;
+  requiredMessage = MESSAGES.REQUIRED
+  emailFormat = MESSAGES.EMAIL_BAD_FORMAT
 
 
   constructor(
@@ -24,9 +25,6 @@ export class SignupComponent implements OnInit{
     private spinner : NgxSpinnerService,
   ) {}
 
-  ngOnInit() {
-    this.requiredMessage = MESSAGES.REQUIRED
-  }
 
   signup() {
 
