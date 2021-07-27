@@ -12,6 +12,7 @@ import {  map, take } from 'rxjs/operators';
 import firebase from 'firebase/app';
 import FieldValue = firebase.firestore.FieldValue;
 import { Observable } from 'rxjs';
+import {UserModel} from "../../../models/user.model";
 
 @Component({
   selector: 'app-profile-feed',
@@ -24,7 +25,7 @@ export class ProfileFeedComponent implements OnInit {
   @ViewChild('sidenav', { static: true }) sideNav: MatSidenav;
   articleArrayIds: string[] = [];
   noPosts: boolean = false;
-  userCredInfo;
+  userCredInfo : UserModel;
   latestArticles = [];
   latestArticleIndex: number = 0;
   observerableTopicList: Observable<any[]>;
@@ -149,7 +150,7 @@ export class ProfileFeedComponent implements OnInit {
 
     this.fsStore
       .collection('users')
-      .doc(`${this.authSrv.userUIDObsvr.value}`)
+      .doc(`${this.userCredInfo.userUID}`)
       .update({ bookmarks: FieldValue.arrayUnion(id) })
       .then(() => {
         console.log('bookmark-ed!!');

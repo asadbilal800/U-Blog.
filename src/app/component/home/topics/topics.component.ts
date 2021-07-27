@@ -5,6 +5,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { AuthService } from '../../../services/auth.service';
 import firebase from 'firebase/app';
 import FieldValue = firebase.firestore.FieldValue;
+import {UserModel} from "../../../models/user.model";
 
 @Component({
   selector: 'app-topics',
@@ -13,7 +14,7 @@ import FieldValue = firebase.firestore.FieldValue;
 })
 export class TopicsComponent implements OnInit {
   topicList;
-  currentUser;
+  currentUser : UserModel;
   constructor(
     private fsStore: AngularFirestore,
     private spinner: NgxSpinnerService,
@@ -47,11 +48,10 @@ export class TopicsComponent implements OnInit {
 
   subscribeTopic(topic: string) {
     console.log('subscribing to topic... ' + topic);
-    console.log(this.authSrv.userUIDObsvr.value);
 
     this.fsStore
       .collection('users')
-      .doc(`${this.authSrv.userUIDObsvr.value}`)
+      .doc(`${this.currentUser.userUID}`)
       .update({ subscriptions: FieldValue.arrayUnion(topic) })
       .then(() => {
         console.log('subscribed!');

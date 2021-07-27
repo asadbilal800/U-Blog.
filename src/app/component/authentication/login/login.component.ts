@@ -37,7 +37,6 @@ export class LoginComponent  {
       .signInWithEmailAndPassword(username, password)
       .then((value) => {
         this.fsAuth.user.subscribe((user) => {
-          this.authSrv.userUIDObsvr.next(user.uid);
           this.authSrv.getUserDataFromFirebase(user.uid);
         });
         this.fsAuth.idToken.subscribe((token) => {
@@ -62,7 +61,6 @@ export class LoginComponent  {
       .get().subscribe( (result)=> {
         if(result.data()) {
           console.log('User already in the db')
-          this.authSrv.userUIDObsvr.next(credentials.user.uid);
           this.authSrv.getUserDataFromFirebase(credentials.user.uid);
            this.fsAuth.idToken.subscribe((token) => {
             localStorage.setItem('token', token);
@@ -83,7 +81,6 @@ export class LoginComponent  {
             .doc(`${credentials.user.uid}`)
             .set(signUpValues)
             .then((value) => {
-              this.authSrv.userUIDObsvr.next(credentials.user.uid);
               this.authSrv.getUserDataFromFirebase(credentials.user.uid);
               this.fsAuth.idToken.subscribe((token) => {
                 localStorage.setItem('token', token);

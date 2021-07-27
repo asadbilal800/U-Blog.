@@ -76,7 +76,6 @@ export class SignInPhoneComponent implements OnInit {
           .get().subscribe( (userData)=> {
           if(userData.data()) {
             console.log('User already in the db')
-            this.authSrv.userUIDObsvr.next(result.user.uid);
             this.authSrv.getUserDataFromFirebase(result.user.uid);
             this.fsAuth.idToken.subscribe((token) => {
               localStorage.setItem('token', token);
@@ -98,7 +97,6 @@ export class SignInPhoneComponent implements OnInit {
               .doc(`${result.user.uid}`)
               .set(signUpValues)
               .then((value) => {
-                this.authSrv.userUIDObsvr.next(result.user.uid);
                 this.authSrv.getUserDataFromFirebase(result.user.uid);
                 this.fsAuth.idToken.subscribe((token) => {
                   localStorage.setItem('token', token);

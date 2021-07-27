@@ -10,7 +10,6 @@ export class AuthService {
   //weird race condition happened that is why i couldnt inject firebase observable directly.
 
   userToken = new BehaviorSubject<string>(null);
-  userUIDObsvr = new BehaviorSubject<string>(null);
   userCredInfo = new BehaviorSubject<any>(null);
   clearModalView = new Subject<void>();
 
