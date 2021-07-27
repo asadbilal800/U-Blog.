@@ -8,6 +8,7 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import {SignUpModel} from "../../../models/sign-up.model";
 import firebase from "firebase/app";
+import {relative} from "@angular/compiler-cli/src/ngtsc/file_system";
 
 
 @Component({

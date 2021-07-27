@@ -1,4 +1,6 @@
 <div class="main-container" fxLayout>
+
+
   <div fxFlex="40" class="animate__animated animate__fadeInLeft">
     <img class="img-fluid" src="../../../../assets/type.svg" />
   </div>
@@ -54,7 +56,13 @@
             >
               <i class="fas fa-sign-in-alt"></i> Login
             </button>
-
+            <button
+              mat-raised-button
+              style = "background-color: #dbd7cc"
+              routerLink="/sign-in-phone"
+              type="button">
+              <mat-icon>smartphone</mat-icon> Login with Phone
+            </button>
             <button
               mat-raised-button
               style = "background-color: #fc4503"
@@ -63,26 +71,57 @@
             >
               <i class="fab fa-google"></i> Login with Google
             </button>
+
           </div>
         </div>
 
         <div fxFlex="22"></div>
       </div>
     </form>
+
   </div>
 </div>
 
 
-<div fxLayout>
+<div class="main-container" fxLayout>
   <div fxFlex="50" fxLayoutAlign="center center">
-    <p class="mat-display-3 text-center">
+    <h1 class="text-center">
       Write What You Feel.
       <br />
       Explore New Ways.
-    </p>
+    </h1>
   </div>
-
   <div fxFlex="50">
     <img class="img-fluid" src="../../../../assets/typewriter.svg" />
   </div>
 </div>
+
+<div class="main-container" style="padding-top: 25%" fxLayout>
+  <div fxFlex>
+    <p class="mat-display-4 text-center">
+      "It's Never Too Late To Write
+      <br />
+      Your Best Story"
+    </p>
+    <h3 class="text-center">~Bryan Hutchinson</h3>
+  </div>
+</div>
+
+<div class="main-container" fxLayout>
+  <div fxFlex="50" fxLayoutAlign="center center">
+    <h1 class="text-center">
+      Community of U-blog
+      <br />
+      is Friendlier Than You think!
+    </h1>
+  </div>
+  <div fxFlex="50">
+    <img class="img-fluid" src="../../../../assets/friends.svg" />
+  </div>
+</div>
+
+<mat-toolbar color =primary>
+  <div fxFlex>
+    <p class="text-center"> &copy; CopyRights Reserved U-Blog 2021</p>
+  </div>
+</mat-toolbar>

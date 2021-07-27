@@ -13,14 +13,15 @@ import { BookmarksComponent } from './component/home/bookmarks/bookmarks.compone
 import { AuthGuardServiceActivate } from './services/auth-guard-activate.service';
 
 const routes: Routes = [
+
+  { path: 'login', component: LoginComponent},
+  { path: 'sign-in-phone', component: SignInPhoneComponent },
+  { path: 'signup', component: SignupComponent },
   {
     path: '',
     redirectTo: 'home/feed',
     pathMatch: 'full',
   },
-  { path: 'login', component: LoginComponent },
-  { path: 'signup', component: SignupComponent },
-  { path: 'signup/phone', component: SignInPhoneComponent },
   {
     path: 'home',
     component: HomeComponent,

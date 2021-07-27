@@ -21,7 +21,7 @@
 
 ## Tools & Technology
 
- <ins> Frontend </ins> :
+ <ins> Front End </ins> :
  Angular 12,
  Angular Material,
  AngularFlex,
@@ -29,7 +29,7 @@
  Angular Fire.
 
 
- <ins> Backend </ins> :
+ <ins> Back End </ins> :
  Firebase & Services
  
  
