@@ -60,14 +60,8 @@ export class LoginComponent implements OnDestroy {
   }
 
   async differentLogin(socialMedia) {
-    let provider;
-    if (socialMedia === 'google') {
-      provider = new firebase.auth.GoogleAuthProvider();
-    } else {
-      provider = new firebase.auth.TwitterAuthProvider();
-    }
+    let provider = new firebase.auth.GoogleAuthProvider();
     const credentials = await this.firestoreAuth.signInWithPopup(provider);
-
 
     this.fireStore.collection('users').doc(`${credentials.user.uid}`)
       .get().subscribe( (result)=> {

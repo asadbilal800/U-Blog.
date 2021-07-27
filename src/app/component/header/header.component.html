@@ -14,7 +14,7 @@
 
   <div fxFlex="80"></div>
 
-  <!-- mat  list contain anything with mat-list-item -->
+  <!-- mat list contain anything with mat-list-item -->
 
   <mat-list *ngIf="isAuth" fxLayout>
 
@@ -35,12 +35,12 @@
     </mat-list-item>
 
     <mat-list-item   >
-      <img matListAvatar src="{{user.displayImage}}" />
+      <img matListAvatar src="{{user?.displayImage}}" />
     </mat-list-item>
 
     <mat-list-item >
       <p matLine>
-        {{user.username}}
+        {{user?.username}}
       </p>
     </mat-list-item>
 
@@ -48,8 +48,5 @@
       <mat-icon>help_outline</mat-icon>
     </mat-list-item>
   </mat-list>
-
-
-
 
 </mat-toolbar>

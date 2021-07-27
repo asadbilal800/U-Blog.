@@ -20,9 +20,9 @@ import { ModalDirective } from '../../directives/modal.directive';
 })
 export class HomeComponent implements OnInit {
   @ViewChild('sidenav', { static: false }) sideNav: MatSidenav;
+  @ViewChild(ModalDirective, { static: false }) modalDirective: ModalDirective;
   user;
   viewFeed = false;
-  @ViewChild(ModalDirective, { static: false }) modalDirective: ModalDirective;
   constructor(
     private router: Router,
     private commonSrv: CommonService,
@@ -38,7 +38,7 @@ export class HomeComponent implements OnInit {
     });
 
     this.commonSrv.sideNavTogglerEmitter.subscribe(() => {
-      this.sideNav?.toggle();
+      this.sideNav.toggle().then(() => null);
     });
 
     this.authSrv.userCredInfo.subscribe((user) => {

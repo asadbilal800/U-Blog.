@@ -1,4 +1,5 @@
 <div class="main-container" fxLayout>
+
   <div fxFlex="20"></div>
 
   <div fxFlex="60">
@@ -16,7 +17,7 @@
             #username="ngModel"
           />
           <mat-error *ngIf="username.hasError('required')"
-            >Please fill correctly!</mat-error
+            >{{requiredMessage}}</mat-error
           >
         </mat-form-field>
 
@@ -25,13 +26,13 @@
           <input
             type="text"
             required
-            name="eph"
+            name="email"
             ngModel
             matInput
             #eph="ngModel"
           />
           <mat-error *ngIf="eph.hasError('required')"
-            >Please fill correctly!</mat-error
+            >{{requiredMessage}}</mat-error
           >
         </mat-form-field>
 
@@ -46,7 +47,7 @@
             #password="ngModel"
           />
           <mat-error *ngIf="password.hasError('required')"
-            >Please fill correctly!</mat-error
+            >{{requiredMessage}}</mat-error
           >
         </mat-form-field>
 
@@ -66,4 +67,13 @@
   </div>
 
   <div fxFlex="20"></div>
+
 </div>
+
+<ngx-spinner
+  name="mainScreenSpinner"
+  size="medium"
+  color="#1b26c3"
+  type="ball-clip-rotate"
+  [fullScreen]="true"
+></ngx-spinner>

@@ -5,7 +5,7 @@ import { SignUpModel } from '../models/sign-up.model';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  constructor(private afStore: AngularFirestore) {}
+  constructor(private fsStore: AngularFirestore) {}
 
   //weird race condition happened that is why i couldnt inject firebase observable directly.
 
@@ -16,7 +16,7 @@ export class AuthService {
 
   getUserCredInfoFromDb(userUID: string) {
     let uid = userUID;
-    this.afStore
+    this.fsStore
       .collection('users')
       .doc(uid).get()
       .subscribe((userDetails) => {

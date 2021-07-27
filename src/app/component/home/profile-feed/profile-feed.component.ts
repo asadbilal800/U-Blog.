@@ -53,16 +53,16 @@ export class ProfileFeedComponent implements OnInit {
     this.commonSrv.sideNavTogglerEmitter.subscribe(() => {
       this.sideNav?.toggle();
     });
-    this.spinner.show('mainScreenSpinner');
+    //this.spinner.show('mainScreenSpinner');
     this.getArticlesId().then(() => {
       this.loadArticle();
-      this.spinner.hide('mainScreenSpinner');
+   //   this.spinner.hide('mainScreenSpinner');
     });
   }
 
   getArticlesId() {
     return new Promise<void>((resolve, reject) => {
-      this.userCredInfo.subscriptions.map((subscription) => {
+      this.userCredInfo.subscriptions?.map((subscription) => {
         this.fsStore
           .collection('all-articles', (ref) =>
             ref.where('tag', '==', subscription as string)
@@ -111,7 +111,7 @@ export class ProfileFeedComponent implements OnInit {
   }
 
   loadArticle() {
-    console.log('laod article');
+    console.log('load article');
     let id = this.articleArrayIds.pop();
     if (id) {
       console.log('pop id->' + id);
@@ -159,16 +159,15 @@ export class ProfileFeedComponent implements OnInit {
   getTopicList() {
     this.observerableTopicList = this.fsStore
       .collection('topics')
-      .doc<object>('SanBNEamwYEo8oZFqzJP')
+      .doc('SanBNEamwYEo8oZFqzJP')
       .valueChanges()
       .pipe(
         take(1),
         map((data) => {
           let arrayOfTopics = [];
-          for (const item in data) {
+          for (const item in data as any) {
             arrayOfTopics.push(data[item]);
           }
-
           return arrayOfTopics;
         })
       );

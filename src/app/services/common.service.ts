@@ -8,4 +8,5 @@ export class CommonService {
 
 export enum MESSAGES {
   SUCCESS_MESSAGE = 'User has been successfully made',
+  REQUIRED = 'Please fill this correctly'
 }

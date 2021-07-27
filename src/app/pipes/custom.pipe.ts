@@ -8,7 +8,7 @@ export class CustomPipe implements PipeTransform {
   constructor(private authSrv: AuthService) {}
 
   transform(value: string): string {
-    if (this.authSrv.userCredInfo.value.subscriptions.length) {
+    if (this.authSrv.userCredInfo.value.subscriptions?.length) {
       return value;
     }
     return 'Looks like your feed is empty..';

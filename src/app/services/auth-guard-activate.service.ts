@@ -6,7 +6,6 @@ import {
   UrlTree,
 } from '@angular/router';
 import { Observable } from 'rxjs';
-import { AngularFireAuth } from '@angular/fire/auth';
 import { Injectable, OnInit } from '@angular/core';
 import { AuthService } from './auth.service';
 
@@ -33,6 +32,7 @@ export class AuthGuardServiceActivate implements CanActivate {
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
+
     if (localStorage.getItem('token')) {
       return true;
     } else {
