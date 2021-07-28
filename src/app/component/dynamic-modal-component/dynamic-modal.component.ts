@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { UserModel} from "../../models/user.model";
@@ -20,7 +20,7 @@ import {CommonService} from "../../services/common.service";
             <textarea
               [(ngModel)]="bio"
               matInput
-              (input)="button.disabled=false"
+              (input)="checkInput()"
             ></textarea>
           </mat-form-field>
         </div>
@@ -29,8 +29,8 @@ import {CommonService} from "../../services/common.service";
             fxFlex
             mat-raised-button
             color="accent"
-            disabled="true"
-            #button
+            [disabled]="inputEmpty"
+            #buttonSubmit
             (click)="proceedToHome()">
             Proceed to Home!
           </button>
@@ -40,14 +40,15 @@ import {CommonService} from "../../services/common.service";
   `,
 })
 export class DynamicModalComponent {
-
+  bio: string;
+  @ViewChild('buttonSubmit',{read:ElementRef}) button : ElementRef;
+  inputEmpty: boolean = true
   constructor(
     private authSrv: AuthService,
     private afStore: AngularFirestore,
     private commonSrv: CommonService
   ) {}
 
-  bio: string;
 
   proceedToHome() {
 
@@ -79,6 +80,9 @@ export class DynamicModalComponent {
       });
 
 
+  }
 
+  checkInput() {
+    (this.bio) ? this.inputEmpty = false : this.inputEmpty =true
   }
 }

@@ -6,7 +6,7 @@ export type UserModel = {
   userUID?: string;
   subscriptions?: string[];
   bookmarks?: string[];
-  isNewUser: boolean;
+  isNewUser?: boolean;
   bio?: string;
 };
 

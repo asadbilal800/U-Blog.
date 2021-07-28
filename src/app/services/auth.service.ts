@@ -21,10 +21,11 @@ export class AuthService {
     .doc(userUID).get()
     .pipe(
       map( (userDetails : DocumentSnapshot<UserModel>) => {
-        if(userDetails.data()?.password){
-          delete userDetails.data().password
+        let userDetail = userDetails.data()
+        if(userDetail?.password){
+          delete userDetail.password
         }
-        return userDetails.data()
+        return userDetail
       })
     )
     .subscribe((userDetails) => {
