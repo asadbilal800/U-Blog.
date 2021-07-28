@@ -31,7 +31,7 @@ export enum MESSAGES {
  SUCCESS_SMS_MESSAGE = 'A code has been sent to your Phone!',
   TICK_MESSAGE = 'Please tick the captcha Box!',
   EMAIL_BAD_FORMAT = 'Email format is not correct',
-  IMAGE_CHANGED = 'Image changed successfully, Please Refresh!',
+  IMAGE_CHANGED = 'Image changed successfully, Please Refresh to see changes!',
   ACCOUNT_DATA_DELETE = 'Account data has been deleted, PLease login again for Fresh Start.',
   SUCCESS_EDIT =  'Successfully Edited!'
 }
