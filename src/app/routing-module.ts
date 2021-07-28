@@ -11,6 +11,7 @@ import { ProfileFeedComponent } from './component/home/profile-feed/profile-feed
 import { ArticleComponent } from './component/home/article/article.component';
 import { BookmarksComponent } from './component/home/bookmarks/bookmarks.component';
 import { AuthGuard } from './services/authGuard.service';
+import {ErrorPageComponent} from "./component/error-page/error-page.component";
 
 const routes: Routes = [
 
@@ -59,6 +60,8 @@ const routes: Routes = [
       },
     ],
   },
+  {path : 'error-page', component: ErrorPageComponent},
+  {path: '**', redirectTo: 'error-page'}
 ];
 
 @NgModule({

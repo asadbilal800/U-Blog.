@@ -46,6 +46,7 @@ import { NgxMatFileInputModule } from '@angular-material-components/file-input';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { CustomPipe } from './pipes/custom.pipe';
 import {MatBadgeModule} from "@angular/material/badge";
+import { ErrorPageComponent } from './component/error-page/error-page.component';
 
 @NgModule({
   declarations: [
@@ -64,6 +65,7 @@ import {MatBadgeModule} from "@angular/material/badge";
     DynamicModalComponent,
     ModalDirective,
     CustomPipe,
+    ErrorPageComponent,
   ],
     imports: [
         BrowserModule,
