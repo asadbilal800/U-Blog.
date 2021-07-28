@@ -2,74 +2,79 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { UserModel} from "../../models/user.model";
+import {map} from "rxjs/operators";
 
 @Component({
   selector: 'app-dynamic-modal-component',
   template: `
-    <div
-      fxLayout="column"
-      fxLayoutAlign="center center"
-      style="padding-top: 10%"
-    >
-      <div class="modalView p-3">
-        <h3 mat-dialog-title>Looks like you are a new User..</h3>
-        <h5>Please Enter the following Details for your profile!</h5>
-        <mat-form-field appearance="standard">
-          <mat-label>Bio:</mat-label>
-          <textarea
-            [(ngModel)]="bio"
-            matInput
-            placeholder="Define Yourself.."
-            (input)="enableButtonFunction()"
-          ></textarea>
-        </mat-form-field>
+    <div class="modal-dialog animate__animated animate__fadeInUp">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 class="modal-title"><b>Looks like you are a new user..</b></h3>
+        </div>
+        <div class="modal-body" fxLayout="column" >
+          <h6>Enter the following Details for your profile!</h6>
+          <mat-form-field fxFlex >
+            <mat-label>Bio:</mat-label>
+            <textarea
+              [(ngModel)]="bio"
+              matInput
+              (input)="button.disabled=false"
+            ></textarea>
+          </mat-form-field>
+        </div>
+        <div class="modal-footer" >
+          <button
+            fxFlex
+            mat-raised-button
+            color="accent"
+            disabled="true"
+            #button
+            (click)="proceedToHome()">
+            Proceed to Home!
+          </button>
+        </div>
       </div>
-      <button
-        mat-raised-button
-        color="primary"
-        class="p-3 mt-3"
-        [disabled]="enableButton"
-        (click)="proceedToHome()"
-      >
-        Proceed to Home!
-      </button>
     </div>
   `,
   styleUrls: ['dynamicModal.css'],
 })
-export class DynamicModalComponent implements OnInit {
-  bio: string;
+export class DynamicModalComponent {
 
   constructor(
     private authSrv: AuthService,
     private afStore: AngularFirestore
   ) {}
 
-  userId;
-  enableButton: boolean = true;
-
-  ngOnInit(): void {
-    this.authSrv.userCredInfo.subscribe((user : UserModel) => {
-      this.userId = user.userUID;
-    });
-  }
-
-  enableButtonFunction() {
-    this.enableButton = false;
-  }
+  bio: string;
 
   proceedToHome() {
-    console.log(this.userId);
 
-    this.afStore
-      .collection('users')
-      .doc(this.userId)
-      .update({
-        bio: this.bio,
-        isNewUser: false,
-      })
-      .then(() => {
-        this.authSrv.clearModalView.complete();
+    this.authSrv.userCredInfo
+      .pipe(
+        map((user : UserModel)=> {
+          if(!!user){
+              return user.userUID}
+          else {
+            return null}
+
+        }))
+      .subscribe((uid) => {
+        if(uid !== null) {
+          this.afStore
+            .collection('users')
+            .doc(uid)
+            .update({
+              bio: this.bio,
+              isNewUser: false,
+            })
+            .then(() => {
+              this.authSrv.clearModalView.complete();
+            });
+        }
       });
+
+
+
   }
 }

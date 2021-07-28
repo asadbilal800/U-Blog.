@@ -20,7 +20,7 @@ import {map} from "rxjs/operators";
   styleUrls: ['./home.component.css'],
 })
 export class HomeComponent implements OnInit {
-  @ViewChild('sidenav', { static: true }) sideNav: MatSidenav;
+  @ViewChild('sidenav', { static: false }) sideNav: MatSidenav;
   @ViewChild(ModalDirective, { static: true }) modalDirective: ModalDirective;
   viewFeed = false;
   constructor(
@@ -33,36 +33,45 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
 
+    this.commonSrv.sideNavTogglerEmitter.subscribe(() => {
+      console.log('ran')
+      this.sideNav.toggle().then(() => null);
+    });
+
     this.authSrv.clearModalView.subscribe(() => {},error => {},
       () => {
         this.modalDirective.viewRef.clear();
         this.viewFeed = true;
       });
 
-    this.commonSrv.sideNavTogglerEmitter.subscribe(() => {
-      this.sideNav.toggle().then(() => null);
-    });
-
-    this.authSrv.userCredInfo
-      .pipe(
+    this.authSrv.userCredInfo.pipe(
         map((user : UserModel)=> {
-          if(user?.isNewUser){
-          return user.isNewUser
+          if(!!user){
+            return user.isNewUser
           }
-          return null
+          else {
+             return null
+          }
         }))
       .subscribe((isNewUser) => {
-      if(isNewUser){
-        (isNewUser) ? this.createModal() : this.viewFeed = true
-      }
+       if(isNewUser !== null) {
+         if(isNewUser){
+            this.createModal();
+         }
+         else {
+           this.viewFeed = true
+         }
+       }
     });
   }
 
   createModal() {
+
       let component = this.factResolve.resolveComponentFactory(
         DynamicModalComponent);
       this.modalDirective.viewRef.clear();
       this.modalDirective.viewRef.createComponent<DynamicModalComponent>(component);
+
   }
 
   signOut() {

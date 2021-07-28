@@ -22,7 +22,7 @@ import {UserModel} from "../../../models/user.model";
 export class ProfileFeedComponent implements OnInit {
   articleArray: articleModel[] = [];
   @ViewChild('imgArticle', { static: true }) img: ElementRef;
-  @ViewChild('sidenav', { static: true }) sideNav: MatSidenav;
+  @ViewChild('sidenav', { static: false }) sideNav: MatSidenav;
   articleArrayIds: string[] = [];
   noPosts: boolean = false;
   userCredInfo : UserModel;
@@ -43,6 +43,7 @@ export class ProfileFeedComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.spinner.show('mainScreenSpinner');
     this.authSrv.userCredInfo.pipe(take(1)).subscribe((data) => {
       this.userCredInfo = data;
       if (!this.userCredInfo.subscriptions) {
@@ -54,10 +55,9 @@ export class ProfileFeedComponent implements OnInit {
     this.commonSrv.sideNavTogglerEmitter.subscribe(() => {
       this.sideNav?.toggle();
     });
-    //this.spinner.show('mainScreenSpinner');
     this.getArticlesId().then(() => {
       this.loadArticle();
-   //   this.spinner.hide('mainScreenSpinner');
+      this.spinner.hide('mainScreenSpinner');
     });
   }
 
