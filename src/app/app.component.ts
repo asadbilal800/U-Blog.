@@ -17,19 +17,19 @@ export class AppComponent implements OnInit {
     private authSrv: AuthService,
   ) {}
   ngOnInit() {
-    if (!!this.authSrv.userCredInfo) {
+    console.log('Retreving state.If any')
       if (localStorage.getItem('user')) {
         let user = JSON.parse(localStorage.getItem('user'));
         this.authSrv.userCredInfo.next(user);
       }
-    }
   }
 
   logout(){
-    this.fsAuth.signOut().then(null);
-    localStorage.clear()
-    this.router.navigate(['/login'])
-    console.log('signing out');
+      localStorage.clear()
+      this.authSrv.userCredInfo.next(null)
+      this.fsAuth.signOut()
+      this.router.navigate(['/login'])
+      console.log('signing out');
 
   }
 }

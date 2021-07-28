@@ -18,24 +18,21 @@ export class HeaderComponent implements OnInit {
     private router: Router,
     private commonSrv: CommonService,
     private authSrv: AuthService,
-    private fsAuth: AngularFireAuth
   ) {}
 
   ngOnInit(): void {
     this.authSrv.userCredInfo.subscribe((data) => {
       if (data) {
         this.user = data;
-      }
-    });
-
-    this.fsAuth.idToken.subscribe((token) => {
-      if(token && !!this.user) {
         this.isAuth = true
       }
       else {
-        this.isAuth = false
+        this.isAuth = false;
+        this.user = null;
       }
+
     });
+
   }
 
   toggleSideNav() {

@@ -36,14 +36,11 @@ export class LoginComponent  {
     this.fsAuth
       .signInWithEmailAndPassword(username, password)
       .then((value) => {
-        this.fsAuth.user.subscribe((user) => {
-          this.authSrv.getUserDataFromFirebase(user.uid);
-        });
-        this.fsAuth.idToken.subscribe((token) => {
-          localStorage.setItem('token', token);
-          this.authSrv.userToken.next(token);
-          this.router.navigate(['/home/feed']);
-        });
+            this.authSrv.getUserDataFromFirebase(value.user.uid).then(
+              () => {
+                this.router.navigate(['./home/feed'])
+              }
+            )
       })
       .catch((err) => {
         this.snackBar.open(err.message, 'X', {
@@ -62,11 +59,7 @@ export class LoginComponent  {
         if(result.data()) {
           console.log('User already in the db')
           this.authSrv.getUserDataFromFirebase(credentials.user.uid);
-           this.fsAuth.idToken.subscribe((token) => {
-            localStorage.setItem('token', token);
-            this.authSrv.userToken.next(token);
             this.router.navigate(['/home/feed']);
-          });
         }
         else {
           console.log('user not in the db')
@@ -82,11 +75,7 @@ export class LoginComponent  {
             .set(signUpValues)
             .then((value) => {
               this.authSrv.getUserDataFromFirebase(credentials.user.uid);
-              this.fsAuth.idToken.subscribe((token) => {
-                localStorage.setItem('token', token);
-                this.authSrv.userToken.next(token);
                 this.router.navigate(['/home/feed']);
-              });
             });
 
         }

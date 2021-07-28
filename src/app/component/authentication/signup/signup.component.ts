@@ -13,10 +13,10 @@ import {NgxSpinnerService} from "ngx-spinner";
   styleUrls: ['./signup.component.css'],
 })
 export class SignupComponent {
+
   @ViewChild('form') myForm: NgForm;
   requiredMessage = MESSAGES.REQUIRED
   emailFormat = MESSAGES.EMAIL_BAD_FORMAT
-
 
   constructor(
     private fsStore: AngularFirestore,

@@ -8,20 +8,23 @@ import {
 import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { AuthService } from './auth.service';
+import {AngularFireAuth} from "@angular/fire/auth";
 
 @Injectable({ providedIn: 'root' })
-export class AuthGuardServiceActivate implements CanActivate {
-  isAuth = false;
+export class AuthGuard implements CanActivate {
   token;
-  constructor(private authSrv: AuthService, private router: Router) {
-    this.authSrv.userToken.subscribe((token) => {
-      if (token) {
-        this.isAuth = true;
-        this.token = token;
-      } else {
+  isAuth;
+  constructor(private authSrv: AuthService ,private router :Router) {
+    this.authSrv.userCredInfo.subscribe((user)=> {
+      if(user) {
+        this.isAuth = true
+      }
+      else {
         this.isAuth = false;
       }
-    });
+    })
+
+
   }
 
   canActivate(
@@ -33,11 +36,12 @@ export class AuthGuardServiceActivate implements CanActivate {
     | boolean
     | UrlTree {
 
-    if (localStorage.getItem('token')) {
-      return true;
-    }
-    else {
-      return this.router.createUrlTree(['/login']);
-    }
+     if(this.isAuth) {
+       return true
+     }
+     else {
+       return this.router.createUrlTree(['./login'])
+     }
+
   }
 }

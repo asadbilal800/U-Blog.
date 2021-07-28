@@ -13,7 +13,7 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFireStorageModule } from '@angular/fire/storage';
 import { AuthService } from './services/auth.service';
-import { AuthGuardServiceActivate } from './services/auth-guard-activate.service';
+import { AuthGuard } from './services/authGuard.service';
 import { SignInPhoneComponent } from './component/authentication/login/signIn-phone/signIn-phone.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -97,7 +97,7 @@ import {MatBadgeModule} from "@angular/material/badge";
     ],
   providers: [
     AuthService,
-    AuthGuardServiceActivate,
+    AuthGuard,
     CommonService,
   ],
   bootstrap: [AppComponent],

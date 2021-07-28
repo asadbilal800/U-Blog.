@@ -77,13 +77,8 @@ export class SignInPhoneComponent implements OnInit {
           if(userData.data()) {
             console.log('User already in the db')
             this.authSrv.getUserDataFromFirebase(result.user.uid);
-            this.fsAuth.idToken.subscribe((token) => {
-              localStorage.setItem('token', token);
-              this.authSrv.userToken.next(token);
-
               this.spinner.hide('mainScreenSpinner')
               this.router.navigate(['/home/feed']);
-            });
           }
           else {
             console.log('user not in the db')
@@ -98,13 +93,8 @@ export class SignInPhoneComponent implements OnInit {
               .set(signUpValues)
               .then((value) => {
                 this.authSrv.getUserDataFromFirebase(result.user.uid);
-                this.fsAuth.idToken.subscribe((token) => {
-                  localStorage.setItem('token', token);
-                  this.authSrv.userToken.next(token);
-
                   this.spinner.hide('mainScreenSpinner')
                   this.router.navigate(['/home/feed']);
-                });
               });
 
           }

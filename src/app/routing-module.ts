@@ -10,7 +10,7 @@ import { TopicsComponent } from './component/home/topics/topics.component';
 import { ProfileFeedComponent } from './component/home/profile-feed/profile-feed.component';
 import { ArticleComponent } from './component/home/article/article.component';
 import { BookmarksComponent } from './component/home/bookmarks/bookmarks.component';
-import { AuthGuardServiceActivate } from './services/auth-guard-activate.service';
+import { AuthGuard } from './services/authGuard.service';
 
 const routes: Routes = [
 
@@ -25,37 +25,37 @@ const routes: Routes = [
   {
     path: 'home',
     component: HomeComponent,
-    canActivate: [AuthGuardServiceActivate],
+    canActivate: [AuthGuard],
     children: [
       {
         path: 'write',
         component: WriteComponent,
-        canActivate: [AuthGuardServiceActivate],
+        canActivate: [AuthGuard],
       },
       {
         path: 'me',
         component: MeComponent,
-        canActivate: [AuthGuardServiceActivate],
+        canActivate: [AuthGuard],
       },
       {
         path: 'topics',
         component: TopicsComponent,
-        canActivate: [AuthGuardServiceActivate],
+        canActivate: [AuthGuard],
       },
       {
         path: 'feed',
         component: ProfileFeedComponent,
-        canActivate: [AuthGuardServiceActivate],
+        canActivate: [AuthGuard],
       },
       {
         path: 'article/:id',
         component: ArticleComponent,
-        canActivate: [AuthGuardServiceActivate],
+        canActivate: [AuthGuard],
       },
       {
         path: 'bookmarks',
         component: BookmarksComponent,
-        canActivate: [AuthGuardServiceActivate],
+        canActivate: [AuthGuard],
       },
     ],
   },
