@@ -16,18 +16,20 @@ export class AuthService {
   getUserDataFromFirebase(userUID: string) {
 
     return new Promise<void>((resolve)=> {
+      console.log('promise running')
     this.fsStore
     .collection('users')
-    .doc(userUID).valueChanges()
+    .doc(userUID).get()
     .pipe(
-      map( (userDetails : UserModel) => {
-        if(userDetails.password){
-          delete userDetails.password
+      map( (userDetails : DocumentSnapshot<UserModel>) => {
+        if(userDetails.data().password){
+          delete userDetails.data().password
         }
-        return userDetails
+        return userDetails.data()
       })
     )
     .subscribe((userDetails) => {
+      console.log('setting item')
       localStorage.setItem('user', JSON.stringify(userDetails));
       this.userCredInfo.next(userDetails);
     });

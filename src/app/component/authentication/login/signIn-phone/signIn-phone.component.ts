@@ -1,7 +1,7 @@
 import { Component, OnInit, } from '@angular/core';
 import firebase from 'firebase/app'
 import 'firebase/auth'
-import { AngularFirestore } from '@angular/fire/firestore';
+import {AngularFirestore, DocumentSnapshot} from '@angular/fire/firestore';
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {MESSAGES} from "../../../../services/common.service";
 import {AngularFireAuth} from "@angular/fire/auth";
@@ -73,12 +73,16 @@ export class SignInPhoneComponent implements OnInit {
       .confirm(String(code))
       .then((result) => {
         this.fsStore.collection('users').doc(`${result.user.uid}`)
-          .get().subscribe( (userData)=> {
-          if(userData.data()) {
+          .get().subscribe( (userData : DocumentSnapshot<UserModel>)=> {
+          if(userData) {
             console.log('User already in the db')
-            this.authSrv.getUserDataFromFirebase(result.user.uid);
-              this.spinner.hide('mainScreenSpinner')
-              this.router.navigate(['/home/feed']);
+            this.authSrv.getUserDataFromFirebase(userData.data().userUID).then(
+              () => {
+                this.spinner.hide('mainScreenSpinner')
+                this.router.navigate(['./home/feed'])
+              }
+            )
+
           }
           else {
             console.log('user not in the db')
@@ -86,15 +90,17 @@ export class SignInPhoneComponent implements OnInit {
               username: result.user.displayName,
               isNewUser: true,
             };
-
             this.fsStore
               .collection('users')
               .doc(`${result.user.uid}`)
               .set(signUpValues)
               .then((value) => {
-                this.authSrv.getUserDataFromFirebase(result.user.uid);
-                  this.spinner.hide('mainScreenSpinner')
-                  this.router.navigate(['/home/feed']);
+                this.authSrv.getUserDataFromFirebase(result.user.uid).then(
+                  () => {
+                    this.spinner.hide('mainScreenSpinner')
+                    this.router.navigate(['./home/feed'])
+                  }
+                )
               });
 
           }

@@ -1,54 +1,42 @@
 <ng-template appModalDirective> </ng-template>
 
 <mat-sidenav-container (click)="sidenav.close()" *ngIf="viewFeed">
+
   <mat-sidenav #sidenav opened="false" mode="over">
-    <mat-list>
-      <mat-list-item>
-        <a mat-icon-button routerLink="feed">
+    <mat-nav-list>
+        <a mat-list-item routerLink="feed">
           <mat-icon>feed</mat-icon> Blog Feed</a
         >
-      </mat-list-item>
       <mat-divider></mat-divider>
-      <mat-list-item>
-        <a mat-icon-button routerLink="topics">
+        <a mat-list-item routerLink="topics">
           <mat-icon>list_alt</mat-icon> Discover Topics!</a
         >
-      </mat-list-item>
       <mat-divider></mat-divider>
-      <mat-list-item>
-        <a mat-icon-button routerLink="bookmarks">
+        <a mat-list-item routerLink="bookmarks">
           <mat-icon>bookmark</mat-icon> Reading List</a
         >
-      </mat-list-item>
       <mat-divider></mat-divider>
-      <mat-list-item>
-        <a mat-icon-button routerLink="">
+        <a mat-list-item routerLink="">
           <mat-icon>people</mat-icon> Friends</a
         >
-      </mat-list-item>
-      <mat-divider></mat-divider
-      ><mat-list-item>
-        <a mat-icon-button routerLink="write">
+      <mat-divider></mat-divider>
+        <a mat-list-item routerLink="write">
           <mat-icon>create</mat-icon> Write Article</a
         >
-      </mat-list-item>
       <mat-divider></mat-divider>
-      <mat-list-item>
-        <a mat-icon-button routerLink="me">
+        <a mat-list-item routerLink="me">
           <mat-icon>account_circle</mat-icon> Edit Profile</a
         >
-      </mat-list-item>
       <mat-divider></mat-divider>
-      <mat-list-item>
-        <a mat-icon-button (click)="signOut()">
+        <a mat-list-item (click)="signOut()">
           <mat-icon>logout</mat-icon> Logout</a
         >
-      </mat-list-item>
       <mat-divider></mat-divider>
-    </mat-list>
+    </mat-nav-list>
   </mat-sidenav>
 
   <mat-sidenav-content>
     <router-outlet></router-outlet>
   </mat-sidenav-content>
+
 </mat-sidenav-container>

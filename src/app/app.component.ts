@@ -17,7 +17,7 @@ export class AppComponent implements OnInit {
     private authSrv: AuthService,
   ) {}
   ngOnInit() {
-    console.log('Retreving state.If any')
+    console.log('app component running!!!!!!!! retreving state.')
       if (localStorage.getItem('user')) {
         let user = JSON.parse(localStorage.getItem('user'));
         this.authSrv.userCredInfo.next(user);
@@ -25,11 +25,10 @@ export class AppComponent implements OnInit {
   }
 
   logout(){
-      localStorage.clear()
-      this.authSrv.userCredInfo.next(null)
-      this.fsAuth.signOut()
-      this.router.navigate(['/login'])
-      console.log('signing out');
-
+    localStorage.clear()
+    this.authSrv.userCredInfo.next(null)
+    this.fsAuth.signOut().then(null);
+    this.router.navigate(['/login'])
+    console.log('signing out');
   }
 }

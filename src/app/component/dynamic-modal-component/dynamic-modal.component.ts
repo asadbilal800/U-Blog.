@@ -69,7 +69,7 @@ export class DynamicModalComponent implements OnInit {
         isNewUser: false,
       })
       .then(() => {
-        this.authSrv.clearModalView.next();
+        this.authSrv.clearModalView.complete();
       });
   }
 }

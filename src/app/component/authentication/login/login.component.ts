@@ -3,11 +3,12 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
 import { AuthService } from '../../../services/auth.service';
-import { AngularFirestore } from '@angular/fire/firestore';
+import {AngularFirestore, DocumentSnapshot} from '@angular/fire/firestore';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import {UserModel} from "../../../models/user.model";
 import firebase from "firebase/app";
 import {MESSAGES} from "../../../services/common.service";
+import {NgxSpinnerService} from "ngx-spinner";
 
 
 @Component({
@@ -26,7 +27,8 @@ export class LoginComponent  {
     private authSrv: AuthService,
     private router: Router,
     private fsStore: AngularFirestore,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private spinner : NgxSpinnerService
   ) {}
 
   login() {
@@ -53,13 +55,17 @@ export class LoginComponent  {
   async differentLogin() {
     let provider = new firebase.auth.GoogleAuthProvider();
     const credentials = await this.fsAuth.signInWithPopup(provider);
-
+    this.spinner.show('mainScreenSpinner')
     this.fsStore.collection('users').doc(`${credentials.user.uid}`)
-      .get().subscribe( (result)=> {
-        if(result.data()) {
+      .get().subscribe( (result : DocumentSnapshot<UserModel>)=> {
+        if(result) {
           console.log('User already in the db')
-          this.authSrv.getUserDataFromFirebase(credentials.user.uid);
-            this.router.navigate(['/home/feed']);
+          this.authSrv.getUserDataFromFirebase(result.data().userUID).then(
+            () => {
+              this.spinner.hide('mainScreenSpinner')
+              this.router.navigate(['./home/feed'])
+            }
+          )
         }
         else {
           console.log('user not in the db')
@@ -74,8 +80,12 @@ export class LoginComponent  {
             .doc(`${credentials.user.uid}`)
             .set(signUpValues)
             .then((value) => {
-              this.authSrv.getUserDataFromFirebase(credentials.user.uid);
-                this.router.navigate(['/home/feed']);
+              this.authSrv.getUserDataFromFirebase(result.data().userUID).then(
+                () => {
+                  this.spinner.hide('mainScreenSpinner')
+                  this.router.navigate(['./home/feed'])
+                }
+              )
             });
 
         }

@@ -1,5 +1,4 @@
 import {
-  AfterViewInit,
   Component,
   ComponentFactoryResolver,
   OnInit,
@@ -12,6 +11,8 @@ import { CommonService } from '../../services/common.service';
 import { AuthService } from '../../services/auth.service';
 import { DynamicModalComponent } from '../dynamic-modal-component/dynamic-modal.component';
 import { ModalDirective } from '../../directives/modal.directive';
+import {UserModel} from "../../models/user.model";
+import {map} from "rxjs/operators";
 
 @Component({
   selector: 'app-home',
@@ -19,57 +20,56 @@ import { ModalDirective } from '../../directives/modal.directive';
   styleUrls: ['./home.component.css'],
 })
 export class HomeComponent implements OnInit {
-  @ViewChild('sidenav', { static: false }) sideNav: MatSidenav;
-  @ViewChild(ModalDirective, { static: false }) modalDirective: ModalDirective;
-  user;
+  @ViewChild('sidenav', { static: true }) sideNav: MatSidenav;
+  @ViewChild(ModalDirective, { static: true }) modalDirective: ModalDirective;
   viewFeed = false;
   constructor(
     private router: Router,
     private commonSrv: CommonService,
-    private afAuth: AngularFireAuth,
+    private fsAuth: AngularFireAuth,
     private authSrv: AuthService,
     private factResolve: ComponentFactoryResolver
   ) {}
 
   ngOnInit(): void {
-    this.authSrv.clearModalView.subscribe(() => {
-      this.modalDirective.viewRef.clear();
-      this.viewFeed = true;
-    });
+
+    this.authSrv.clearModalView.subscribe(() => {},error => {},
+      () => {
+        this.modalDirective.viewRef.clear();
+        this.viewFeed = true;
+      });
 
     this.commonSrv.sideNavTogglerEmitter.subscribe(() => {
       this.sideNav.toggle().then(() => null);
     });
 
-    this.authSrv.userCredInfo.subscribe((user) => {
-      this.user = user;
-      setTimeout(() => {
-        let newUser = this.user?.isNewUser;
-        if (newUser) {
-          this.createModal();
-        } else {
-          this.viewFeed = true;
-        }
-      }, 1000);
+    this.authSrv.userCredInfo
+      .pipe(
+        map((user : UserModel)=> {
+          if(user?.isNewUser){
+          return user.isNewUser
+          }
+          return null
+        }))
+      .subscribe((isNewUser) => {
+      if(isNewUser){
+        (isNewUser) ? this.createModal() : this.viewFeed = true
+      }
     });
   }
 
   createModal() {
-    setTimeout(() => {
       let component = this.factResolve.resolveComponentFactory(
-        DynamicModalComponent
-      );
+        DynamicModalComponent);
       this.modalDirective.viewRef.clear();
-      this.modalDirective.viewRef.createComponent<DynamicModalComponent>(
-        component
-      );
-    }, 1000);
+      this.modalDirective.viewRef.createComponent<DynamicModalComponent>(component);
   }
 
   signOut() {
-    this.afAuth.signOut().then(null);
-    localStorage.clear();
-    this.router.navigate(['/login']);
+    localStorage.clear()
+    this.authSrv.userCredInfo.next(null)
+    this.fsAuth.signOut().then(null);
+    this.router.navigate(['/login'])
     console.log('signing out');
   }
 }

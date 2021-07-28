@@ -1,22 +1,13 @@
 mat-sidenav-container{
-  margin : 0;
-  height: 100%;
-  background-color: white;
-  padding-top: 5%;
+  height: 100vh;
+  margin: 0;
+  background-color: aliceblue;
 }
 
 mat-sidenav{
-  width: 18%;
+  width: 20%;
   height: 100%;
   position: fixed;
-  background-color: ghostwhite;
-  margin:0;
-
 }
-
-.feed {
-  padding-top: 20%;
-}
-
 
 
