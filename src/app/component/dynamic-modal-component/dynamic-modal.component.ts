@@ -70,6 +70,9 @@ export class DynamicModalComponent {
               isNewUser: false,
             })
             .then(() => {
+              let user = JSON.parse(localStorage.getItem('user'))
+              user.isNewUser = false
+              localStorage.setItem('user',JSON.stringify(user))
               this.commonSrv.clearModalView.complete();
             });
         }

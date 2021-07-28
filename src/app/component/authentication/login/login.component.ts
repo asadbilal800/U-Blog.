@@ -52,47 +52,46 @@ export class LoginComponent  {
       });
   }
 
-  async differentLogin() {
+  async googleLogin() {
     let provider = new firebase.auth.GoogleAuthProvider();
     const credentials = await this.fsAuth.signInWithPopup(provider);
     this.spinner.show('mainScreenSpinner')
     this.fsStore.collection('users').doc(`${credentials.user.uid}`)
       .get().subscribe( (result : DocumentSnapshot<UserModel>)=> {
-        if(result) {
+
+        if(result.data()) {
           console.log('User already in the db')
-          this.authSrv.getUserDataFromFirebase(result.data().userUID).then(
-            () => {
-              this.spinner.hide('mainScreenSpinner')
-              this.router.navigate(['./home/feed'])
-            }
-          )
+          this.getUserDataFromFirebase(credentials.user.uid)
         }
+
         else {
           console.log('user not in the db')
           let signUpValues: UserModel = {
             username: credentials.user.displayName,
             email: credentials.user.email,
             isNewUser: true,
+            userUID: credentials.user.uid
           };
-
           this.fsStore
             .collection('users')
             .doc(`${credentials.user.uid}`)
             .set(signUpValues)
             .then((value) => {
-              this.authSrv.getUserDataFromFirebase(result.data().userUID).then(
-                () => {
-                  this.spinner.hide('mainScreenSpinner')
-                  this.router.navigate(['./home/feed'])
-                }
-              )
+              this.getUserDataFromFirebase(credentials.user.uid)
             });
 
         }
     })
+  }
 
 
-
-
+  getUserDataFromFirebase(uid){
+    this.authSrv.getUserDataFromFirebase(uid).then(
+      () => {
+        console.log('FINALLY')
+        this.spinner.hide('mainScreenSpinner')
+        this.router.navigate(['./home/feed'])
+      }
+    )
   }
 }

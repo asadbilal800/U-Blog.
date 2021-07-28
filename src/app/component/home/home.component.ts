@@ -13,6 +13,7 @@ import { DynamicModalComponent } from '../dynamic-modal-component/dynamic-modal.
 import { ModalDirective } from '../../directives/modal.directive';
 import {UserModel} from "../../models/user.model";
 import {map} from "rxjs/operators";
+import {NgxSpinnerService} from "ngx-spinner";
 
 @Component({
   selector: 'app-home',
@@ -28,11 +29,10 @@ export class HomeComponent implements OnInit {
     private commonSrv: CommonService,
     private fsAuth: AngularFireAuth,
     private authSrv: AuthService,
-    private factResolve: ComponentFactoryResolver
+    private factResolve: ComponentFactoryResolver,
   ) {}
 
   ngOnInit(): void {
-
     this.commonSrv.sideNavTogglerEmitter.subscribe(() => {
       console.log('ran')
       this.sideNav.toggle().then(() => null);
@@ -56,7 +56,8 @@ export class HomeComponent implements OnInit {
       .subscribe((isNewUser) => {
        if(isNewUser !== null) {
          if(isNewUser){
-            this.createModal();
+           this.createModal();
+
          }
          else {
            this.viewFeed = true

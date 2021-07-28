@@ -68,20 +68,16 @@ export class SignInPhoneComponent implements OnInit {
   }
 
   verify(code) {
-    this.spinner.show('mainScreenSpinner')
+    //this.spinner.show('mainScreenSpinner')
     this.localwinReference.confirmationResult
       .confirm(String(code))
       .then((result) => {
         this.fsStore.collection('users').doc(`${result.user.uid}`)
           .get().subscribe( (userData : DocumentSnapshot<UserModel>)=> {
-          if(userData) {
-            console.log('User already in the db')
-            this.authSrv.getUserDataFromFirebase(userData.data().userUID).then(
-              () => {
-                this.spinner.hide('mainScreenSpinner')
-                this.router.navigate(['./home/feed'])
-              }
-            )
+          if(userData.data()) {
+            console.log(userData)
+            console.log('user in the db')
+            this.getUserDataFromFirebase(result.user.uid)
 
           }
           else {
@@ -89,25 +85,21 @@ export class SignInPhoneComponent implements OnInit {
             let signUpValues: UserModel = {
               username: result.user.displayName,
               isNewUser: true,
+              userUID: result.data().userUID
             };
             this.fsStore
               .collection('users')
               .doc(`${result.user.uid}`)
               .set(signUpValues)
               .then((value) => {
-                this.authSrv.getUserDataFromFirebase(result.user.uid).then(
-                  () => {
-                    this.spinner.hide('mainScreenSpinner')
-                    this.router.navigate(['./home/feed'])
-                  }
-                )
+                this.getUserDataFromFirebase(result.user.uid)
               });
 
           }
         })
       })
       .catch((error) => {
-        this.spinner.hide('mainScreenSpinner')
+      //  this.spinner.hide('mainScreenSpinner')
         this.handleDisplayMessage(error.message)
       });
     this.captchaCheck = false
@@ -120,6 +112,15 @@ export class SignInPhoneComponent implements OnInit {
       verticalPosition: 'top',
       duration  :8000
     })
+  }
+
+  getUserDataFromFirebase(uid){
+    this.authSrv.getUserDataFromFirebase(uid).then(
+      () => {
+        this.spinner.hide('mainScreenSpinner')
+        this.router.navigate(['./home/feed'])
+      }
+    )
   }
 
 }

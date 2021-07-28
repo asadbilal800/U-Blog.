@@ -21,7 +21,7 @@ export class AuthService {
     .doc(userUID).get()
     .pipe(
       map( (userDetails : DocumentSnapshot<UserModel>) => {
-        if(userDetails.data().password){
+        if(userDetails.data()?.password){
           delete userDetails.data().password
         }
         return userDetails.data()
