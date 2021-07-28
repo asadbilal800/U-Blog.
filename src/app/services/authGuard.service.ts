@@ -8,7 +8,6 @@ import {
 import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { AuthService } from './auth.service';
-import {AngularFireAuth} from "@angular/fire/auth";
 
 @Injectable({ providedIn: 'root' })
 export class AuthGuard implements CanActivate {
@@ -16,14 +15,8 @@ export class AuthGuard implements CanActivate {
   isAuth;
   constructor(private authSrv: AuthService ,private router :Router) {
     this.authSrv.userCredInfo.subscribe((user)=> {
-      if(user) {
-        this.isAuth = true
-      }
-      else {
-        this.isAuth = false;
-      }
+      (user) ? this.isAuth = true : this.isAuth = false
     })
-
   }
 
   canActivate(

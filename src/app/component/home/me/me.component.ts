@@ -1,10 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import { AuthService } from '../../../services/auth.service';
 import { UserModel } from '../../../models/user.model';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import {CommonService, MESSAGES} from "../../../services/common.service";
+import {HomeComponent} from "../home.component";
+import {AngularFireAuth} from "@angular/fire/auth";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-me',
@@ -12,54 +15,117 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrls: ['./me.component.css'],
 })
 export class MeComponent implements OnInit {
-  currentUser: UserModel;
-  value: string = 'Change Display Picture';
+
+  user: UserModel;
+  bio;
+  bioInput: boolean = true
+  username;
+  usernameInput: boolean = true;
+
   constructor(
     private authSrv: AuthService,
-    private fsStore: AngularFireStorage,
-    private fireStore: AngularFirestore,
+    private fsStorage: AngularFireStorage,
+    private fsStore: AngularFirestore,
     private spinner: NgxSpinnerService,
-    private snackBar: MatSnackBar
+    private commonSrv : CommonService,
+    private fsAuth : AngularFireAuth,
+    private router : Router
   ) {}
 
   ngOnInit(): void {
     this.spinner.show('mainScreenSpinner');
-    this.authSrv.userCredInfo.subscribe((data) => {
-      this.currentUser = data;
+    this.authSrv.userCredInfo.subscribe((user : UserModel) => {
+      if(user){
+        this.user = user;
+        this.username = user.username
+        this.bio = user.bio
+      }
     });
     this.spinner.hide('mainScreenSpinner');
   }
 
   changePicture(event) {
     this.spinner.show('mainScreenSpinner');
-    console.log('method initiated.');
     let file = event.target.files[0];
-    this.fsStore
-      .ref(`display-pictures-users/${this.currentUser.username}`)
+    this.fsStorage
+      .ref(`display-pictures-users/${this.user.username}`)
       .put(file)
-      .then(() => {
-        console.log('Display picture has been set in the storage');
-        console.log('storing it in user table..');
-        this.spinner.hide('mainScreenSpinner');
-        this.snackBar.open('Image changed successfully', 'X', {
-          duration: 8000,
-          verticalPosition: 'top',
-        });
+      .then((image) => {
+        image.ref.getDownloadURL().then((url)=> {
+          this.fsStore
+            .collection('users')
+            .doc(`${this.user.userUID}`)
+            .update({ displayImage: url })
+            .then(() => {
+              this.spinner.hide('mainScreenSpinner');
+              this.commonSrv.updateLocalStorage(url,'displayImage')
+              this.commonSrv.handleDisplayMessage(MESSAGES.IMAGE_CHANGED)
+            });
+        })
 
-        this.fsStore
-          .ref(`display-pictures-users/${this.currentUser.username}`)
-          .getDownloadURL()
-          .subscribe((url) => {
-            console.log(url);
-            console.log(this.currentUser.userUID);
-            this.fireStore
-              .collection('users')
-              .doc(`${this.currentUser.userUID}`)
-              .update({ displayImage: url })
-              .then(() => {
-                console.log('successfully uploaded display picture');
-              });
-          });
       });
   }
+
+  deleteAccountData() {
+    let bool = confirm('Are you sure you want to delete user data!?')
+    if(bool){
+      this.spinner.show('mainScreenSpinner');
+      this.fsStore.collection('users').doc(this.user.userUID)
+        .update({
+          username: '',
+          displayImage :'',
+          subscriptions : [],
+          bookmarks : [],
+          isNewUser : true,
+          bio : ''
+        }).then(()=> {
+        this.spinner.hide('mainScreenSpinner');
+        this.commonSrv.handleDisplayMessage(MESSAGES.ACCOUNT_DATA_DELETE)
+        this.logOut()
+      })
+    }
+  }
+
+  logOut(){
+    localStorage.clear()
+    this.authSrv.userCredInfo.next(null)
+    this.fsAuth.signOut().then(null);
+    this.router.navigate(['/login'])
+  }
+
+  save(editable: string) {
+    if(editable === 'username'){
+      this.spinner.show('mainScreenSpinner');
+      this.fsStore
+        .collection('users')
+        .doc(this.user.userUID)
+        .update({
+          username: this.username,
+        })
+        .then(() => {
+          this.commonSrv.updateLocalStorage(this.username,"username")
+          this.spinner.hide('mainScreenSpinner');
+          this.commonSrv.handleDisplayMessage(MESSAGES.SUCCESS_EDIT)
+        });
+
+    }
+    else {
+      this.spinner.show('mainScreenSpinner');
+      this.fsStore
+        .collection('users')
+        .doc(this.user.userUID)
+        .update({
+          bio: this.bio,
+        })
+        .then(() => {
+          this.commonSrv.updateLocalStorage(this.bio,"bio")
+          this.spinner.hide('mainScreenSpinner');
+          this.commonSrv.handleDisplayMessage(MESSAGES.SUCCESS_EDIT)
+        });
+    }
+
+  }
+
+
+
 }

@@ -51,25 +51,23 @@ export class SignupComponent {
             .doc(`${data.user.uid}`)
             .set(signUpValues)
             .then((value) => {
-              this.spinner.hide('mainScreenSpinner')
-              this.snackBar.open(MESSAGES.SUCCESS_MESSAGE, 'X', {
-                duration: 8000,
-                verticalPosition: 'top',
-              });
-
+              this.handleDisplayMessage(MESSAGES.SUCCESS_MESSAGE)
             });
-
-
       })
       .catch((error) => {
-        this.spinner.hide('mainScreenSpinner')
-        this.snackBar.open(error.message, 'X', {
-          duration: 8000,
-          verticalPosition: 'top',
-        });
+        this.handleDisplayMessage(error.message)
       });
 
     this.myForm.resetForm();
     this.fsAuth.signOut().then(()=> {});
   }
+
+  handleDisplayMessage(message : string){
+    this.spinner.hide('mainScreenSpinner')
+    this.snackBar.open(message,'X',{
+      verticalPosition: 'top',
+      duration  :8000
+    })
+  }
+
 }

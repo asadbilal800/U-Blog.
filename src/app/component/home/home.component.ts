@@ -13,7 +13,6 @@ import { DynamicModalComponent } from '../dynamic-modal-component/dynamic-modal.
 import { ModalDirective } from '../../directives/modal.directive';
 import {UserModel} from "../../models/user.model";
 import {map} from "rxjs/operators";
-import {NgxSpinnerService} from "ngx-spinner";
 
 @Component({
   selector: 'app-home',
@@ -34,7 +33,6 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.commonSrv.sideNavTogglerEmitter.subscribe(() => {
-      console.log('ran')
       this.sideNav.toggle().then(() => null);
     });
 

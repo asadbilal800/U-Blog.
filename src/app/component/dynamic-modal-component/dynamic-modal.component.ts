@@ -8,7 +8,7 @@ import {CommonService} from "../../services/common.service";
 @Component({
   selector: 'app-dynamic-modal-component',
   template: `
-    <div class="modal-dialog animate__animated animate__fadeInUp" style="height: 1vh;">
+    <div class="modal-dialog animate__animated animate__fadeInUp">
       <div class="modal-content">
         <div class="modal-header">
           <h3 class="modal-title"><b>Looks like you are a new user..</b></h3>
@@ -41,7 +41,6 @@ import {CommonService} from "../../services/common.service";
 })
 export class DynamicModalComponent {
   bio: string;
-  @ViewChild('buttonSubmit',{read:ElementRef}) button : ElementRef;
   inputEmpty: boolean = true
   constructor(
     private authSrv: AuthService,
@@ -71,9 +70,7 @@ export class DynamicModalComponent {
               isNewUser: false,
             })
             .then(() => {
-              let user = JSON.parse(localStorage.getItem('user'))
-              user.isNewUser = false
-              localStorage.setItem('user',JSON.stringify(user))
+              this.commonSrv.updateLocalStorage(false,'isNewUser')
               this.commonSrv.clearModalView.complete();
             });
         }

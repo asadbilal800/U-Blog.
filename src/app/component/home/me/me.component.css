@@ -1,4 +1,5 @@
-.container {
-  height: 100%;
-  margin: 0;
+img {
+  border-radius: 80%;
+  width:300px;
+  height:400px;
 }

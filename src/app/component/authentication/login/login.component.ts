@@ -55,7 +55,6 @@ export class LoginComponent  {
   async googleLogin() {
     let provider = new firebase.auth.GoogleAuthProvider();
     const credentials = await this.fsAuth.signInWithPopup(provider);
-    this.spinner.show('mainScreenSpinner')
     this.fsStore.collection('users').doc(`${credentials.user.uid}`)
       .get().subscribe( (result : DocumentSnapshot<UserModel>)=> {
 
@@ -84,12 +83,9 @@ export class LoginComponent  {
     })
   }
 
-
   getUserDataFromFirebase(uid){
     this.authSrv.getUserDataFromFirebase(uid).then(
       () => {
-        console.log('FINALLY')
-        this.spinner.hide('mainScreenSpinner')
         this.router.navigate(['./home/feed'])
       }
     )
