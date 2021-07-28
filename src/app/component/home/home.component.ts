@@ -38,7 +38,7 @@ export class HomeComponent implements OnInit {
       this.sideNav.toggle().then(() => null);
     });
 
-    this.authSrv.clearModalView.subscribe(() => {},error => {},
+    this.commonSrv.clearModalView.subscribe(() => {},error => {},
       () => {
         this.modalDirective.viewRef.clear();
         this.viewFeed = true;

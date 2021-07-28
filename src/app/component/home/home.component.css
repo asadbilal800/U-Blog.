@@ -1,6 +1,5 @@
 mat-sidenav-container{
   height: 100vh;
-  margin: 0;
   background-color: aliceblue;
 }
 
@@ -9,5 +8,3 @@ mat-sidenav{
   height: 100%;
   position: fixed;
 }
-
-

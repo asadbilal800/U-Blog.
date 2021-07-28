@@ -3,15 +3,11 @@
 }
 
 .main-container {
-  height: 100%;
-  padding-top: 10%;
+  height:100vh;
+  padding-top: 10%
 }
 
 body {
   background-color: aliceblue;
   height: 100%;
-  min-height: 100%;
-  margin: 0
 }
-
-

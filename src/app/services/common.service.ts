@@ -4,6 +4,8 @@ import { Subject } from 'rxjs';
 @Injectable({ providedIn: 'root' })
 export class CommonService {
   sideNavTogglerEmitter = new Subject<void>();
+  clearModalView = new Subject<void>();
+
 }
 
 export enum MESSAGES {

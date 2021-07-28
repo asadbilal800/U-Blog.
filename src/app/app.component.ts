@@ -6,7 +6,6 @@ import { AuthService } from './services/auth.service';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css'],
 })
 export class AppComponent implements OnInit {
   title = 'U-blog';
@@ -17,7 +16,6 @@ export class AppComponent implements OnInit {
     private authSrv: AuthService,
   ) {}
   ngOnInit() {
-    console.log('app component running!!!!!!!! retreving state.')
       if (localStorage.getItem('user')) {
         let user = JSON.parse(localStorage.getItem('user'));
         this.authSrv.userCredInfo.next(user);

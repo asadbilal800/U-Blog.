@@ -3,11 +3,12 @@ import { AuthService } from '../../services/auth.service';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { UserModel} from "../../models/user.model";
 import {map} from "rxjs/operators";
+import {CommonService} from "../../services/common.service";
 
 @Component({
   selector: 'app-dynamic-modal-component',
   template: `
-    <div class="modal-dialog animate__animated animate__fadeInUp">
+    <div class="modal-dialog animate__animated animate__fadeInUp" style="height: 1vh;">
       <div class="modal-content">
         <div class="modal-header">
           <h3 class="modal-title"><b>Looks like you are a new user..</b></h3>
@@ -37,13 +38,13 @@ import {map} from "rxjs/operators";
       </div>
     </div>
   `,
-  styleUrls: ['dynamicModal.css'],
 })
 export class DynamicModalComponent {
 
   constructor(
     private authSrv: AuthService,
-    private afStore: AngularFirestore
+    private afStore: AngularFirestore,
+    private commonSrv: CommonService
   ) {}
 
   bio: string;
@@ -69,7 +70,7 @@ export class DynamicModalComponent {
               isNewUser: false,
             })
             .then(() => {
-              this.authSrv.clearModalView.complete();
+              this.commonSrv.clearModalView.complete();
             });
         }
       });

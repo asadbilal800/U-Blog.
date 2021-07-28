@@ -11,7 +11,6 @@ export class AuthService {
   constructor(private fsStore: AngularFirestore,private router : Router) {}
 
   userCredInfo = new BehaviorSubject<any>(null);
-  clearModalView = new Subject<void>();
 
   getUserDataFromFirebase(userUID: string) {
 
