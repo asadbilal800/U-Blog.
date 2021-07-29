@@ -60,8 +60,8 @@ const routes: Routes = [
       },
     ],
   },
-  {path : 'error-page', component: ErrorPageComponent},
-  {path: '**', redirectTo: 'error-page'}
+  // {path : 'error-page', component: ErrorPageComponent},
+  // {path: '**', redirectTo: 'error-page'}
 ];
 
 @NgModule({
