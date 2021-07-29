@@ -3,7 +3,7 @@ import firebase from 'firebase/app'
 import 'firebase/auth'
 import {AngularFirestore, DocumentSnapshot} from '@angular/fire/firestore';
 import {MatSnackBar} from "@angular/material/snack-bar";
-import {MESSAGES} from "../../../../services/common.service";
+import {CommonService, MESSAGES} from "../../../../services/common.service";
 import {AngularFireAuth} from "@angular/fire/auth";
 import {UserModel} from "../../../../models/user.model";
 import {NgxSpinnerService} from "ngx-spinner";
@@ -27,7 +27,8 @@ export class SignInPhoneComponent implements OnInit {
     private fsAuth : AngularFireAuth,
     private spinner : NgxSpinnerService,
     private authSrv : AuthService,
-    private router : Router
+    private router : Router,
+    private commonSrv : CommonService
   ) {
     this.localwinReference = window;
   }
@@ -54,15 +55,15 @@ export class SignInPhoneComponent implements OnInit {
       .signInWithPhoneNumber(this.phoneNumber, this.localwinReference.recaptchaVerifier)
       .then((confirmationResult) => {
         this.captchaVisible = true
-        this.handleDisplayMessage(MESSAGES.SUCCESS_SMS_MESSAGE)
+        this.commonSrv.handleDisplayMessage(MESSAGES.SUCCESS_SMS_MESSAGE)
         this.localwinReference.confirmationResult = confirmationResult;
       })
       .catch((error) => {
-        this.handleDisplayMessage(error.message)
+        this.commonSrv.handleDisplayMessage(error.message)
       });
     }
     else {
-      this.handleDisplayMessage(MESSAGES.TICK_MESSAGE)
+      this.commonSrv.handleDisplayMessage(MESSAGES.TICK_MESSAGE)
     }
 
   }
@@ -100,18 +101,11 @@ export class SignInPhoneComponent implements OnInit {
       })
       .catch((error) => {
       //  this.spinner.hide('mainScreenSpinner')
-        this.handleDisplayMessage(error.message)
+        this.commonSrv.handleDisplayMessage(error.message)
       });
     this.captchaCheck = false
     this.fsAuth.signOut().then(()=> null)
 
-  }
-
-  handleDisplayMessage(message : string){
-    this.snackBar.open(message,'X',{
-      verticalPosition: 'top',
-      duration  :8000
-    })
   }
 
   getUserDataFromFirebase(uid){

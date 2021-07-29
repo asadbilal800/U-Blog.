@@ -4,7 +4,7 @@ import { UserModel } from '../../../models/user.model';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { MESSAGES} from '../../../services/common.service';
+import {CommonService, MESSAGES} from '../../../services/common.service';
 import {NgxSpinnerService} from "ngx-spinner";
 
 @Component({
@@ -23,6 +23,7 @@ export class SignupComponent {
     private fsAuth: AngularFireAuth,
     private snackBar: MatSnackBar,
     private spinner : NgxSpinnerService,
+    private commonSrv : CommonService
   ) {}
 
 
@@ -51,23 +52,15 @@ export class SignupComponent {
             .doc(`${data.user.uid}`)
             .set(signUpValues)
             .then((value) => {
-              this.handleDisplayMessage(MESSAGES.SUCCESS_MESSAGE)
+              this.commonSrv.handleDisplayMessage(MESSAGES.SUCCESS_MESSAGE)
             });
       })
       .catch((error) => {
-        this.handleDisplayMessage(error.message)
+        this.commonSrv.handleDisplayMessage(error.message)
       });
 
     this.myForm.resetForm();
     this.fsAuth.signOut().then(()=> {});
-  }
-
-  handleDisplayMessage(message : string){
-    this.spinner.hide('mainScreenSpinner')
-    this.snackBar.open(message,'X',{
-      verticalPosition: 'top',
-      duration  :8000
-    })
   }
 
 }

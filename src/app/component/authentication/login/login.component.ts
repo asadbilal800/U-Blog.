@@ -7,7 +7,7 @@ import {AngularFirestore, DocumentSnapshot} from '@angular/fire/firestore';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import {UserModel} from "../../../models/user.model";
 import firebase from "firebase/app";
-import {MESSAGES} from "../../../services/common.service";
+import {CommonService, MESSAGES} from "../../../services/common.service";
 import {NgxSpinnerService} from "ngx-spinner";
 
 
@@ -27,8 +27,7 @@ export class LoginComponent  {
     private authSrv: AuthService,
     private router: Router,
     private fsStore: AngularFirestore,
-    private snackBar: MatSnackBar,
-    private spinner : NgxSpinnerService
+    private commonSrv : CommonService
   ) {}
 
   login() {
@@ -45,10 +44,7 @@ export class LoginComponent  {
             )
       })
       .catch((err) => {
-        this.snackBar.open(err.message, 'X', {
-          duration: 8000,
-          verticalPosition: 'top',
-        });
+        this.commonSrv.handleDisplayMessage(err.message)
       });
   }
 
