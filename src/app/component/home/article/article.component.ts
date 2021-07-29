@@ -49,6 +49,7 @@ export class ArticleComponent implements OnInit {
           this.commentsArray = this.article.comment;
         }
         else {
+          this.commentsArray = []
           this.commentsArray.push('No Comments For This Article So Far..')
         }
       });
