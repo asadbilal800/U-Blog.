@@ -4,7 +4,7 @@
   <!-- mat nav list contain a tag with mat-list-item -->
   <mat-nav-list fxLayout>
 
-    <a  *ngIf="isAuth" mat-list-item  (click)="toggleSideNav()"
+    <a  *ngIf="isAuth && !isNewUser" mat-list-item  (click)="toggleSideNav()"
     ><mat-icon>menu</mat-icon></a>
 
     <a  mat-list-item class="text-white" routerLink="/home/feed"
@@ -16,7 +16,7 @@
 
   <!-- mat list contain anything with mat-list-item -->
 
-  <mat-list *ngIf="isAuth" fxLayout>
+  <mat-list *ngIf="isAuth && !isNewUser" fxLayout>
 
     <mat-list-item>
       <mat-icon matBadge="7" matBadgeColor="warn">notifications</mat-icon>

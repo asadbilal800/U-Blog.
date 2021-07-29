@@ -12,6 +12,7 @@ import { UserModel } from '../../models/user.model';
 export class HeaderComponent implements OnInit {
   user: UserModel = null;
   isAuth = false;
+  isNewUser;
 
   constructor(
     private router: Router,
@@ -20,17 +21,22 @@ export class HeaderComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.authSrv.userCredInfo.subscribe((data) => {
-      if (data) {
+    this.authSrv.userCredInfo.subscribe((data : UserModel) => {
+      if (data ) {
         this.user = data;
         this.isAuth = true
+        this.isNewUser = data.isNewUser
       }
       else {
         this.isAuth = false;
         this.user = null;
       }
-
     });
+
+    this.commonSrv.clearModalView.subscribe(() => {},error => {},
+      () => {
+        this.isNewUser = false
+      });
 
   }
 
