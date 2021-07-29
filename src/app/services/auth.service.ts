@@ -10,6 +10,8 @@ export class AuthService {
 
   userCredInfo = new BehaviorSubject<any>(null);
 
+
+  //updating persistance local storage aswell as my authSrv.credInfo.
   getUserDataFromFirebase(userUID: string) {
 
     return new Promise<void>((resolve)=> {

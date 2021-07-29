@@ -5,3 +5,7 @@
 mat-card,mat-chip,mat-list{
   cursor: pointer;
 }
+
+mat-card {
+  background-color: ghostwhite;
+}
