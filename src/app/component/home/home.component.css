@@ -1,6 +1,9 @@
 mat-sidenav-container{
-  height: 100vh;
+  height: 100%;
   background-color: aliceblue;
+  margin:0;
+  padding-bottom: 1%;
+  padding-top: 1%;
 }
 
 mat-sidenav{

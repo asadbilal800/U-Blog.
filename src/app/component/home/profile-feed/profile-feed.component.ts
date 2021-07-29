@@ -1,14 +1,14 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { articleModel } from '../../../models/article.model';
 import { MatSidenav } from '@angular/material/sidenav';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AuthService } from '../../../services/auth.service';
 import { Router } from '@angular/router';
-import { AngularFirestore } from '@angular/fire/firestore';
+import {AngularFirestore, DocumentSnapshot} from '@angular/fire/firestore';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { CommonService } from '../../../services/common.service';
-import {  map, take } from 'rxjs/operators';
+import {CommonService, MESSAGES} from '../../../services/common.service';
+import {  map } from 'rxjs/operators';
 import firebase from 'firebase/app';
 import FieldValue = firebase.firestore.FieldValue;
 import { Observable } from 'rxjs';
@@ -20,17 +20,16 @@ import {UserModel} from "../../../models/user.model";
   styleUrls: ['./profile-feed.component.css'],
 })
 export class ProfileFeedComponent implements OnInit {
+
   articleArray: articleModel[] = [];
-  @ViewChild('imgArticle', { static: true }) img: ElementRef;
-  @ViewChild('sidenav', { static: false }) sideNav: MatSidenav;
   articleArrayIds: string[] = [];
   noPosts: boolean = false;
-  userCredInfo : UserModel;
-  latestArticles = [];
+  user : UserModel;
+  latestArticles : Array<articleModel> = []
   latestArticleIndex: number = 0;
-  observerableTopicList: Observable<any[]>;
-  subscribeToNone;
-  noFeed: boolean = true;
+  observerableTopicList: Observable<any[string]>;
+  @ViewChild('sidenav', { static: false }) sideNav: MatSidenav;
+
 
   constructor(
     private fsAuth: AngularFireAuth,
@@ -44,40 +43,37 @@ export class ProfileFeedComponent implements OnInit {
 
   ngOnInit(): void {
     this.spinner.show('mainScreenSpinner');
-    this.authSrv.userCredInfo.pipe(take(1)).subscribe((data) => {
-      this.userCredInfo = data;
-      if (!this.userCredInfo.subscriptions) {
-        this.subscribeToNone = true;
-      }
-    });
+    this.user = JSON.parse(localStorage.getItem('user'))
+
     this.getTopicList();
     this.realTimeDbChangesListener();
+
     this.commonSrv.sideNavTogglerEmitter.subscribe(() => {
       this.sideNav?.toggle();
     });
+
     this.getArticlesId().then(() => {
       this.loadArticle();
       this.spinner.hide('mainScreenSpinner');
     });
   }
 
+  //this is a heavy firebase task,so it will take time fetching data.
   getArticlesId() {
-    return new Promise<void>((resolve, reject) => {
-      this.userCredInfo.subscriptions?.map((subscription) => {
+    return new Promise<void>((resolve) => {
+      this.user.subscriptions?.map((subscription) => {
         this.fsStore
           .collection('all-articles', (ref) =>
             ref.where('tag', '==', subscription as string)
           )
-          .snapshotChanges()
+          .get()
           .pipe(
-            take(1),
-            map((data) => {
-              let arrayOfId = [];
-              data.map((val) => {
-                let id = val.payload.doc.id;
-                arrayOfId.push(id);
-              });
-              return arrayOfId;
+            map(data => {
+              let arrayId = []
+              data.docs.map(data => {
+                arrayId.push(data.id)
+              })
+             return arrayId
             })
           )
           .subscribe((idsArray) => {
@@ -90,41 +86,21 @@ export class ProfileFeedComponent implements OnInit {
       });
       setTimeout(() => {
         resolve();
-      }, 1000);
+      }, 3000);
     });
-  }
 
-  realTimeDbChangesListener() {
-    this.fsStore
-      .collection('all-articles')
-      .stateChanges(['added'])
 
-      .subscribe((action) => {
-        action.map((a) => {
-          if (this.latestArticleIndex == 5) {
-            this.latestArticleIndex = 0;
-          }
-          let article = a.payload.doc.data() as any;
-          this.latestArticles[this.latestArticleIndex] = article.name;
-          this.latestArticleIndex = this.latestArticleIndex + 1;
-        });
-      });
   }
 
   loadArticle() {
-    console.log('load article');
     let id = this.articleArrayIds.pop();
     if (id) {
-      console.log('pop id->' + id);
-      console.log(this.articleArrayIds.length);
       this.fsStore
         .collection('all-articles')
         .doc(id)
-        .snapshotChanges()
-        .pipe(take(1))
-        .subscribe((data) => {
-          let singleArticle = data.payload.data() as articleModel;
-          singleArticle.id = data.payload.id;
+        .get()
+        .subscribe((data : DocumentSnapshot<articleModel>) => {
+          let singleArticle = data.data() as articleModel;
           this.articleArray.push(singleArticle);
         });
     } else {
@@ -133,44 +109,74 @@ export class ProfileFeedComponent implements OnInit {
   }
 
   onScroll() {
-    if (this.noPosts) {
-      // do nothing..
-    } else {
+    if (!this.noPosts) {
       this.spinner.show('articleLoadingSpinner');
       setTimeout(() => {
         this.loadArticle();
         this.spinner.hide('articleLoadingSpinner');
-      }, 1500);
+      }, 1000);
+    } else {
+      //do nothing.
     }
   }
 
   bookmarkArticle(id: string) {
-    event.preventDefault();
-    console.log(id);
 
-    this.fsStore
-      .collection('users')
-      .doc(`${this.userCredInfo.userUID}`)
-      .update({ bookmarks: FieldValue.arrayUnion(id) })
-      .then(() => {
-        console.log('bookmark-ed!!');
-      });
+    event.preventDefault();
+
+    let user : UserModel = JSON.parse(localStorage.getItem('user'))
+    if(user.bookmarks.find(ids => ids === id)){
+      this.fsStore
+        .collection('users')
+        .doc(`${this.user.userUID}`)
+        .update({ bookmarks: FieldValue.arrayRemove(id) })
+        .then(() => {
+          this.commonSrv.updateLocalStorage(id,'bookmarks',true)
+          this.commonSrv.handleDisplayMessage(MESSAGES.UNBOOKMARK)
+        });
+    }
+    else {
+      this.fsStore
+        .collection('users')
+        .doc(`${this.user.userUID}`)
+        .update({bookmarks: FieldValue.arrayUnion(id)})
+        .then(() => {
+          this.commonSrv.updateLocalStorage(id, 'bookmarks', true)
+          this.commonSrv.handleDisplayMessage(MESSAGES.BOOKMARK)
+        });
+    }
   }
 
   getTopicList() {
+
     this.observerableTopicList = this.fsStore
       .collection('topics')
       .doc('SanBNEamwYEo8oZFqzJP')
       .valueChanges()
       .pipe(
-        take(1),
-        map((data) => {
+        map((data : Array<object>) => {
           let arrayOfTopics = [];
-          for (const item in data as any) {
+          for (const item in data) {
             arrayOfTopics.push(data[item]);
           }
           return arrayOfTopics;
         })
       );
+  }
+
+  realTimeDbChangesListener() {
+    this.fsStore
+      .collection('all-articles')
+      .stateChanges(['added'])
+      .subscribe((data) => {
+        data.map((data) => {
+          if (this.latestArticleIndex == 5) {
+            this.latestArticleIndex = 0;
+          }
+          let article = data.payload.doc.data() as articleModel;
+          this.latestArticles[this.latestArticleIndex] = article;
+          this.latestArticleIndex = this.latestArticleIndex + 1;
+        });
+      });
   }
 }

@@ -1,77 +1,85 @@
-<!-- mat drawer is a flex so no need to recreate it -->
-<div style="position: absolute;" class="ml-5">
-  <mat-chip-list aria-label="Fish selection">
+<!-- mat content drawer is a flex so no need to recreate it -->
+<div style="position: absolute;" >
+  <mat-chip-list>
     <mat-chip
       color="primary"
       selected
+      routerLink="../topics"
       *ngFor="let topic of observerableTopicList | async"
       >{{ topic }}</mat-chip
     >
   </mat-chip-list>
 </div>
-<div fxFlex="20"></div>
+
+<div fxFlex="15"></div>
+
 <div
-  fxFlex="30"
   style="padding-top: 10%"
+  fxFlex="35"
   infiniteScroll
   [infiniteScrollDistance]="2"
   [infiniteScrollThrottle]="50"
   (scrolled)="onScroll()"
 >
   <mat-card
-    class="mb-5 animate__animated animate__fadeIn"
-    *ngFor="let article of articleArray"
-  >
+    class="mb-5 animate__animated animate__fadeInUp"
+    *ngFor="let article of articleArray">
+
     <mat-card-header>
       <mat-card-title [routerLink]="['../article', article.id]">
         <h3>
           {{ this.article.name }}
         </h3>
       </mat-card-title>
-      <mat-card-subtitle
-        ><p><b>Author :</b> {{ this.article.owner }}</p>
+      <mat-card-subtitle>
+        <p><b>Author :</b> {{ this.article.owner }}</p>
       </mat-card-subtitle>
     </mat-card-header>
+
     <img
       [routerLink]="['../article', article.id]"
       mat-card-image
       src="{{ this.article.imgURL }}"
-      alt="No image"
-    />
+      alt="No image"/>
+
     <mat-card-content>
-      <p><b>Min to read :</b> {{ this.article.mintoRead }}</p>
-      <hr />
-      <p>
-        {{ this.article.description }}
-      </p>
+
+      <p><b>Min to read : {{ this.article.mintoRead }}</b></p>
+      <p>{{ this.article.description }}</p>
+      <hr>
+
     </mat-card-content>
+
     <mat-card-actions>
       <button
-              mat-list-item
+        mat-icon-button
         matTooltip="Bookmark it"
-        (click)="bookmarkArticle(this.article.id)"
-      >
+        (click)="bookmarkArticle(this.article.id)">
         <mat-icon>bookmark </mat-icon>
       </button>
     </mat-card-actions>
+
   </mat-card>
 
-  <div *ngIf="noPosts">
-    <h4 class="text-center">{{ "No more posts" | noFeedPipe }}</h4>
-  </div>
+  <h4  *ngIf="noPosts" class="text-center">{{ "No more posts" | noFeedPipe }}</h4>
+
 </div>
 
 <div fxFlex="10"></div>
-<div fxFlex="30">
-  <mat-card class="latest-article">
-    <p class="text-center"><b>Latest Articles</b></p>
-    <mat-list>
-      <mat-list-item *ngFor="let name of latestArticles">
-        <p><mat-icon>chevron_right</mat-icon>{{ name }}</p>
-      </mat-list-item>
-    </mat-list>
-  </mat-card>
+
+<div fxFlex style="padding-top: 10%">
+    <h4  class="text-center">Latest Articles</h4>
+  <mat-divider></mat-divider>
+  <mat-nav-list>
+      <a mat-list-item *ngFor="let article of latestArticles" [routerLink]="['../article',article.id]">
+        <mat-icon>chevron_right</mat-icon>{{ article.name }}
+      </a>
+    </mat-nav-list>
+  <mat-divider></mat-divider>
+
 </div>
+
+<div fxFlex="5"></div>
 
 <div class="fixed-bottom mb-5">
   <ngx-spinner

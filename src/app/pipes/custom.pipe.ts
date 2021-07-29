@@ -11,6 +11,6 @@ export class CustomPipe implements PipeTransform {
     if (this.authSrv.userCredInfo.value.subscriptions?.length) {
       return value;
     }
-    return 'Looks like your feed is empty..';
+    return 'Looks like your feed is empty.. Browse Topics!';
   }
 }

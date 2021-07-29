@@ -64,6 +64,9 @@ export enum MESSAGES {
   SUBSCRIBED = 'Followed!',
   UNSUBSCRIBED = 'UnFollowed!',
   FOLLOW = 'Follow!',
-  FOLLOWING = 'Following!'
+  FOLLOWING = 'Following!',
+  BOOKMARK = 'Bookmark set',
+  UNBOOKMARK = 'Bookmark remove.'
+
 
 }

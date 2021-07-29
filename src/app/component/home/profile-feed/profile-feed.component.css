@@ -2,9 +2,6 @@
   height: 400px;
 }
 
-mat-card.mat-card-feed {
+mat-card,mat-chip,mat-list{
   cursor: pointer;
 }
-
-
-
