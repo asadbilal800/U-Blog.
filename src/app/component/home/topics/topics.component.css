@@ -1,5 +1,7 @@
-.container {
-  padding-top: 10%;
-  height: 100%;
+button {
+  width: 10%;
+}
 
+* {
+  font-family: Quicksand;
 }

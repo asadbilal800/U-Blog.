@@ -47,6 +47,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { CustomPipe } from './pipes/custom.pipe';
 import {MatBadgeModule} from "@angular/material/badge";
 import { ErrorPageComponent } from './component/error-page/error-page.component';
+import { UnfollowPipe } from './pipes/unfollow.pipe';
 
 @NgModule({
   declarations: [
@@ -66,6 +67,7 @@ import { ErrorPageComponent } from './component/error-page/error-page.component'
     ModalDirective,
     CustomPipe,
     ErrorPageComponent,
+    UnfollowPipe,
   ],
     imports: [
         BrowserModule,

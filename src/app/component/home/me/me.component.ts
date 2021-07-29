@@ -58,7 +58,7 @@ export class MeComponent implements OnInit {
             .update({ displayImage: url })
             .then(() => {
               this.spinner.hide('mainScreenSpinner');
-              this.commonSrv.updateLocalStorage(url,'displayImage')
+              this.commonSrv.updateLocalStorage(url,'displayImage',false)
               this.commonSrv.handleDisplayMessage(MESSAGES.IMAGE_CHANGED)
             });
         })
@@ -103,7 +103,7 @@ export class MeComponent implements OnInit {
           username: this.username,
         })
         .then(() => {
-          this.commonSrv.updateLocalStorage(this.username,"username")
+          this.commonSrv.updateLocalStorage(this.username,"username",false)
           this.spinner.hide('mainScreenSpinner');
           this.commonSrv.handleDisplayMessage(MESSAGES.SUCCESS_EDIT)
         });
@@ -118,7 +118,7 @@ export class MeComponent implements OnInit {
           bio: this.bio,
         })
         .then(() => {
-          this.commonSrv.updateLocalStorage(this.bio,"bio")
+          this.commonSrv.updateLocalStorage(this.bio,"bio",false)
           this.spinner.hide('mainScreenSpinner');
           this.commonSrv.handleDisplayMessage(MESSAGES.SUCCESS_EDIT)
         });

@@ -70,7 +70,7 @@ export class DynamicModalComponent {
               isNewUser: false,
             })
             .then(() => {
-              this.commonSrv.updateLocalStorage(false,'isNewUser')
+              this.commonSrv.updateLocalStorage(false,'isNewUser',false)
               this.commonSrv.clearModalView.complete();
             });
         }

@@ -1,31 +1,29 @@
-<div class="container" fxLayoutAlign="space-around center">
-  <mat-list fxFlex>
-    <h3
-      class="mat-display-4 animate__animated animate__fadeInDownBig text-center"
-    >
+<mat-list fxFlex>
+
+    <h1  class="animate__animated animate__fadeInDownBig text-center">
       Topics
-    </h3>
+    </h1>
     <mat-list-item *ngFor="let topic of topicList">
-      <img
-        matListAvatar
-        src="https://familydoctor.org/wp-content/uploads/2016/11/exercise.jpg"
-        alt="no img"
-      />
-      <h3 matLine>
-        <p class="lead">{{ topic }}</p>
-      </h3>
-      <button color="primary" (click)="subscribeTopic(topic)" mat-raised-button>
-        Follow
+        <p matLine > - {{ topic }}</p>
+      <button  #button  (click)="subscribeTopic(topic,button)" color="primary"  mat-raised-button>
+        {{"Follow!" | unfollow:topic:button}}
       </button>
+
       <mat-divider></mat-divider>
     </mat-list-item>
+
   </mat-list>
-</div>
+
+<mat-toolbar color ="primary" class="fixed-bottom" >
+    <div fxFlex>
+      <p class="text-center"> &copy; CopyRights Reserved U-Blog 2021</p>
+    </div>
+  </mat-toolbar>
 
 <ngx-spinner
-  bdColor="rgba(0,0,0,0)"
+  name="mainScreenSpinner"
   size="medium"
-  color="#2e47b5"
-  type="square-jelly-box"
+  color="#1b26c3"
+  type="ball-clip-rotate"
   [fullScreen]="true"
 ></ngx-spinner>
