@@ -1,40 +1,53 @@
 <div class="main-container" fxLayout>
   <div fxFlex="20"></div>
+
+  <!--article section -->
   <div fxLayout="column" fxFlex>
-    <!--article image -->
-    <h1 class="mat-display-4">{{ article.name }}</h1>
-    <span class="help-block font-weight-light"
-      >Min to Read : {{ article.mintoRead }} Claps: {{ article.claps }}</span
-    >
+    <h1 class='mat-display-4 text-center'>{{ article?.name }}</h1>
+    <a  mat-icon-button><mat-icon>history_edu</mat-icon> Written By : {{ article?.owner }}
+    </a>
+    <img src="{{ article?.imgURL }}" alt="none" />
+    <a  mat-icon-button><mat-icon>auto_stories</mat-icon> Min to Read : {{ article?.mintoRead }}
+      <mat-icon>waving_hand</mat-icon>   Clap : {{ article?.claps }}
+    </a>
+    <h5>
+      {{ article?.itSelf }}
+    </h5>
+    <br> <br> <br>
 
-    <img fxFlex="50" src="{{ article.imgURL }}" alt="none" />
+    <!-- comment section -->
+    <h3><mat-icon>comment</mat-icon> Comments </h3>
+    <mat-divider></mat-divider>
+    <mat-list>
+      <mat-list-item  *ngFor="let comment of commentsArray">
+       <h5>{{ comment }} </h5>
+        <mat-divider></mat-divider>
+      </mat-list-item>
+    </mat-list>
+    <mat-divider></mat-divider>
 
-    <p class="lead">
-      {{ article.itSelf }}
-    </p>
-
-    <p class="text-center">Comment :</p>
-    <ul class="list-group list-group-flush">
-      <li class="list-group-item" *ngFor="let comment of commentsArray">
-        {{ comment }}
-      </li>
-    </ul>
-
+    <!-- clap section -->
     <button
-      color="warn"
-      mat-raised-button
-      color="primary"
-      [disabled]="disableClap"
-      (click)="clap()"
-    >
-      Clap!
+      mat-icon-button
+      #button
+      (click)="clap(button)">
+     <mat-icon>waving_hand</mat-icon> CLAP
     </button>
 
-    <label>Comment :</label>
-    <input type="text" [(ngModel)]="comment" />
-    <button mat-raised-button color="accent" (click)="makeComment()">
-      Comment!
+   <!-- make comment section -->
+    <mat-form-field>
+      <mat-label>Comment</mat-label>
+      <input
+        matInput
+        type="text"
+        [(ngModel)]="comment"
+        >
+    </mat-form-field>
+    <button mat-raised-button color="accent" (click)="makeComment()" [disabled]="!this.comment">
+      Comment
     </button>
   </div>
+
   <div fxFlex="20"></div>
+
 </div>

@@ -1,4 +1,7 @@
-.main-container {
-  height: 100%;
-  padding-top: 5%;
+img {
+  border : 1px solid black;
+}
+
+mat-list{
+  background-color: white;
 }

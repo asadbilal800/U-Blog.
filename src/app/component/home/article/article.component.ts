@@ -1,11 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, ElementRef, OnInit, Renderer2, ViewChild} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { AngularFirestore } from '@angular/fire/firestore';
-import { take } from 'rxjs/operators';
+import {AngularFirestore, DocumentSnapshot} from '@angular/fire/firestore';
+import {map, take} from 'rxjs/operators';
 import { articleModel } from '../../../models/article.model';
 import { AuthService } from '../../../services/auth.service';
 import firebase from 'firebase/app';
 import FieldValue = firebase.firestore.FieldValue;
+import {MatButton} from "@angular/material/button";
 
 @Component({
   selector: 'app-article',
@@ -13,69 +14,69 @@ import FieldValue = firebase.firestore.FieldValue;
   styleUrls: ['./article.component.css'],
 })
 export class ArticleComponent implements OnInit {
+
   articleId;
-  disableClap = false;
-  userCredInfo;
   article: articleModel;
-  comment: string = '';
+  userCredInfo;
+  comment: string;
   commentsArray: string[] = [];
+  clapReceived = false;
+
   constructor(
-    private routerSS: ActivatedRoute,
-    private afStore: AngularFirestore,
-    private authSrv: AuthService
+    private activatedRoute: ActivatedRoute,
+    private fsStore: AngularFirestore,
+    private authSrv: AuthService,
   ) {}
 
   ngOnInit(): void {
-    this.authSrv.userCredInfo.subscribe((data) => [(this.userCredInfo = data)]);
+    this.authSrv.userCredInfo.subscribe((user) => {
+      if (user) {
+        this.userCredInfo = user
+      }})
 
-    this.routerSS.params.subscribe((data) => {
+    this.activatedRoute.params.subscribe((data) => {
       this.articleId = data['id'];
     });
 
-    this.afStore
+    this.fsStore
       .collection('all-articles')
       .doc(this.articleId)
-      .snapshotChanges()
-      .pipe(take(1))
-      .subscribe((data) => {
-        console.log(data.payload.data());
-
-        this.article = data.payload.data() as articleModel;
-        this.commentsArray = this.article.comment;
+      .valueChanges()
+      .subscribe((article : articleModel) => {
+        this.article = article;
+        if(!!this.article?.comment?.length){
+          this.commentsArray = []
+          this.commentsArray = this.article.comment;
+        }
+        else {
+          this.commentsArray.push('No Comments For This Article So Far..')
+        }
       });
   }
 
   makeComment() {
-    console.log(this.comment);
 
-    let localCommentArray = [];
-    this.afStore
-      .collection('all-articles')
-      .doc(this.articleId)
-      .valueChanges()
-      .subscribe((data) => {
-        // localCommentArray = data.comment as any;
-      });
-    localCommentArray.push(this.comment);
-    console.log('array to be sent');
-    console.log(localCommentArray);
-    this.afStore
+    this.commentsArray.push(`${this.userCredInfo.username} Says : '` + this.comment +` '`)
+    this.fsStore
       .collection('all-articles')
       .doc(this.articleId)
       .update({
         comment: FieldValue.arrayUnion(
-          `${this.userCredInfo.username} says : ` + this.comment
+          `${this.userCredInfo.username} Says : '` + this.comment + ` '`
         ),
       });
+    this.comment = ''
   }
 
-  // }
-  clap() {
-    this.afStore
-      .collection('all-articles')
-      .doc(this.articleId)
-      .update({ claps: FieldValue.increment(1) });
-
-    this.disableClap = true;
+  clap(button : MatButton) {
+    button.color='primary'
+    if(!this.clapReceived){
+      this.clapReceived = true;
+      this.fsStore
+        .collection('all-articles')
+        .doc(this.articleId)
+        .update({ claps: FieldValue.increment(1) });
+    }
   }
+
 }
