@@ -3,7 +3,9 @@ import { AuthService } from '../../../services/auth.service';
 import { UserModel } from '../../../models/user.model';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { articleModel } from '../../../models/article.model';
-import { take } from 'rxjs/operators';
+import {map, take} from 'rxjs/operators';
+import firebase from "firebase";
+import DocumentSnapshot = firebase.firestore.DocumentSnapshot;
 
 @Component({
   selector: 'app-bookmarks',
@@ -14,35 +16,44 @@ export class BookmarksComponent implements OnInit {
   user: UserModel;
   bookmarkIdArray: string[] = [];
   articleArray: articleModel[] = [];
+  booksmarksNotAvailable=false;
+
   constructor(
     private authSrv: AuthService,
-    private afStore: AngularFirestore
+    private fsStore: AngularFirestore
   ) {}
 
   ngOnInit(): void {
     this.authSrv.userCredInfo.subscribe((user) => {
-      this.user = user;
+      if(user) {
+        this.user = user;
+        if(!!this.user?.bookmarks?.length){
+          this.bookmarkIdArray = this.user.bookmarks;
+        }
+        else {
+          this.booksmarksNotAvailable = true
+        }
+      }
     });
 
-    this.getBookMmarksOfUser();
     this.loadBookmark();
   }
 
-  getBookMmarksOfUser() {
-    this.bookmarkIdArray = this.user.bookmarks;
-  }
-
   loadBookmark() {
-    this.afStore.collection('all-articles');
 
+    this.fsStore.collection('all-articles');
     this.bookmarkIdArray.map((id) => {
-      this.afStore
+      this.fsStore
         .collection('all-articles')
         .doc(id)
-        .valueChanges()
-        .pipe(take(1))
+        .get()
+        .pipe(
+          map((article : DocumentSnapshot<articleModel>) => {
+            return article.data()
+          })
+        )
         .subscribe((article) => {
-          this.articleArray.push(article as articleModel);
+          this.articleArray.push(article);
         });
     });
   }

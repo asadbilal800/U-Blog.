@@ -126,7 +126,7 @@ export class ProfileFeedComponent implements OnInit {
     event.preventDefault();
 
     let user : UserModel = JSON.parse(localStorage.getItem('user'))
-    if(user.bookmarks.find(ids => ids === id)){
+    if(user?.bookmarks?.find(ids => ids === id)){
       this.fsStore
         .collection('users')
         .doc(`${this.user.userUID}`)
