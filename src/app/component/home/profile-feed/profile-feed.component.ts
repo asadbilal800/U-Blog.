@@ -42,6 +42,7 @@ export class ProfileFeedComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+
     this.spinner.show('mainScreenSpinner');
     this.user = JSON.parse(localStorage.getItem('user'))
 
@@ -131,7 +132,7 @@ export class ProfileFeedComponent implements OnInit {
         .doc(`${this.user.userUID}`)
         .update({ bookmarks: FieldValue.arrayRemove(id) })
         .then(() => {
-          this.commonSrv.updateLocalStorage(id,'bookmarks',true)
+          this.authSrv.getUserDataFromFirebase(this.user.userUID)
           this.commonSrv.handleDisplayMessage(MESSAGES.UNBOOKMARK)
         });
     }
@@ -141,7 +142,7 @@ export class ProfileFeedComponent implements OnInit {
         .doc(`${this.user.userUID}`)
         .update({bookmarks: FieldValue.arrayUnion(id)})
         .then(() => {
-          this.commonSrv.updateLocalStorage(id, 'bookmarks', true)
+          this.authSrv.getUserDataFromFirebase(this.user.userUID)
           this.commonSrv.handleDisplayMessage(MESSAGES.BOOKMARK)
         });
     }

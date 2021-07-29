@@ -26,7 +26,6 @@ export class AuthService {
       })
     )
     .subscribe((userDetails) => {
-      console.log('setting item')
       localStorage.setItem('user', JSON.stringify(userDetails));
       this.userCredInfo.next(userDetails);
     });

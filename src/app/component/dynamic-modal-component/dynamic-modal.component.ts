@@ -70,7 +70,7 @@ export class DynamicModalComponent {
               isNewUser: false,
             })
             .then(() => {
-              this.commonSrv.updateLocalStorage(false,'isNewUser',false)
+              this.authSrv.getUserDataFromFirebase(uid)
               this.commonSrv.clearModalView.complete();
             });
         }

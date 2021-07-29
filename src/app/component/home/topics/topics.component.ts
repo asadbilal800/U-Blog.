@@ -63,9 +63,10 @@ export class TopicsComponent implements OnInit {
         .doc(`${this.user.userUID}`)
         .update({ subscriptions: FieldValue.arrayUnion(topic) })
         .then(() => {
-          this.commonSrv.updateLocalStorage(topic,'subscriptions',true)
+          this.authSrv.getUserDataFromFirebase(this.user.userUID)
           this.commonSrv.handleDisplayMessage(MESSAGES.SUBSCRIBED)
         });
+
     }
     else {
       button.color = "primary"
@@ -76,7 +77,7 @@ export class TopicsComponent implements OnInit {
         .doc(`${this.user.userUID}`)
         .update({ subscriptions: FieldValue.arrayRemove(topic) })
         .then(() => {
-          this.commonSrv.updateLocalStorage(topic,'subscriptions',true)
+          this.authSrv.getUserDataFromFirebase(this.user.userUID)
           this.commonSrv.handleDisplayMessage(MESSAGES.UNSUBSCRIBED)
         });
     }
