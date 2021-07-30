@@ -86,7 +86,9 @@ export class SignInPhoneComponent implements OnInit {
             let signUpValues: UserModel = {
               username: result.user.displayName,
               isNewUser: true,
-              userUID: result.data().userUID
+              userUID: result.data().userUID,
+              newNotficationCount: 0,
+              notifications :[]
             };
             this.fsStore
               .collection('users')

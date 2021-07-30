@@ -9,6 +9,7 @@ export type UserModel = {
   isNewUser?: boolean;
   bio?: string;
   notifications?: string[],
-  newNotficationCount?: number
+  newNotficationCount?: number,
+  setNotification?: boolean
 };
 

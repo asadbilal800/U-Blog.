@@ -44,7 +44,9 @@ export class SignupComponent {
           email: email,
           password: password,
           isNewUser: true,
-          userUID: data.user.uid
+          userUID: data.user.uid,
+          newNotficationCount : 0,
+          notifications : []
         };
 
           this.fsStore

@@ -2,19 +2,9 @@
   color : white
 }
 
-mat-icon {
-  color : white
-}
-
-p {
-  font-family: Quicksand;
-}
-
-mat-menu.p {
-  background-color: #202020;
-}
-
 mat-sidenav{
-  height: 100%;
+  height: 20%;
+  width: 30%;
   position: fixed;
 }
+

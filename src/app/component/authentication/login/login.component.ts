@@ -28,7 +28,6 @@ export class LoginComponent  {
     private router: Router,
     private fsStore: AngularFirestore,
     private commonSrv : CommonService,
-    private spinner : NgxSpinnerService
   ) {}
 
   login() {
@@ -66,7 +65,9 @@ export class LoginComponent  {
             username: credentials.user.displayName,
             email: credentials.user.email,
             isNewUser: true,
-            userUID: credentials.user.uid
+            userUID: credentials.user.uid,
+            newNotficationCount: 0,
+            notifications : []
           };
           this.fsStore
             .collection('users')

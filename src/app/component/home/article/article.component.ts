@@ -1,7 +1,6 @@
-import {Component, ElementRef, OnInit, Renderer2, ViewChild} from '@angular/core';
+import {Component, OnInit, } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import {AngularFirestore, DocumentSnapshot} from '@angular/fire/firestore';
-import {map, take} from 'rxjs/operators';
+import {AngularFirestore, } from '@angular/fire/firestore';
 import { articleModel } from '../../../models/article.model';
 import { AuthService } from '../../../services/auth.service';
 import firebase from 'firebase/app';
@@ -73,18 +72,23 @@ export class ArticleComponent implements OnInit {
   clap(button : MatButton) {
 
     button.color='primary'
+
     if(!this.clapReceived){
       this.clapReceived = true;
       this.fsStore
         .collection('all-articles')
         .doc(this.articleId)
-        .update({ claps: FieldValue.increment(1) });
+        .update({ claps: FieldValue.increment(1) })
+
 
       //send notification to owner.
+      let notificationToSet = MESSAGES.CLAP_NOTIFY + this.article.name
+
       this.fsStore.collection('users')
         .doc(this.article.ownerId)
         .update({
-          notifications : FieldValue.arrayUnion(this.article.claps+ MESSAGES.CLAP_NOTIFY+ this.article.name)
+          notifications : FieldValue.arrayUnion(notificationToSet),
+          setNotification: true,
         })
 
     }

@@ -48,7 +48,7 @@ export enum MESSAGES {
   UNBOOKMARK = 'Bookmark remove.',
   ARTICLE_POSTED = 'Article Posted!',
   SET_IMAGE = 'Please Set Article Image!',
-  CLAP_NOTIFY ='  Clap Received From ',
+  CLAP_NOTIFY =' Clap Received For Article : ',
   NEW_NOTIFICATION = '1 New Notification Received'
 
 }

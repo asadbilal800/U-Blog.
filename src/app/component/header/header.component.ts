@@ -16,8 +16,8 @@ export class HeaderComponent implements OnInit {
   user: UserModel;
   isAuth = false;
   isNewUser;
-  notifications : string[] =[]
-  newNotficationCount= null
+  notifications : string[];
+  newNotficationCount= 0
   @ViewChild('SecondSidenav') secondSideNav;
 
   constructor(
@@ -34,17 +34,16 @@ export class HeaderComponent implements OnInit {
       this.secondSideNav.close().then(() => null);
     })
 
+
     this.authSrv.userCredInfo.subscribe((data : UserModel) => {
       if (data) {
         this.user = data;
         this.isAuth = true
         this.isNewUser = data.isNewUser
-        if(this.user?.newNotficationCount){
-          this.newNotficationCount =this.user.newNotficationCount
-        }
-        if( this.user?.notifications){
-          console.log('founddddddd OLD notification')
+        this.newNotficationCount = this.user.newNotficationCount
+        if( this.user.notifications.length){
           this.notifications = this.user.notifications
+          this.notifications.reverse()
         }
       }
       else {
@@ -59,24 +58,26 @@ export class HeaderComponent implements OnInit {
       .doc(this.user?.userUID)
       .valueChanges()
       .subscribe((user: UserModel)  => {
-        console.log('CHANGESSSS')
+        console.log('changes made to user.')
 
-        if(user?.notifications){
-          console.log(user.notifications)
-          console.log(this.user.notifications)
-          if(user?.notifications?.length === this.user?.notifications?.length){
-            console.log('NOTHING NEW.')
+        //first check notification are alive or not..means logged in.
+        if(this.user) {
+
+          if(user.setNotification){
+            console.log('SETTING.')
+            this.notifications = user.notifications
+            this.fsStore.collection('users').doc(this.user.userUID)
+              .update({
+                setNotification : false,
+                newNotficationCount : FieldValue.increment(1)
+              })
+            this.commonSrv.handleDisplayMessage(MESSAGES.NEW_NOTIFICATION, true)
+            this.authSrv.getUserDataFromFirebase(this.user.userUID)
           }
           else {
-            console.log('notified')
-            this.commonSrv.handleDisplayMessage(MESSAGES.NEW_NOTIFICATION,true)
-            this.fsStore.collection('users').doc(this?.user?.userUID)
-              .update({
-                newNotficationCount : FieldValue.increment(1)})
-              this.authSrv.getUserDataFromFirebase(this?.user?.userUID)
-
+              console.log('NOTHING NEW.')
+            }
           }
-        }
       })
 
     this.commonSrv.clearModalView.subscribe(() => {},error => {},
@@ -92,12 +93,15 @@ export class HeaderComponent implements OnInit {
 
   clearNotificationCount(SecondSideNav) {
 
-    SecondSideNav.toggle()
-    if(this.newNotficationCount !== 0 && this.newNotficationCount !== null) {
+    SecondSideNav.toggle();
+
+    if(this.newNotficationCount !== 0) {
       this.fsStore.collection('users').doc(this?.user?.userUID)
         .update({
-          newNotficationCount : 0})
-      this.newNotficationCount = 0;
+          newNotficationCount : 0,
+          notifications : []
+        })
+
       this.authSrv.getUserDataFromFirebase(this.user.userUID)
     }
     else {
