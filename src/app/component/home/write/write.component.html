@@ -1,26 +1,86 @@
-<form #form="ngForm" (ngSubmit)="write(form)">
-  file
+<div fxLayout>
 
-  <input type="file" name="file" ngModel (change)="upload($event)" />
+<div fxFlex="10"></div>
 
-  name
+  <div fxFlex>
+    <form #form="ngForm" (ngSubmit)="write(form)" >
 
-  <input type="text" name="name" ngModel />
+      <h3>Write Article</h3>
+      <mat-form-field  appearance="fill" >
+        <mat-label>Start Writing Your Best Story Here..</mat-label>
+        <textarea matInput
+                  cdkTextareaAutosize
+                  cdkAutosizeMinRows="20"
+                  cdkAutosizeMaxRows="100"
+                  ngModel
+                  name="itSelf"
+                  required
+        ></textarea>
+      </mat-form-field>
 
-  mintoread
-  <input type="number" name="minToRead" ngModel />
+      <div class="image-article-input">
+        <input   #articleImage type="file"  hidden  (change)="upload($event)" />
+        <button  type="button" mat-raised-button color="warn" (click)="articleImage.click()">Set Image Article</button>
+      </div>
 
-  article
-  <input type="text" name="itSelf" ngModel />
 
-  desc
-  <input type="text" name="desc" ngModel />
+      <h3> Article Name</h3>
+      <mat-form-field  appearance="fill" >
+        <mat-label> Article Name</mat-label>
+        <input matInput
+               name="name"
+               required
+               ngModel
+        />
+      </mat-form-field>
 
-  tag
-  <select name="dropdownTag" ngModel>
-    <option *ngFor="let item of topicList" value="{{ item }}">
-      {{ item }}
-    </option>
-  </select>
-  <button type="submit">submit</button>
-</form>
+      <h3> Short Description</h3>
+      <mat-form-field  appearance="fill" >
+        <mat-label> Short Description</mat-label>
+        <input matInput
+               name="desc"
+               ngModel
+               required
+               type="text"
+        />
+      </mat-form-field>
+
+      <h3> How many minutes is it going to take to Read?</h3>
+      <mat-form-field  appearance="fill" >
+        <mat-label> Approximiate minutes</mat-label>
+        <input matInput
+               name="minToRead"
+               ngModel
+               required
+               type="number"
+        />
+      </mat-form-field>
+
+
+
+
+      <h3> Which Topic It Belongs To?</h3>
+      <mat-form-field  appearance="fill" >
+        <mat-select name="dropdownTag" required ngModel placeholder="Choose Topic">
+          <mat-option *ngFor="let item of topicList" value="{{ item }}">
+            {{ item }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <button  mat-raised-button  color="accent" [disabled]="!form.valid" type="submit">Post!</button>
+
+    </form>
+  </div>
+
+<div fxFlex="10"></div>
+
+</div>
+
+<ngx-spinner
+  name="mainScreenSpinner"
+  size="medium"
+  color="#1b26c3"
+  type="ball-clip-rotate"
+  [fullScreen]="true"
+></ngx-spinner>

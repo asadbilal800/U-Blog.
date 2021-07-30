@@ -33,7 +33,8 @@ export enum MESSAGES {
   FOLLOW = 'Follow!',
   FOLLOWING = 'Following!',
   BOOKMARK = 'Bookmark set',
-  UNBOOKMARK = 'Bookmark remove.'
-
+  UNBOOKMARK = 'Bookmark remove.',
+  ARTICLE_POSTED = 'Article Posted!',
+  SET_IMAGE = 'Please Set Article Image!'
 
 }
