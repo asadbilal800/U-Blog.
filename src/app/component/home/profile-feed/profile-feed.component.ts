@@ -28,6 +28,7 @@ export class ProfileFeedComponent implements OnInit {
   latestArticles : Array<articleModel> = []
   latestArticleIndex: number = 0;
   observerableTopicList: Observable<any[string]>;
+  myTopicList = []
   @ViewChild('sidenav', { static: false }) sideNav: MatSidenav;
 
 
@@ -44,7 +45,12 @@ export class ProfileFeedComponent implements OnInit {
   ngOnInit(): void {
 
     this.spinner.show('mainScreenSpinner');
-    this.user = JSON.parse(localStorage.getItem('user'))
+     this.authSrv.userCredInfo.subscribe((user) => {
+      this.user = user;
+      if(this.user?.subscriptions){
+        this.myTopicList =  this.user.subscriptions
+      }
+    })
 
     this.getTopicList();
     this.realTimeDbChangesListener();
