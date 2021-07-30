@@ -11,3 +11,7 @@ body {
   background-color: aliceblue;
   height: 100%;
 }
+
+body {
+  overflow-x: hidden;
+}

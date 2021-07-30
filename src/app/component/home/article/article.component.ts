@@ -7,6 +7,7 @@ import { AuthService } from '../../../services/auth.service';
 import firebase from 'firebase/app';
 import FieldValue = firebase.firestore.FieldValue;
 import {MatButton} from "@angular/material/button";
+import {MESSAGES} from "../../../services/common.service";
 
 @Component({
   selector: 'app-article',
@@ -70,6 +71,7 @@ export class ArticleComponent implements OnInit {
   }
 
   clap(button : MatButton) {
+
     button.color='primary'
     if(!this.clapReceived){
       this.clapReceived = true;
@@ -77,7 +79,17 @@ export class ArticleComponent implements OnInit {
         .collection('all-articles')
         .doc(this.articleId)
         .update({ claps: FieldValue.increment(1) });
+
+      //send notification to owner.
+      this.fsStore.collection('users')
+        .doc(this.article.ownerId)
+        .update({
+          notifications : FieldValue.arrayUnion(this.article.claps+ MESSAGES.CLAP_NOTIFY+ this.article.name)
+        })
+
     }
+
+
   }
 
 }

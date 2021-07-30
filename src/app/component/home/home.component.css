@@ -4,6 +4,8 @@ mat-sidenav-container{
   margin:0;
   padding-top: 1%;
   padding-bottom: 5%;
+  overflow-x: hidden;
+
 }
 
 mat-sidenav{

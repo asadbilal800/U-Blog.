@@ -68,6 +68,7 @@ export class WriteComponent implements OnInit {
         name: form.value.name,
         claps: 0,
         description: form.value.desc,
+        ownerId: this.user.userUID
       };
 
       this.fsStore

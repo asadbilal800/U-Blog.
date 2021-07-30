@@ -8,5 +8,7 @@ export type UserModel = {
   bookmarks?: string[];
   isNewUser?: boolean;
   bio?: string;
+  notifications?: string[],
+  newNotficationCount?: number
 };
 

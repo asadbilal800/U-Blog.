@@ -1,7 +1,20 @@
-:any-link,p {
+:any-link{
   color : white
 }
 
 mat-icon {
   color : white
+}
+
+p {
+  font-family: Quicksand;
+}
+
+mat-menu.p {
+  background-color: #202020;
+}
+
+mat-sidenav{
+  height: 100%;
+  position: fixed;
 }

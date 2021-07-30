@@ -14,27 +14,34 @@ export class AuthService {
   //updating persistance local storage aswell as my authSrv.credInfo.
   getUserDataFromFirebase(userUID: string) {
 
-    return new Promise<void>((resolve)=> {
-    this.fsStore
-    .collection('users')
-    .doc(userUID).get()
-    .pipe(
-      map( (userDetails : DocumentSnapshot<UserModel>) => {
-        let userDetail = userDetails.data()
-        if(userDetail?.password){
-          delete userDetail.password
-        }
-        return userDetail
+    if(userUID) {
+
+      return new Promise<void>((resolve) => {
+        this.fsStore
+          .collection('users')
+          .doc(userUID).get()
+          .pipe(
+            map((userDetails: DocumentSnapshot<UserModel>) => {
+              let userDetail = userDetails.data()
+              if (userDetail?.password) {
+                delete userDetail.password
+              }
+              return userDetail
+            })
+          )
+          .subscribe((userDetails) => {
+            localStorage.setItem('user', JSON.stringify(userDetails));
+            this.userCredInfo.next(userDetails);
+          });
+        setTimeout(() => {
+          resolve()
+        }, 1000)
       })
-    )
-    .subscribe((userDetails) => {
-      localStorage.setItem('user', JSON.stringify(userDetails));
-      this.userCredInfo.next(userDetails);
-    });
-    setTimeout(()=> {
+
+    }
+    return new Promise<void>((resolve)=> {
       resolve()
-    },1000)
-})
+    })
 
   }
 }

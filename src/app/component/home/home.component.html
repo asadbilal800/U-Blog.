@@ -1,6 +1,6 @@
 <ng-template appModalDirective> </ng-template>
 
-<mat-sidenav-container (click)="sidenav.close()" *ngIf="viewFeed">
+<mat-sidenav-container (click)="sidenav.close(); closeSecondSideNav()" *ngIf="viewFeed">
 
   <mat-sidenav #sidenav opened="false" mode="over">
     <mat-nav-list>
@@ -16,10 +16,7 @@
           <mat-icon>bookmark</mat-icon> Reading List</a
         >
       <mat-divider></mat-divider>
-        <a mat-list-item routerLink="">
-          <mat-icon>people</mat-icon> Friends</a
-        >
-      <mat-divider></mat-divider>
+
         <a mat-list-item routerLink="write">
           <mat-icon>create</mat-icon> Write Article</a
         >

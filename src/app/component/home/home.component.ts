@@ -20,56 +20,59 @@ import {map} from "rxjs/operators";
   styleUrls: ['./home.component.css'],
 })
 export class HomeComponent implements OnInit {
-  @ViewChild('sidenav', { static: false }) sideNav: MatSidenav;
-  @ViewChild(ModalDirective, { static: true }) modalDirective: ModalDirective;
+  @ViewChild('sidenav', {static: false}) sideNav: MatSidenav;
+  @ViewChild(ModalDirective, {static: true}) modalDirective: ModalDirective;
   viewFeed = false;
+
   constructor(
     private router: Router,
     private commonSrv: CommonService,
     private fsAuth: AngularFireAuth,
     private authSrv: AuthService,
     private factResolve: ComponentFactoryResolver,
-  ) {}
+  ) {
+  }
 
   ngOnInit(): void {
     this.commonSrv.sideNavTogglerEmitter.subscribe(() => {
       this.sideNav.toggle().then(() => null);
     });
 
-    this.commonSrv.clearModalView.subscribe(() => {},error => {},
+
+    this.commonSrv.clearModalView.subscribe(() => {
+      }, error => {
+      },
       () => {
         this.modalDirective.viewRef.clear();
         this.viewFeed = true;
       });
 
     this.authSrv.userCredInfo.pipe(
-        map((user : UserModel)=> {
-          if(!!user){
-            return user.isNewUser
-          }
-          else {
-             return null
-          }
-        }))
+      map((user: UserModel) => {
+        if (!!user) {
+          return user.isNewUser
+        } else {
+          return null
+        }
+      }))
       .subscribe((isNewUser) => {
-       if(isNewUser !== null) {
-         if(isNewUser){
-           this.createModal();
+        if (isNewUser !== null) {
+          if (isNewUser) {
+            this.createModal();
 
-         }
-         else {
-           this.viewFeed = true
-         }
-       }
-    });
+          } else {
+            this.viewFeed = true
+          }
+        }
+      });
   }
 
   createModal() {
 
-      let component = this.factResolve.resolveComponentFactory(
-        DynamicModalComponent);
-      this.modalDirective.viewRef.clear();
-      this.modalDirective.viewRef.createComponent<DynamicModalComponent>(component);
+    let component = this.factResolve.resolveComponentFactory(
+      DynamicModalComponent);
+    this.modalDirective.viewRef.clear();
+    this.modalDirective.viewRef.createComponent<DynamicModalComponent>(component);
 
   }
 
@@ -79,5 +82,9 @@ export class HomeComponent implements OnInit {
     this.fsAuth.signOut().then(null);
     this.router.navigate(['/login'])
     console.log('signing out');
+  }
+
+  closeSecondSideNav() {
+    this.commonSrv.secondSideNavTogglerEmitter.next();
   }
 }

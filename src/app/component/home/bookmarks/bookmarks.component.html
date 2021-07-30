@@ -7,7 +7,7 @@
   <mat-divider></mat-divider>
   <a mat-list-item *ngFor="let article of articleArray" [routerLink]="['../article', article.id]">
     <img matListAvatar src="{{article.imgURL}}" />
-    <h3> {{article.name}}</h3>
+    <h4> {{article.name}}</h4>
     <mat-divider></mat-divider>
   </a>
   <h3 class="text-center" *ngIf="booksmarksNotAvailable" >No Bookmark has been set so far...</h3>

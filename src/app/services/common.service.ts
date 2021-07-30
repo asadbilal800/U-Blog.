@@ -7,14 +7,26 @@ export class CommonService {
   constructor(private snackBar : MatSnackBar) {
   }
   sideNavTogglerEmitter = new Subject<void>();
+  secondSideNavTogglerEmitter = new Subject<void>();
+
 
   clearModalView = new Subject<void>();
 
-  handleDisplayMessage(message : string){
-    this.snackBar.open(message,'X',{
-      verticalPosition: 'top',
-      duration  :8000
-    })
+  handleDisplayMessage(message : string,isNotification?: boolean){
+
+    if(isNotification){
+      this.snackBar.open(message,'X',{
+        horizontalPosition: 'end',
+        verticalPosition : 'bottom',
+        duration  :8000
+      })
+    }
+    else {
+      this.snackBar.open(message, 'X', {
+        verticalPosition: 'top',
+        duration: 8000
+      })
+    }
   }
 
 }
@@ -35,6 +47,8 @@ export enum MESSAGES {
   BOOKMARK = 'Bookmark set',
   UNBOOKMARK = 'Bookmark remove.',
   ARTICLE_POSTED = 'Article Posted!',
-  SET_IMAGE = 'Please Set Article Image!'
+  SET_IMAGE = 'Please Set Article Image!',
+  CLAP_NOTIFY ='  Clap Received From ',
+  NEW_NOTIFICATION = '1 New Notification Received'
 
 }

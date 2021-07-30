@@ -1,5 +1,5 @@
 <!--mat toolbar is a flexbox itself -->
-<mat-toolbar  color="primary">
+<mat-toolbar color="primary"  >
 
   <!-- mat nav list contain a tag with mat-list-item -->
   <mat-nav-list fxLayout>
@@ -18,9 +18,40 @@
 
   <mat-nav-list *ngIf="isAuth && !isNewUser" fxLayout>
 
-    <a mat-list-item matTooltip="Your Notifications">
-      <mat-icon matBadge="7" matBadgeColor="warn">notifications</mat-icon>
+    <a   mat-list-item matTooltip="Your Notifications" (click)="clearNotificationCount(SecondSidenav)">
+      <mat-icon matBadge="{{this.newNotficationCount}}" matBadgeColor="warn">notifications</mat-icon>
     </a>
+
+    <!-- mat menu is used as dropdown -->
+    <!-- didnt use mat menu list item because it dosent show full text -->
+
+    <mat-sidenav #SecondSidenav opened="false" position="end" mode="over">
+
+      <mat-nav-list>
+        <a mat-list-item>
+          <mat-icon>notifications_active</mat-icon>
+          <b> Notifications</b>
+        </a>
+        <a mat-list-item *ngFor="let notification of notifications">
+           {{notifications}}
+        </a>
+        <mat-divider></mat-divider>
+      </mat-nav-list>
+    </mat-sidenav>
+
+<!--   <mat-menu #menu >-->
+
+<!--     <div *ngIf="notifications?.length">-->
+<!--     <p  *ngFor=" let notification of notifications">-->
+<!--       <b> {{notification}} </b>-->
+<!--       <mat-divider></mat-divider>-->
+<!--     </p>-->
+<!--     </div>-->
+
+<!--     <p mat-menu-item  *ngIf="!notifications?.length" >-->
+<!--       You have no Notifications.-->
+<!--     </p>-->
+<!--   </mat-menu>-->
 
     <a mat-list-item matTooltip="Your Bookmarks">
       <button mat-icon-button routerLink="/home/bookmarks">
@@ -32,10 +63,6 @@
       <button mat-icon-button routerLink="/home/write">
         <mat-icon>mode</mat-icon>
       </button>
-    </a>
-
-    <a mat-list-item matTooltip="Search Article/Person">
-      <mat-icon>search</mat-icon>
     </a>
 
     <a mat-list-item routerLink="/home/me">

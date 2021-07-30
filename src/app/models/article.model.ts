@@ -4,6 +4,7 @@ export type articleModel = {
   mintoRead: number;
   itSelf: string;
   owner: string;
+  ownerId: string,
   tag: string;
   claps: number;
   imgURL?: string;

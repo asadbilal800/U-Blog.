@@ -48,6 +48,7 @@ import { CustomPipe } from './pipes/custom.pipe';
 import {MatBadgeModule} from "@angular/material/badge";
 import { ErrorPageComponent } from './component/error-page/error-page.component';
 import { UnfollowPipe } from './pipes/unfollow.pipe';
+import {MatMenuModule} from "@angular/material/menu";
 
 @NgModule({
   declarations: [
@@ -98,6 +99,7 @@ import { UnfollowPipe } from './pipes/unfollow.pipe';
         NgxMatFileInputModule,
         MatTooltipModule,
         MatBadgeModule,
+        MatMenuModule,
     ],
   providers: [
     AuthService,
