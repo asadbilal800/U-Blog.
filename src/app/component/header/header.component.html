@@ -4,7 +4,7 @@
   <!-- mat nav list contain a tag with mat-list-item -->
   <mat-nav-list fxLayout>
 
-    <a  *ngIf="isAuth && !isNewUser" mat-list-item  (click)="toggleSideNav()" matTooltip="Side Navigation"
+    <a  *ngIf="isAuth && !isNewUser" mat-list-item  (click)="toggleSideNav()"
     ><mat-icon>menu</mat-icon></a>
 
     <a  mat-list-item  routerLink="/home/feed"
@@ -16,38 +16,38 @@
 
   <!-- mat list contain anything with mat-list-item -->
 
-  <mat-list *ngIf="isAuth && !isNewUser" fxLayout>
+  <mat-nav-list *ngIf="isAuth && !isNewUser" fxLayout>
 
-    <mat-list-item matTooltip="Your Notifications">
+    <a mat-list-item matTooltip="Your Notifications">
       <mat-icon matBadge="7" matBadgeColor="warn">notifications</mat-icon>
-    </mat-list-item>
+    </a>
 
-    <mat-list-item matTooltip="Your Bookmarks">
+    <a mat-list-item matTooltip="Your Bookmarks">
       <button mat-icon-button routerLink="/home/bookmarks">
-        <mat-icon matBadge="{{this.user.bookmarks.length}}" matBadgeColor="warn">bookmark</mat-icon>
+        <mat-icon matBadge="{{this.user?.bookmarks?.length}}" matBadgeColor="warn">bookmark</mat-icon>
       </button>
-    </mat-list-item>
+    </a>
 
-    <mat-list-item matTooltip="Write Article">
+    <a mat-list-item matTooltip="Write Article">
       <button mat-icon-button routerLink="/home/write">
         <mat-icon>mode</mat-icon>
       </button>
-    </mat-list-item>
+    </a>
 
-    <mat-list-item matTooltip="Search Article/Person">
+    <a mat-list-item matTooltip="Search Article/Person">
       <mat-icon>search</mat-icon>
-    </mat-list-item>
+    </a>
 
-    <mat-list-item   >
+    <a mat-list-item routerLink="/home/me">
       <img matListAvatar src="{{user?.displayImage}}" />
-    </mat-list-item>
+    </a>
 
-    <mat-list-item >
+    <a mat-list-item routerLink="/home/me" >
       <p matLine>
         {{user?.username}}
       </p>
-    </mat-list-item>
+    </a>
 
-  </mat-list>
+  </mat-nav-list>
 
 </mat-toolbar>

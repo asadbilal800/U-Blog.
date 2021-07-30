@@ -23,6 +23,7 @@ export class HeaderComponent implements OnInit {
   ngOnInit(): void {
     this.authSrv.userCredInfo.subscribe((data : UserModel) => {
       if (data ) {
+        console.log('AHAHAHAHAHHAH')
         this.user = data;
         this.isAuth = true
         this.isNewUser = data.isNewUser

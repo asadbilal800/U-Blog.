@@ -100,7 +100,7 @@ export class SignInPhoneComponent implements OnInit {
         })
       })
       .catch((error) => {
-      //  this.spinner.hide('mainScreenSpinner')
+        this.spinner.hide('mainScreenSpinner')
         this.commonSrv.handleDisplayMessage(error.message)
       });
     this.captchaCheck = false

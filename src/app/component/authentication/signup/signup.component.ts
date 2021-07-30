@@ -52,10 +52,12 @@ export class SignupComponent {
             .doc(`${data.user.uid}`)
             .set(signUpValues)
             .then((value) => {
+              this.spinner.hide('mainScreenSpinner')
               this.commonSrv.handleDisplayMessage(MESSAGES.SUCCESS_MESSAGE)
             });
       })
       .catch((error) => {
+        this.spinner.hide('mainScreenSpinner')
         this.commonSrv.handleDisplayMessage(error.message)
       });
 

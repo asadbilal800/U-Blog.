@@ -27,7 +27,8 @@ export class LoginComponent  {
     private authSrv: AuthService,
     private router: Router,
     private fsStore: AngularFirestore,
-    private commonSrv : CommonService
+    private commonSrv : CommonService,
+    private spinner : NgxSpinnerService
   ) {}
 
   login() {
