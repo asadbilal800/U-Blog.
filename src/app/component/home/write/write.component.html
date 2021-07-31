@@ -23,7 +23,6 @@
         <button  type="button" mat-raised-button color="warn" (click)="articleImage.click()">Set Image Article</button>
       </div>
 
-
       <h3> Article Name</h3>
       <mat-form-field  appearance="fill" >
         <mat-label> Article Name</mat-label>
@@ -47,7 +46,7 @@
 
       <h3> How many minutes is it going to take to Read?</h3>
       <mat-form-field  appearance="fill" >
-        <mat-label> Approximiate minutes</mat-label>
+        <mat-label> Approximate minutes</mat-label>
         <input matInput
                name="minToRead"
                ngModel
@@ -55,8 +54,6 @@
                type="number"
         />
       </mat-form-field>
-
-
 
 
       <h3> Which Topic It Belongs To?</h3>
@@ -68,7 +65,7 @@
         </mat-select>
       </mat-form-field>
 
-      <button  mat-raised-button  color="accent" [disabled]="!form.valid" type="submit">Post!</button>
+      <button class="submit"  mat-raised-button  color="accent" [disabled]="!form.valid" type="submit">Post!</button>
 
     </form>
   </div>

@@ -46,7 +46,9 @@ export class SignupComponent {
           isNewUser: true,
           userUID: data.user.uid,
           newNotficationCount : 0,
-          notifications : []
+          notifications : [],
+          bookmarks : [],
+          displayImage: 'https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png'
         };
 
           this.fsStore

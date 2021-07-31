@@ -9,6 +9,9 @@ import { UserModel } from '../../../models/user.model';
 import {map, take} from 'rxjs/operators';
 import {NgxSpinnerService} from "ngx-spinner";
 import {CommonService, MESSAGES} from "../../../services/common.service";
+import firebase from "firebase";
+import DocumentSnapshot = firebase.firestore.DocumentSnapshot;
+import {Action} from "@angular/fire/database";
 
 @Component({
   selector: 'app-write',
@@ -68,35 +71,49 @@ export class WriteComponent implements OnInit {
         name: form.value.name,
         claps: 0,
         description: form.value.desc,
-        ownerId: this.user.userUID
+        ownerId: this.user.userUID,
+        isNewArticle : true
       };
+
+
 
       this.fsStore
         .collection('all-articles')
         .doc()
         .set(article)
         .then((x) => {
+          let articleID;
+
+
+            this.fsStore
+              .collection('all-articles', (ref) =>
+                ref.where('isNewArticle', '==', true)
+              )
+              .get()
+              .subscribe((article) => {
+                articleID = article.docs[0].id
+              })
+
+
           //now getting latest article and then storing image.
           this.fsStore
             .collection('all-articles')
-            .snapshotChanges().pipe(
-            take(1)
-          )
-            .subscribe((data) => {
-              let articleId = data[0].payload.doc.id
+            .get()
+            .subscribe((data ) => {
+              console.log(articleID)
               //storing article image.
               this.fsStorage
                 .ref(
                   'article-images/' +
-                  `${this.user.username}/${articleId}/image`
+                  `${this.user.username}/${articleID}/image`
                 )
                 .put(this.image, {contentType: 'image/jpeg'})
                 .then((img) => {
                   img.ref.getDownloadURL().then(url => {
                     this.fsStore
                       .collection('all-articles')
-                      .doc(articleId)
-                      .update({imgURL: url, id: articleId})
+                      .doc(articleID)
+                      .update({imgURL: url, id: articleID, isNewArticle : false})
                       .then(() => {
                         this.commonSrv.handleDisplayMessage(MESSAGES.ARTICLE_POSTED)
                         this.spinner.hide('mainScreenSpinner')
@@ -105,6 +122,8 @@ export class WriteComponent implements OnInit {
                 });
             })
         });
+      this.forms.resetForm();
+
     } else {
       this.commonSrv.handleDisplayMessage(MESSAGES.SET_IMAGE)
 
@@ -112,6 +131,8 @@ export class WriteComponent implements OnInit {
   }
 
   upload(event) {
-    this.image = event.target.files[0];
+    console.log('sdasdsa')
+    this.image = event.target.files[event.target.files.length -1];
+    this.commonSrv.handleDisplayMessage(MESSAGES.IMAGE_UPLOAD)
   }
 }

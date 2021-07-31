@@ -14,7 +14,7 @@ import {CommonService} from "../../services/common.service";
           <h3 class="modal-title"><b>Looks like you are a new user..</b></h3>
         </div>
         <div class="modal-body" fxLayout="column" >
-          <h6>Enter the following Details for your profile!</h6>
+          <h6>Enter the following Detail for your profile!</h6>
           <mat-form-field fxFlex >
             <mat-label>Bio:</mat-label>
             <textarea
@@ -28,7 +28,7 @@ import {CommonService} from "../../services/common.service";
           <button
             fxFlex
             mat-raised-button
-            color="accent"
+            color="warn"
             [disabled]="inputEmpty"
             #buttonSubmit
             (click)="proceedToHome()">

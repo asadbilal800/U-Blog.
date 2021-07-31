@@ -8,7 +8,7 @@ import {AngularFirestore, DocumentSnapshot} from '@angular/fire/firestore';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { NgxSpinnerService } from 'ngx-spinner';
 import {CommonService, MESSAGES} from '../../../services/common.service';
-import {  map } from 'rxjs/operators';
+import {map, take} from 'rxjs/operators';
 import firebase from 'firebase/app';
 import FieldValue = firebase.firestore.FieldValue;
 import { Observable } from 'rxjs';
@@ -25,7 +25,7 @@ export class ProfileFeedComponent implements OnInit {
   articleArrayIds: string[] = [];
   noPosts: boolean = false;
   user : UserModel;
-  latestArticles : Array<articleModel> = []
+  latestArticles : Array<articleModel>= new Array<articleModel>(1);
   latestArticleIndex: number = 0;
   observerableTopicList: Observable<any[string]>;
   myTopicList = []
@@ -175,14 +175,18 @@ export class ProfileFeedComponent implements OnInit {
     this.fsStore
       .collection('all-articles')
       .stateChanges(['added'])
+      .pipe(
+        map(data => {
+          return data.slice(0,1)
+        })
+      )
       .subscribe((data) => {
         data.map((data) => {
-          if (this.latestArticleIndex == 5) {
-            this.latestArticleIndex = 0;
+          if(!!data.payload.doc.data()) {
+            this.latestArticles.pop()
+            this.latestArticles.push(data.payload.doc.data() as articleModel)
           }
-          let article = data.payload.doc.data() as articleModel;
-          this.latestArticles[this.latestArticleIndex] = article;
-          this.latestArticleIndex = this.latestArticleIndex + 1;
+
         });
       });
   }

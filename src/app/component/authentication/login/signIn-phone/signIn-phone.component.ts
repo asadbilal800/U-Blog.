@@ -88,7 +88,9 @@ export class SignInPhoneComponent implements OnInit {
               isNewUser: true,
               userUID: result.data().userUID,
               newNotficationCount: 0,
-              notifications :[]
+              notifications :[],
+              bookmarks : [],
+              displayImage : 'https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png'
             };
             this.fsStore
               .collection('users')

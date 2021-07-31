@@ -75,14 +75,18 @@
     <h4  class="text-center">Latest Articles</h4>
   <mat-divider></mat-divider>
   <mat-nav-list >
-      <a mat-list-item *ngFor="let article of latestArticles" [routerLink]="['../article',article.id]">
-        <mat-icon>chevron_right</mat-icon>{{ article.name }}
+      <a mat-list-item *ngFor="let article of latestArticles" [routerLink]="['../article',article?.id]">
+        <mat-icon>chevron_right</mat-icon>{{ this.article?.name }}
       </a>
     </mat-nav-list>
+  <h6 *ngIf="!latestArticles.length"> (No Latest Articles Found..)</h6>
   <mat-divider></mat-divider>
 
-  <h4  class="text-center" style="padding-top: 20%">Your Topics</h4>
-  <hr>
+  <div *ngIf="myTopicList.length" >
+    <h4  class="text-center" style="padding-top: 20%">Your Topics</h4>
+    <hr>
+  </div>
+
   <mat-chip-list>
     <mat-chip
       selected

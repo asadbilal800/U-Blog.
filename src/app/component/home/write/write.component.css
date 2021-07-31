@@ -6,3 +6,7 @@ padding-bottom :5%;
 .image-article-input {
   padding-bottom: 5%;
 }
+
+.submit {
+  width: 100%
+}

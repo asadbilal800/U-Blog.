@@ -49,6 +49,7 @@ export enum MESSAGES {
   ARTICLE_POSTED = 'Article Posted!',
   SET_IMAGE = 'Please Set Article Image!',
   CLAP_NOTIFY =' Clap Received For Article : ',
-  NEW_NOTIFICATION = '1 New Notification Received'
+  NEW_NOTIFICATION = '1 New Notification Received',
+  IMAGE_UPLOAD = 'Image has been uploaded!'
 
 }

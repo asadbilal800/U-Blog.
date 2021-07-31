@@ -5,10 +5,18 @@ mat-sidenav-container{
   padding-top: 1%;
   padding-bottom: 5%;
 
+
 }
 
 mat-sidenav{
   width: 20%;
   height: 100%;
   position: fixed;
+
+}
+mat-sidenav-content{
+  overflow-x: hidden;
+  padding-left: 1%;
+
+
 }

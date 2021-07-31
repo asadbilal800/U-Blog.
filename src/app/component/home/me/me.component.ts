@@ -73,11 +73,14 @@ export class MeComponent implements OnInit {
       this.fsStore.collection('users').doc(this.user.userUID)
         .update({
           username: '',
-          displayImage :'',
+          displayImage :'https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png',
           subscriptions : [],
           bookmarks : [],
           isNewUser : true,
-          bio : ''
+          bio : '',
+          notifications :[],
+          newNotficationCount : 0
+
         }).then(()=> {
         this.spinner.hide('mainScreenSpinner');
         this.commonSrv.handleDisplayMessage(MESSAGES.ACCOUNT_DATA_DELETE)

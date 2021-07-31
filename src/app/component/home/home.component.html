@@ -2,7 +2,7 @@
 
 <mat-sidenav-container (click)="sidenav.close(); closeSecondSideNav()" *ngIf="viewFeed">
 
-  <mat-sidenav #sidenav opened="false" mode="over">
+  <mat-sidenav #sidenav opened="false" mode="side">
     <mat-nav-list>
         <a mat-list-item routerLink="feed">
           <mat-icon>feed</mat-icon> Blog Feed</a

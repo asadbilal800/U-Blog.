@@ -2,13 +2,18 @@
 
 
   <div fxFlex="40" class="animate__animated animate__fadeInLeft">
+    <h1 class="text-center"><b> U-BLOG </b></h1>
+    <p class="text-center">Your Personal Blog</p>
     <img class="img-fluid" src="../../../../assets/type.svg" />
+    <h1 class="text-center"><b>Write Your Own World!</b></h1>
+
   </div>
-  <div fxFlex="60" class="animate__animated animate__fadeInRight">
+
+  <div fxFlex="60" class="animate__animated animate__fadeInRight login">
     <form (ngSubmit)="login()" #form="ngForm">
-      <div fxLayout>
+      <div fxLayout >
         <div fxFlex="23"></div>
-        <div fxFlex="55">
+        <div fxFlex="55" >
           <div fxLayout="column" fxLayoutGap="5%">
             <mat-form-field>
               <mat-label> Email</mat-label>
@@ -60,7 +65,7 @@
               style = "background-color: #dbd7cc"
               routerLink="/sign-in-phone"
               type="button">
-              <mat-icon>smartphone</mat-icon> Login with Phone
+              <mat-icon>smartphone</mat-icon> Login with Phone Number
             </button>
             <button
               mat-raised-button
@@ -86,9 +91,9 @@
 
   <div fxFlex="50" fxLayoutAlign="center center">
     <h1 class="text-center">
-      Write What You Feel.
+      <b> Write What You Feel.</b>
       <br />
-      Explore New Ways.
+      <b> Explore New Ways.</b>
     </h1>
   </div>
   <div fxFlex="50">
@@ -110,9 +115,9 @@
 <div class="main-container" fxLayout>
   <div fxFlex="50" fxLayoutAlign="center center">
     <h1 class="text-center">
-      Community of U-blog
+      <b>Community of U-blog</b>
       <br />
-      is Friendlier Than You think!
+      <b>is Friendlier Than You think!</b>
     </h1>
   </div>
   <div fxFlex="50">

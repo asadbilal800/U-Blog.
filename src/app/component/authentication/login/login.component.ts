@@ -67,7 +67,9 @@ export class LoginComponent  {
             isNewUser: true,
             userUID: credentials.user.uid,
             newNotficationCount: 0,
-            notifications : []
+            notifications : [],
+            bookmarks : [],
+            displayImage : 'https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png'
           };
           this.fsStore
             .collection('users')
