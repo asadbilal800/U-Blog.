@@ -28,6 +28,7 @@
 
     <!-- clap section -->
     <button
+      *ngIf="checkIfWrittenByMe()"
       mat-icon-button
       #button
       (click)="clap(button)">

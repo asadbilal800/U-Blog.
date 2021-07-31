@@ -7,6 +7,7 @@ import firebase from 'firebase/app';
 import FieldValue = firebase.firestore.FieldValue;
 import {MatButton} from "@angular/material/button";
 import {MESSAGES} from "../../../services/common.service";
+import {UserModel} from "../../../models/user.model";
 
 @Component({
   selector: 'app-article',
@@ -17,7 +18,7 @@ export class ArticleComponent implements OnInit {
 
   articleId;
   article: articleModel;
-  userCredInfo;
+  userCredInfo : UserModel;
   comment: string;
   commentsArray: string[] = [];
   clapReceived = false;
@@ -96,4 +97,7 @@ export class ArticleComponent implements OnInit {
 
   }
 
+  checkIfWrittenByMe() {
+    return this.article.ownerId !== this.userCredInfo.userUID
+  }
 }

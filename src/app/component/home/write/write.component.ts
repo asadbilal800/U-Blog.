@@ -22,7 +22,7 @@ export class WriteComponent implements OnInit {
   user: UserModel;
   @ViewChild('form') forms: NgForm;
   topicList: string[] = [];
-  image;
+  image= null
 
   constructor(
     private fsStore: AngularFirestore,
@@ -109,6 +109,7 @@ export class WriteComponent implements OnInit {
                 )
                 .put(this.image, {contentType: 'image/jpeg'})
                 .then((img) => {
+                  this.image = null;
                   img.ref.getDownloadURL().then(url => {
                     this.fsStore
                       .collection('all-articles')
@@ -131,7 +132,6 @@ export class WriteComponent implements OnInit {
   }
 
   upload(event) {
-    console.log('sdasdsa')
     this.image = event.target.files[event.target.files.length -1];
     this.commonSrv.handleDisplayMessage(MESSAGES.IMAGE_UPLOAD)
   }

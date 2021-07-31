@@ -25,7 +25,7 @@ export class ProfileFeedComponent implements OnInit {
   articleArrayIds: string[] = [];
   noPosts: boolean = false;
   user : UserModel;
-  latestArticles : Array<articleModel>= new Array<articleModel>(1);
+  latestArticles : Array<articleModel>=[]
   latestArticleIndex: number = 0;
   observerableTopicList: Observable<any[string]>;
   myTopicList = []
@@ -175,16 +175,23 @@ export class ProfileFeedComponent implements OnInit {
     this.fsStore
       .collection('all-articles')
       .stateChanges(['added'])
-      .pipe(
-        map(data => {
-          return data.slice(0,1)
-        })
-      )
+
       .subscribe((data) => {
         data.map((data) => {
+
           if(!!data.payload.doc.data()) {
-            this.latestArticles.pop()
-            this.latestArticles.push(data.payload.doc.data() as articleModel)
+            console.log('AHAHAHAHAHAH')
+
+            console.log(this.latestArticles.length)
+            if(this.latestArticles.length > 5) {
+              console.log('AHAHAHAHAHAH')
+              this.latestArticles.splice(0,1)
+              this.latestArticles.push(data.payload.doc.data() as articleModel)
+
+            }
+          else {
+              this.latestArticles.push(data.payload.doc.data() as articleModel)
+            }
           }
 
         });
