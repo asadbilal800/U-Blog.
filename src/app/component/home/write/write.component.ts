@@ -12,6 +12,7 @@ import {CommonService, MESSAGES} from "../../../services/common.service";
 import firebase from "firebase";
 import DocumentSnapshot = firebase.firestore.DocumentSnapshot;
 import {Action} from "@angular/fire/database";
+import FieldValue = firebase.firestore.FieldValue;
 
 @Component({
   selector: 'app-write',
@@ -72,7 +73,8 @@ export class WriteComponent implements OnInit {
         claps: 0,
         description: form.value.desc,
         ownerId: this.user.userUID,
-        isNewArticle : true
+        isNewArticle : true,
+        timeCreated: FieldValue.serverTimestamp()
       };
 
 
@@ -84,7 +86,6 @@ export class WriteComponent implements OnInit {
         .then((x) => {
           let articleID;
 
-
             this.fsStore
               .collection('all-articles', (ref) =>
                 ref.where('isNewArticle', '==', true)
@@ -93,6 +94,7 @@ export class WriteComponent implements OnInit {
               .subscribe((article) => {
                 articleID = article.docs[0].id
               })
+
 
 
           //now getting latest article and then storing image.

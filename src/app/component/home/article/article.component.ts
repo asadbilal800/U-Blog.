@@ -98,6 +98,6 @@ export class ArticleComponent implements OnInit {
   }
 
   checkIfWrittenByMe() {
-    return this.article.ownerId !== this.userCredInfo.userUID
+    return this.article?.ownerId !== this.userCredInfo.userUID
   }
 }

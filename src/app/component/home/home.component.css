@@ -15,8 +15,7 @@ mat-sidenav{
 
 }
 mat-sidenav-content{
-  overflow-x: hidden;
+  width: 100%;
   padding-left: 1%;
-
 
 }

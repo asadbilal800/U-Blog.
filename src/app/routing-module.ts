@@ -58,6 +58,8 @@ const routes: Routes = [
         component: BookmarksComponent,
         canActivate: [AuthGuard],
       },
+      {path: '**', redirectTo: 'error-page'}
+
     ],
   },
   {path : 'error-page', component: ErrorPageComponent},

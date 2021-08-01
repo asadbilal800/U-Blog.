@@ -60,6 +60,8 @@ export class LoginComponent  {
         }
 
         else {
+
+
           console.log('user not in the db')
           let signUpValues: UserModel = {
             username: credentials.user.displayName,

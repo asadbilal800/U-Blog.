@@ -7,7 +7,7 @@
   <mat-divider></mat-divider>
   <a mat-list-item *ngFor="let article of articleArray" [routerLink]="['../article', article.id]">
     <img matListAvatar src="{{article.imgURL}}" />
-    <h4> {{article.name}}</h4>
+    <p matLine> {{article.name}}</p>
     <mat-divider></mat-divider>
   </a>
   <h3 class="text-center" *ngIf="booksmarksNotAvailable" >No Bookmark has been set so far...</h3>
@@ -15,8 +15,3 @@
 </mat-nav-list>
 <div fxFlex="10"></div>
 
-<mat-toolbar color ="primary" class="fixed-bottom" >
-  <div fxFlex>
-    <p class="text-center"> &copy; CopyRights Reserved U-Blog 2021</p>
-  </div>
-</mat-toolbar>

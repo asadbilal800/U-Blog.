@@ -2,7 +2,7 @@
   <div fxFlex="20"></div>
 
   <!--article section -->
-  <div fxLayout="column" fxFlex>
+  <div  fxLayout="column" fxFlex>
     <h1 class='mat-display-4 text-center'>{{ article?.name }}</h1>
     <a  mat-icon-button><mat-icon>history_edu</mat-icon> Written By : {{ article?.owner }}
     </a>
@@ -10,7 +10,7 @@
     <a  mat-icon-button><mat-icon>auto_stories</mat-icon> Min to Read : {{ article?.mintoRead }}
       <mat-icon>waving_hand</mat-icon>   Clap : {{ article?.claps }}
     </a>
-    <h5>
+    <h5 class="text text-center">
       {{ article?.itSelf }}
     </h5>
     <br> <br> <br>
@@ -37,7 +37,7 @@
 
    <!-- make comment section -->
     <mat-form-field>
-      <mat-label>Comment</mat-label>
+      <mat-label>Comment Here</mat-label>
       <input
         matInput
         type="text"

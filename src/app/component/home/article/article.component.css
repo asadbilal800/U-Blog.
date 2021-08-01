@@ -1,7 +1,15 @@
 img {
   border : 1px solid black;
+  width: 60vw;
 }
 
 mat-list{
   background-color: white;
+}
+
+.text {
+  padding-top: 1%;
+  width:60vw;
+  word-wrap: break-word;
+
 }

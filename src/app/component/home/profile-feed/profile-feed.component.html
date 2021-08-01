@@ -28,7 +28,7 @@
     <mat-card-header>
       <mat-card-title [routerLink]="['../article', article.id]">
         <h3>
-          {{ this.article.name }}
+          <b> {{ this.article.name }} </b>
         </h3>
       </mat-card-title>
       <mat-card-subtitle>
@@ -79,7 +79,7 @@
         <mat-icon>chevron_right</mat-icon>{{ this.article?.name }}
       </a>
     </mat-nav-list>
-  <h6 *ngIf="!latestArticles.length"> (No Latest Articles Found..)</h6>
+  <h6 class="text-center" *ngIf="!latestArticles.length"> (No Latest Articles Found)</h6>
   <mat-divider></mat-divider>
 
   <div *ngIf="myTopicList.length" >

@@ -61,6 +61,7 @@ export class SignInPhoneComponent implements OnInit {
       .catch((error) => {
         this.commonSrv.handleDisplayMessage(error.message)
       });
+
     }
     else {
       this.commonSrv.handleDisplayMessage(MESSAGES.TICK_MESSAGE)
@@ -84,9 +85,9 @@ export class SignInPhoneComponent implements OnInit {
           else {
             console.log('user not in the db')
             let signUpValues: UserModel = {
-              username: result.user.displayName,
+              username: result.user.phoneNumber,
               isNewUser: true,
-              userUID: result.data().userUID,
+              userUID: result.user.uid,
               newNotficationCount: 0,
               notifications :[],
               bookmarks : [],

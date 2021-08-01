@@ -53,15 +53,18 @@ export class ProfileFeedComponent implements OnInit {
     })
 
     this.getTopicList();
-    this.realTimeDbChangesListener();
 
     this.commonSrv.sideNavTogglerEmitter.subscribe(() => {
       this.sideNav?.toggle();
     });
 
+    this.realTimeDbChangesListener();
+
+
     this.getArticlesId().then(() => {
       this.loadArticle();
       this.spinner.hide('mainScreenSpinner');
+
     });
   }
 
@@ -172,29 +175,49 @@ export class ProfileFeedComponent implements OnInit {
   }
 
   realTimeDbChangesListener() {
+
     this.fsStore
-      .collection('all-articles')
-      .stateChanges(['added'])
-
+      .collection('all-articles', (ref) =>
+        ref.limitToLast(5).orderBy('timeCreated')
+      )
+      .valueChanges()
       .subscribe((data) => {
-        data.map((data) => {
 
-          if(!!data.payload.doc.data()) {
-            console.log('AHAHAHAHAHAH')
+        this.latestArticles = data as articleModel[];
+        this.latestArticles.reverse()
 
-            console.log(this.latestArticles.length)
-            if(this.latestArticles.length > 5) {
-              console.log('AHAHAHAHAHAH')
-              this.latestArticles.splice(0,1)
-              this.latestArticles.push(data.payload.doc.data() as articleModel)
+      })
 
-            }
-          else {
-              this.latestArticles.push(data.payload.doc.data() as articleModel)
-            }
-          }
 
-        });
-      });
+    // this.fsStore
+    //   .collection('all-articles')
+    //   .stateChanges(['added'])
+    //   .subscribe((data ) => {
+    //
+    //     //if length is greater than
+    //     if(data.length === 1 ) {
+    //       this.latestArticles.push(data[0].payload.doc.data() as articleModel)
+    //     }
+
+
+        // data.map((data) => {
+        //
+        //   if(!!data.payload.) {
+        //     console.log('AHAHAHAHAHAH')
+        //
+        //     console.log(this.latestArticles.length)
+        //     if(this.latestArticles.length > 5) {
+        //       console.log('AHAHAHAHAHAH')
+        //       this.latestArticles.splice(0,1)
+        //       this.latestArticles.push(data.payload.doc.data() as articleModel)
+        //
+        //     }
+        //   else {
+        //       this.latestArticles.push(data.payload.doc.data() as articleModel)
+        //     }
+        //   }
+        //
+        // });
+    //  });
   }
 }

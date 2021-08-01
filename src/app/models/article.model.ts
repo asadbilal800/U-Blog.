@@ -10,5 +10,6 @@ export type articleModel = {
   imgURL?: string;
   id?: string;
   comment?: string[];
-  isNewArticle ?: boolean
+  isNewArticle ?: boolean,
+  timeCreated? : any
 };
