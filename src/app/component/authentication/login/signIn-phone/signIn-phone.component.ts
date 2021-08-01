@@ -77,13 +77,10 @@ export class SignInPhoneComponent implements OnInit {
         this.fsStore.collection('users').doc(`${result.user.uid}`)
           .get().subscribe( (userData : DocumentSnapshot<UserModel>)=> {
           if(userData.data()) {
-            console.log(userData)
-            console.log('user in the db')
             this.getUserDataFromFirebase(result.user.uid)
 
           }
           else {
-            console.log('user not in the db')
             let signUpValues: UserModel = {
               username: result.user.phoneNumber,
               isNewUser: true,

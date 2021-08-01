@@ -81,7 +81,6 @@ export class HomeComponent implements OnInit {
     this.authSrv.userCredInfo.next(null)
     this.fsAuth.signOut().then(null);
     this.router.navigate(['/login'])
-    console.log('signing out');
   }
 
   closeSecondSideNav() {

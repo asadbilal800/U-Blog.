@@ -20,7 +20,6 @@ export class MeComponent implements OnInit {
   bioInput: boolean = true
   username;
   usernameInput: boolean = true;
-  warningMessage: boolean = false;
 
   constructor(
     private authSrv: AuthService,
@@ -91,14 +90,14 @@ export class MeComponent implements OnInit {
     this.router.navigate(['/login'])
   }
 
-  save(editable: string) {
+  save(editable: string,value:string) {
     if(editable === 'username'){
       this.spinner.show('mainScreenSpinner');
       this.fsStore
         .collection('users')
         .doc(this.user.userUID)
         .update({
-          username: this.username,
+          username: value,
         })
         .then(() => {
           this.authSrv.getUserDataFromFirebase(this.user.userUID)
@@ -113,7 +112,7 @@ export class MeComponent implements OnInit {
         .collection('users')
         .doc(this.user.userUID)
         .update({
-          bio: this.bio,
+          bio: value,
         })
         .then(() => {
           this.authSrv.getUserDataFromFirebase(this.user.userUID)

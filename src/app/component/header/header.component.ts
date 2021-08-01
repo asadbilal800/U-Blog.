@@ -58,13 +58,11 @@ export class HeaderComponent implements OnInit {
       .doc(this.user?.userUID)
       .valueChanges()
       .subscribe((user: UserModel)  => {
-        console.log('changes made to user.')
 
         //first check notification are alive or not..means logged in.
         if(this.user) {
 
           if(user.setNotification){
-            console.log('SETTING.')
             this.notifications = user.notifications
             this.fsStore.collection('users').doc(this.user.userUID)
               .update({
@@ -75,7 +73,6 @@ export class HeaderComponent implements OnInit {
             this.authSrv.getUserDataFromFirebase(this.user.userUID)
           }
           else {
-              console.log('NOTHING NEW.')
             }
           }
       })
@@ -105,7 +102,6 @@ export class HeaderComponent implements OnInit {
       this.authSrv.getUserDataFromFirebase(this.user.userUID)
     }
     else {
-      console.log('no need for db')
     }
 
 

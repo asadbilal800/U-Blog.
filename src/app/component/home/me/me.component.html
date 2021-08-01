@@ -48,14 +48,15 @@
             <input
               type="text"
               matInput
-              [(ngModel)]="username"
+              [value]="username"
               [disabled]="usernameInput"
+              #usernameRef
             />
           </mat-form-field>
-          <button  class="ml-3" mat-raised-button color="warn" *ngIf="!usernameInput" (click)="save('username')">Save</button>
+          <button  class="ml-3" mat-raised-button color="warn" *ngIf="!usernameInput" (click)="save('username',usernameRef.value)">Save</button>
         </p>
         <div fxLayoutAlign="flex-end">
-          <button mat-icon-button (click)="this.usernameInput = !this.usernameInput; this.warningMessage = !this.warningMessage">
+          <button mat-icon-button (click)="this.usernameInput = !this.usernameInput;">
             <mat-icon>edit</mat-icon>
           </button>
         </div>
@@ -71,14 +72,15 @@
             <input
               type="text"
               matInput
-              [(ngModel)]="bio"
+              [value]="bio"
               [disabled]="bioInput"
+              #bioRef
             />
           </mat-form-field>
-          <button  class="ml-3" mat-raised-button color="warn" *ngIf="!bioInput" (click)="save('bio')">Save</button>
+          <button  class="ml-3" mat-raised-button color="warn" *ngIf="!bioInput" (click)="save('bio',bioRef.value)">Save</button>
         </p>
         <div fxLayoutAlign="flex-end">
-          <button mat-icon-button (click)="this.bioInput = !this.bioInput; this.warningMessage = !this.warningMessage">
+          <button mat-icon-button (click)="this.bioInput = !this.bioInput; ">
             <mat-icon>edit</mat-icon>
           </button>
         </div>
@@ -98,7 +100,6 @@
       </div>
       <hr />
     </div>
-    <h4 style="color:red" *ngIf="warningMessage">(Note: If You Are Unable to Edit,In that Case Please Refresh The Page)</h4>
 
 
     <div  class="mt-3">

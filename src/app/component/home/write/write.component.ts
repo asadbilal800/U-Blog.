@@ -100,7 +100,6 @@ export class WriteComponent implements OnInit {
             .collection('all-articles')
             .get()
             .subscribe((data ) => {
-              console.log(articleID)
               //storing article image.
               this.fsStorage
                 .ref(

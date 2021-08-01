@@ -187,37 +187,5 @@ export class ProfileFeedComponent implements OnInit {
         this.latestArticles.reverse()
 
       })
-
-
-    // this.fsStore
-    //   .collection('all-articles')
-    //   .stateChanges(['added'])
-    //   .subscribe((data ) => {
-    //
-    //     //if length is greater than
-    //     if(data.length === 1 ) {
-    //       this.latestArticles.push(data[0].payload.doc.data() as articleModel)
-    //     }
-
-
-        // data.map((data) => {
-        //
-        //   if(!!data.payload.) {
-        //     console.log('AHAHAHAHAHAH')
-        //
-        //     console.log(this.latestArticles.length)
-        //     if(this.latestArticles.length > 5) {
-        //       console.log('AHAHAHAHAHAH')
-        //       this.latestArticles.splice(0,1)
-        //       this.latestArticles.push(data.payload.doc.data() as articleModel)
-        //
-        //     }
-        //   else {
-        //       this.latestArticles.push(data.payload.doc.data() as articleModel)
-        //     }
-        //   }
-        //
-        // });
-    //  });
   }
 }

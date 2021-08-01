@@ -55,14 +55,12 @@ export class LoginComponent  {
       .get().subscribe( (result : DocumentSnapshot<UserModel>)=> {
 
         if(result.data()) {
-          console.log('User already in the db')
           this.getUserDataFromFirebase(credentials.user.uid)
         }
 
         else {
 
 
-          console.log('user not in the db')
           let signUpValues: UserModel = {
             username: credentials.user.displayName,
             email: credentials.user.email,
