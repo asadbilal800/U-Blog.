@@ -3,8 +3,8 @@ import { AuthService } from '../../../services/auth.service';
 import { UserModel } from '../../../models/user.model';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { articleModel } from '../../../models/article.model';
-import {map, take} from 'rxjs/operators';
-import firebase from "firebase";
+import {map} from 'rxjs/operators';
+import firebase from "firebase/app";
 import DocumentSnapshot = firebase.firestore.DocumentSnapshot;
 
 @Component({

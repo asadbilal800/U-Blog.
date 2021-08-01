@@ -1,11 +1,10 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit,} from '@angular/core';
 import { AuthService } from '../../../services/auth.service';
 import { UserModel } from '../../../models/user.model';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { NgxSpinnerService } from 'ngx-spinner';
 import {CommonService, MESSAGES} from "../../../services/common.service";
-import {HomeComponent} from "../home.component";
 import {AngularFireAuth} from "@angular/fire/auth";
 import {Router} from "@angular/router";
 
@@ -21,6 +20,7 @@ export class MeComponent implements OnInit {
   bioInput: boolean = true
   username;
   usernameInput: boolean = true;
+  warningMessage: boolean = false;
 
   constructor(
     private authSrv: AuthService,

@@ -6,12 +6,10 @@ import { AuthService } from '../../../services/auth.service';
 import { NgForm } from '@angular/forms';
 import { articleModel } from '../../../models/article.model';
 import { UserModel } from '../../../models/user.model';
-import {map, take} from 'rxjs/operators';
+import {map} from 'rxjs/operators';
 import {NgxSpinnerService} from "ngx-spinner";
 import {CommonService, MESSAGES} from "../../../services/common.service";
-import firebase from "firebase";
-import DocumentSnapshot = firebase.firestore.DocumentSnapshot;
-import {Action} from "@angular/fire/database";
+import firebase from "firebase/app";
 import FieldValue = firebase.firestore.FieldValue;
 
 @Component({
