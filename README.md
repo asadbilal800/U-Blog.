@@ -31,7 +31,7 @@
 
 
  <ins> Back End </ins> :
- Firebase & Services
+ Firebase & Services i.e. FireStore & FireStorage & FireAuth.
  
  
  
