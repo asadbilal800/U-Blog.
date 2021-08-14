@@ -35,6 +35,9 @@
  
  ## Snapshots
  ![Screen Shot 2021-08-12 at 2 18 32 PM](https://user-images.githubusercontent.com/24291795/129172137-388f3b20-02e2-4adb-a17f-139a682e1ab6.png)
+ 
+ ![Screen Shot 2021-08-14 at 8 11 08 PM](https://user-images.githubusercontent.com/24291795/129450796-3053a4e3-4d94-43eb-afda-5eee54a5acf3.png)
+
 
  
  
