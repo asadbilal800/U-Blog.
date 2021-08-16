@@ -29,7 +29,6 @@
  Bootstrap,
  Angular Fire.
 
-
  <ins> Back End </ins> :
  Firebase & Services i.e. FireStore & FireStorage & FireAuth.
  
